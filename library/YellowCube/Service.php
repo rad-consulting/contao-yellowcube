@@ -7,10 +7,12 @@
  */
 namespace YellowCube;
 
+use Contao\DataContainer;
 use Exception;
 use Contao\Model;
 use Contao\Model\Collection;
 use Isotope\Model\OrderStatus;
+use Isotope\Model\Product;
 use Isotope\Model\ProductCollection\Order;
 use YellowCube\Model\EventModel;
 use YellowCube\Model\FulfillmentModel;
@@ -118,6 +120,18 @@ class Service
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * @param DataContainer $dc
+     * @return void
+     */
+    public function sendArticle(DataContainer $dc)
+    {
+        if ($dc->activeRecord) {
+            $product = Product::findByPk($dc->activeRecord->id);
+            $this->dispatchEvent('sendArticle', $product);
         }
     }
 
