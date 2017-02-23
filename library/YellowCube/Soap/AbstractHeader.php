@@ -7,11 +7,10 @@
  */
 namespace YellowCube\Soap;
 
-use SoapClient;
-
 /**
- * Class Client
+ * Class AbstractHeader
  */
-class Client extends SoapClient
+abstract class AbstractHeader
 {
+
 }

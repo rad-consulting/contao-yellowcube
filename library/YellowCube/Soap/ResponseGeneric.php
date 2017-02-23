@@ -23,6 +23,11 @@ class ResponseGeneric
     protected $StatusText;
 
     /**
+     * @var string
+     */
+    protected $StatusType;
+
+    /**
      * @return int
      */
     public function getStatusCode()
@@ -43,6 +48,6 @@ class ResponseGeneric
      */
     public function isSuccess()
     {
-        return false; // TODO
+        return 'S' == $this->StatusType;
     }
 }

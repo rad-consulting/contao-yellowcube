@@ -101,11 +101,7 @@ class Service
             foreach ($collection as $item) {
                 if ($item instanceof EventModel && (0 == $item->attempt || time() > $item->tstamp + $item->timeout)) {
                     try {
-                        $item->attempt++;
-                        $item->status = $item::RUNNING;
-                        $item->tstamp = time();
-                        $item->error = 0;
-                        $item->save();
+                        $item->run()->save();
 
                         foreach ($this->getListeners($item->name) as $listener) {
                             call_user_func_array($listener, array($item, $this));
@@ -114,9 +110,7 @@ class Service
                         $item->delete();
                     }
                     catch (Exception $e) {
-                        $item->status = $item::WAITING;
-                        $item->error = 1;
-                        $item->log($e)->save();
+                        $item->wait($e)->save();
                     }
                 }
             }

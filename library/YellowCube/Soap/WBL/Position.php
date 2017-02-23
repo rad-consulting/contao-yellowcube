@@ -7,10 +7,12 @@
  */
 namespace YellowCube\Soap\WBL;
 
+use YellowCube\Soap\AbstractPosition;
+
 /**
  * Class Position
  */
-class Position
+class Position extends AbstractPosition
 {
 
 }

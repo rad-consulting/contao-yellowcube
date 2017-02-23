@@ -5,13 +5,14 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace YellowCube\Soap;
+namespace YellowCube\Soap\WBL;
 
-use SoapClient;
+use YellowCube\Soap\AbstractHeader;
 
 /**
- * Class Client
+ * Class Header
  */
-class Client extends SoapClient
+class Header extends AbstractHeader
 {
+
 }

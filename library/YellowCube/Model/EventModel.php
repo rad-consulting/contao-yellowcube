@@ -144,6 +144,35 @@ class EventModel extends Model
     }
 
     /**
+     * @return $this
+     */
+    public function run()
+    {
+        $this->attempt++;
+        $this->status = static::RUNNING;
+        $this->tstamp = time();
+        $this->error = 0;
+
+        return $this;
+    }
+
+    /**
+     * @param Exception|null $e
+     * @return $this
+     */
+    public function wait(Exception $e = null)
+    {
+        $this->status = static::WAITING;
+
+        if ($e) {
+            $this->error = 1;
+            $this->log($e);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param string|Exception $message
      * @param int              $level
      * @param string|null      $data
@@ -169,31 +198,6 @@ class EventModel extends Model
         LogModel::deleteByModel($this);
 
         return parent::delete();
-    }
-
-    /**
-     * @return $this
-     */
-    public function run()
-    {
-        $this->status = static::RUNNING;
-        $this->attempt++;
-        $this->error = 0;
-        $this->tstamp = time();
-        $this->save();
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function wait()
-    {
-        $this->status = static::WAITING;
-        $this->save();
-
-        return $this;
     }
 
     /**

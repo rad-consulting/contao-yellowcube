@@ -5,13 +5,12 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace YellowCube\Soap;
-
-use SoapClient;
+namespace YellowCube\Soap\WBL;
 
 /**
- * Class Client
+ * Class Order
  */
-class Client extends SoapClient
+class Order
 {
+
 }

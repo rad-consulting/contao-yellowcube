@@ -42,6 +42,9 @@ class Config
         if ('options' == $name) {
             return array(
                 'trace' => true,
+                'features' => SOAP_SINGLE_ELEMENT_ARRAYS,
+                'exceptions' => true,
+                'cache_wsdl' => WSDL_CACHE_MEMORY,
             );
         }
 
