@@ -9,6 +9,7 @@ namespace RAD\YellowCube\Backend;
 
 use Contao\Backend;
 use Contao\DataContainer;
+use Contao\System;
 use RAD\Event\EventDispatcher;
 use RAD\Fulfillment\Model\SupplierOrderModel as SupplierOrder;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
@@ -29,6 +30,7 @@ class Panel extends Backend
             $model = forward_static_call(array($class, 'findByPk'), $dc->activeRecord->id);
 
             if ($model instanceof YellowCubeProduct && $model->doExport()) {
+                System::log('dispatch', __METHOD__, TL_GENERAL);
                 EventDispatcher::getInstance()->dispatch('yellowcube.exportProduct', $model);
 
                 return;
