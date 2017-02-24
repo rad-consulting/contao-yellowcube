@@ -8,7 +8,6 @@
 namespace YellowCube\Model\Product;
 
 use Fulfillment\Model\Product\FulfillmentProduct;
-use YellowCube\ArticleInterface;
 
 /**
  * Class YellowCubeProduct
@@ -20,7 +19,7 @@ use YellowCube\ArticleInterface;
  * @property float $yc_length
  * @property float $yc_height
  */
-class YellowCubeProduct extends FulfillmentProduct implements ArticleInterface
+class YellowCubeProduct extends FulfillmentProduct
 {
     /**
      * @inheritdoc

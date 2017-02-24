@@ -7,7 +7,7 @@
  */
 namespace YellowCube\Soap\ART;
 
-use YellowCube\ArticleInterface;
+use YellowCube\Model\Product\YellowCubeProduct;
 
 /**
  * Class Article
@@ -30,10 +30,10 @@ class Article
     protected $ChangeFlag;
 
     /**
-     * @param ArticleInterface $article
+     * @param YellowCubeProduct $article
      * @return static
      */
-    public static function factory(ArticleInterface $article)
+    public static function factory(YellowCubeProduct $article)
     {
         $instance = new static();
         $instance->EAN = $article->getEAN();
