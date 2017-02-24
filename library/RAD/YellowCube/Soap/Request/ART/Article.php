@@ -9,18 +9,15 @@ namespace RAD\YellowCube\Soap\Request\ART;
 
 use RAD\YellowCube\Config;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
-use RAD\YellowCube\Soap\Unit\DimensionUnit;
 use RAD\YellowCube\Soap\Unit\EANUnit;
 use RAD\YellowCube\Soap\Unit\HeightUnit;
 use RAD\YellowCube\Soap\Unit\LengthUnit;
+use RAD\YellowCube\Soap\Unit\UnitInterface;
 use RAD\YellowCube\Soap\Unit\VolumeUnit;
 use RAD\YellowCube\Soap\Unit\WeightUnit;
 use RAD\YellowCube\Soap\Unit\WidthUnit;
-use RAD\YellowCube\Soap\Util\Dimension;
 use RAD\YellowCube\Soap\Util\EANType;
 use RAD\YellowCube\Soap\Util\ISO;
-use RAD\YellowCube\Soap\Util\UnitInterface;
-use RAD\YellowCube\Soap\Util\UnitOfMeasure;
 
 /**
  * Class Article

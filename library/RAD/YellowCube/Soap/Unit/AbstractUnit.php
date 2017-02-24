@@ -7,6 +7,7 @@
  */
 namespace RAD\YellowCube\Soap\Unit;
 
+use Contao\System;
 use RAD\YellowCube\Soap\Util\SimpleValue;
 
 /**
@@ -27,6 +28,8 @@ abstract class AbstractUnit extends SimpleValue implements UnitInterface
     {
         parent::__construct($value);
         $this->ISO = $ISO;
+
+        System::log($this->getName() . ' ' . $value . ' ' . $this->ISO, __METHOD__, TL_GENERAL);
     }
 
     /**
