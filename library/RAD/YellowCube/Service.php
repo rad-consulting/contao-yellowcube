@@ -117,7 +117,7 @@ class Service implements EventSubscriber
      * @return void
      * @throws Exception
      */
-    public function onExportSupplierorder(Event $event)
+    public function onExportSupplierOrder(Event $event)
     {
         // TODO
     }

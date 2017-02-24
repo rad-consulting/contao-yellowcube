@@ -48,7 +48,7 @@ class Config
             );
         }
 
-        $value = Contao::get('yc_' . $name);
+        $value = Contao::get('rad_yellowcube_' . $name);
 
         return empty($value) ? $default : $value;
     }
