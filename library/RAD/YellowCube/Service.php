@@ -92,6 +92,7 @@ class Service implements EventSubscriber
      */
     public function onExportProduct(Event $event)
     {
+        throw new Exception('hello', Log::ERROR);
         $product = $event->getSubject();
 
         if ($product instanceof YellowCubeProduct) {
