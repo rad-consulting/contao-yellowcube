@@ -110,6 +110,8 @@ class Service implements EventSubscriber
 
             throw new Exception($response->getStatusText(), Log::ERROR);
         }
+
+        throw new Exception(get_class($product), Log::ERROR);
     }
 
     /**
