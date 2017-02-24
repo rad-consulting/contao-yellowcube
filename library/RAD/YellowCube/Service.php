@@ -107,6 +107,7 @@ class Service implements EventSubscriber
                 return;
             }
 
+            $product->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
             throw new Exception($response->getStatusText(), Log::ERROR);
         }
     }
