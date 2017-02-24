@@ -11,6 +11,8 @@ use RAD\YellowCube\Config;
 
 /**
  * Class ControlReference
+ *
+ *
  */
 class ControlReference
 {
