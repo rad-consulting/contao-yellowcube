@@ -26,6 +26,8 @@ class Panel extends Backend
     public function onSubmit(DataContainer $dc)
     {
         if ($dc->activeRecord) {
+            System::log('call', __METHOD__, TL_GENERAL);
+
             $class = $GLOBALS['TL_MODELS'][$dc->table];
             $model = forward_static_call(array($class, 'findByPk'), $dc->activeRecord->id);
 
