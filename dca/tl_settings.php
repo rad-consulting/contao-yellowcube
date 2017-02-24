@@ -8,7 +8,7 @@
  */
 
 // Palettes
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{rad_yellowcube_legend},rad_yellowcube_operatingmode,rad_yellowcube_depositorid,rad_yellowcube_depositorno,rad_yellowcube_supplierno,rad_yellowcube_partnerid,rad_yellowcube_plant;';
+$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{rad_yellowcube_legend},rad_yellowcube_operatingmode,rad_yellowcube_depositorid,rad_yellowcube_depositorno,rad_yellowcube_supplierno,rad_yellowcube_partnerid,rad_yellowcube_plantid;';
 
 // Fields
 $GLOBALS['TL_DCA']['tl_settings']['fields']['rad_yellowcube_depositorno'] = array(
@@ -30,9 +30,9 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['rad_yellowcube_partnerid'] = array(
     'inputType' => 'text',
 );
 
-$GLOBALS['TL_DCA']['tl_settings']['fields']['rad_yellowcube_plant'] = array(
+$GLOBALS['TL_DCA']['tl_settings']['fields']['rad_yellowcube_plantid'] = array(
     'eval' => array('maxlength' => 4),
-    'label' => &$GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_plant'],
+    'label' => &$GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_plantid'],
     'inputType' => 'text',
 );
 

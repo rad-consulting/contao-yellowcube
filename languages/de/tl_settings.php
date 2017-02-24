@@ -16,4 +16,4 @@ $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_depositorno'] = array('Deposi
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_supplierno'] = array('Supplier Number');
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_operatingmode'] = array('Operating Mode');
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_partnerid'] = array('Partner ID');
-$GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_plant'] = array('Plant');
+$GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_plantid'] = array('Plant ID');
