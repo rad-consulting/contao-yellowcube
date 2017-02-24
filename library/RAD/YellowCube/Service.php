@@ -80,36 +80,6 @@ class Service implements EventSubscriberInterface
     }
 
     /**
-     * @param DataContainer $dc
-     * @return void
-     */
-    public function exportProduct(DataContainer $dc)
-    {
-        if ($dc->activeRecord) {
-            $product = YellowCubeProduct::findByPk($dc->activeRecord->id);
-
-            if ($product instanceof YellowCubeProduct && $product->doExport()) {
-                $this->dispatch('exportProduct', $product);
-            }
-        }
-    }
-
-    /**
-     * @param DataContainer $dc
-     * @return void
-     */
-    public function exportSupplierorder(DataContainer $dc)
-    {
-        if ($dc->activeRecord) {
-            $order = SupplierOrder::findByPk($dc->activeRecord->id);
-
-            if ($order instanceof SupplierOrder && $order->doExport()) {
-                $this->dispatch('exportSupplierorder', $order);
-            }
-        }
-    }
-
-    /**
      * @return void
      */
     public function importStock()
