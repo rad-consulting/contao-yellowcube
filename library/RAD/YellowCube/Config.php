@@ -17,7 +17,7 @@ class Config
     /**
      * @const string
      */
-    const TEST = 'I';
+    const TEST = 'T';
     const PROD = 'P';
 
     /**
