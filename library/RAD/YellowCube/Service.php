@@ -97,7 +97,7 @@ class Service implements EventSubscriber
             $response = $this->getClient()->insertArticleMasterData(array(
                 'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'ArticleList' => array(
-                    'Article' => Request\ART\Article::factory($product),
+                    'Article' => Request\ART\Article::factory($product, $this->getConfig()),
                 ),
             ));
 
