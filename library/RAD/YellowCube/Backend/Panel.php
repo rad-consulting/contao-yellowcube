@@ -10,6 +10,8 @@ namespace RAD\YellowCube\Backend;
 use Contao\Backend;
 use Contao\DataContainer;
 use Contao\System;
+use Isotope\Model\Product;
+use Isotope\Model\ProductType;
 use RAD\Event\EventDispatcher;
 use RAD\Fulfillment\Model\SupplierOrderModel as SupplierOrder;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
@@ -26,14 +28,15 @@ class Panel extends Backend
     public function onSubmit(DataContainer $dc)
     {
         if ($dc->activeRecord) {
-            System::log('call', __METHOD__, TL_GENERAL);
-
             $class = $GLOBALS['TL_MODELS'][$dc->table];
             $model = forward_static_call(array($class, 'findByPk'), $dc->activeRecord->id);
 
-            if ($model instanceof YellowCubeProduct && $model->doExport()) {
-                System::log('dispatch', __METHOD__, TL_GENERAL);
-                EventDispatcher::getInstance()->dispatch('yellowcube.exportProduct', $model);
+            if ($model instanceof Product) {
+                $type = ProductType::findByPk($model->type);
+
+                if ('yellowcube' == $type->class) {
+                    EventDispatcher::getInstance()->dispatch('yellowcube.exportProduct', $model);
+                }
 
                 return;
             }
