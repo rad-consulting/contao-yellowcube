@@ -36,7 +36,7 @@ class Config
     public function get($name, $default = null)
     {
         if ('wsdl' == $name) {
-            return $this->wsdl[$this->get('operatingmode', 'I')];
+            return $this->wsdl[Contao::get('rad_yellowcube_operatingmode')];
         }
 
         if ('options' == $name) {
