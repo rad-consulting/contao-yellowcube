@@ -10,11 +10,12 @@ namespace RAD\YellowCube\Soap\Request\ART;
 use RAD\YellowCube\Config;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
 use RAD\YellowCube\Soap\Unit\EANUnit;
+use RAD\YellowCube\Soap\Unit\GrossWeightUnit;
 use RAD\YellowCube\Soap\Unit\HeightUnit;
 use RAD\YellowCube\Soap\Unit\LengthUnit;
+use RAD\YellowCube\Soap\Unit\NetWeightUnit;
 use RAD\YellowCube\Soap\Unit\UnitInterface;
 use RAD\YellowCube\Soap\Unit\VolumeUnit;
-use RAD\YellowCube\Soap\Unit\WeightUnit;
 use RAD\YellowCube\Soap\Unit\WidthUnit;
 use RAD\YellowCube\Soap\Util\EANType;
 use RAD\YellowCube\Soap\Util\ISO;
@@ -106,12 +107,12 @@ class Article
         $instance->PlantID = $config->get('plantid');
         $instance->ArticleNo = $article->getArticleNo();
         $instance->BaseUOM = ISO::PCE;
-        $instance->NetWeight = new WeightUnit($article->getWeightNet(), ISO::KGM);
+        $instance->NetWeight = new NetWeightUnit($article->getWeightNet()->getWeightValue(), ISO::KGM);
         $instance->UnitsOfMeasure['AlternateUnitISO'] = ISO::PCE;
         $instance->addArticleDescription(new ArticleDescription($article->getName(), 'de'));
 
         // Optional
-        $instance->addUnitOfMeasure(new WeightUnit($article->getWeight(), ISO::KGM));
+        $instance->addUnitOfMeasure(new GrossWeightUnit($article->getWeightGross()->getWeightValue(), ISO::KGM));
         $instance->addUnitOfMeasure(new LengthUnit($article->getLength(), ISO::CMT));
         $instance->addUnitOfMeasure(new WidthUnit($article->getWidth(), ISO::CMT));
         $instance->addUnitOfMeasure(new HeightUnit($article->getHeight(), ISO::CMT));
