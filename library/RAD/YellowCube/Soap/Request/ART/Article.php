@@ -5,7 +5,7 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace RAD\YellowCube\Soap\ART;
+namespace RAD\YellowCube\Soap\Request\ART;
 
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
 

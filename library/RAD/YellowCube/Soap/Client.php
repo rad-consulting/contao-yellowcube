@@ -8,14 +8,29 @@
 namespace RAD\YellowCube\Soap;
 
 use SoapClient;
+use RAD\YellowCube\Soap\Response\GenericResponse;
 
 /**
  * Class Client
  *
- * @method ResponseGeneric XXX($p)
+ * @see https://service-test.swisspost.ch/apache/yellowcube-test/?wsdl
+ * @see https://service.swisspost.ch/apache/yellowcube/?wsdl
+ *
+ * @method GenericResponse insertArticleMasterData(array $request)
  */
 class Client extends SoapClient
 {
+    /**
+     * @param string $wsdl
+     * @param array  $options
+     */
+    public function __construct($wsdl, array $options)
+    {
+        parent::__construct($wsdl, array_merge(array(
+            'classmap' => array(
+                'GEN_Response' => 'RAD\\YellowCube\\Soap\\Response\\GenericResponse',
+            )), $options));
+    }
 
     /**
      * @return string

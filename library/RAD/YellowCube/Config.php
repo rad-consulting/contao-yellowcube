@@ -18,14 +18,14 @@ class Config
      * @const string
      */
     const TEST = 'I';
-    const PRODUCTION = 'P';
+    const PROD = 'P';
 
     /**
      * @var array
      */
     protected $wsdl = array(
-        self::TEST => '',
-        self::PRODUCTION => '',
+        self::TEST => 'https://service-test.swisspost.ch/apache/yellowcube-test/?wsdl',
+        self::PROD => 'https://service.swisspost.ch/apache/yellowcube/?wsdl',
     );
 
     /**

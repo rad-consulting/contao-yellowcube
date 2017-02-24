@@ -17,9 +17,8 @@ use Isotope\Model\ProductCollection\Order;
 use RAD\Fulfillment\Model\FulfillmentModel as Fulfillment;
 use RAD\Log\Model\LogModel as Log;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
-use RAD\YellowCube\Soap\ART\Article;
+use RAD\YellowCube\Soap\Request;
 use RAD\YellowCube\Soap\Client;
-use RAD\YellowCube\Soap\ControlReference;
 
 /**
  * Class Service
@@ -95,10 +94,10 @@ class Service implements EventSubscriber
         $product = $event->getSubject();
 
         if ($product instanceof YellowCubeProduct) {
-            $response = $this->getClient()->XXX(array(
-                'ControlReference' => ControlReference::factory('ART', $this->getConfig()),
+            $response = $this->getClient()->insertArticleMasterData(array(
+                'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'ArticleList' => array(
-                    'Article' => Article::factory($product),
+                    'Article' => Request\ART\Article::factory($product),
                 ),
             ));
 
