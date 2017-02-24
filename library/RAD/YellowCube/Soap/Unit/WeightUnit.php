@@ -7,9 +7,24 @@
  */
 namespace RAD\YellowCube\Soap\Unit;
 
+use RAD\YellowCube\Soap\Util\ISO;
+
 /**
  * Class WeightUnit
  */
 class WeightUnit extends AbstractUnit
 {
+    /**
+     * @param float  $value
+     * @param string $ISO
+     */
+    public function __construct($value, $ISO)
+    {
+        // Map values from Haste
+        $map = array(
+            'kg' => ISO::KGM,
+        );
+
+        parent::__construct($value, $ISO);
+    }
 }
