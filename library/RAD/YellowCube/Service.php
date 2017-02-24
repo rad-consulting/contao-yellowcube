@@ -8,15 +8,13 @@
 namespace RAD\YellowCube;
 
 use RAD\Event\EventDispatcher;
-use RAD\Event\EventSubscriberInterface;
+use RAD\Event\EventSubscriberInterface as EventSubscriber;
 use RAD\Event\Model\EventModel as Event;
 use Exception;
-use Contao\DataContainer;
 use Contao\Model;
 use Isotope\Model\OrderStatus;
 use Isotope\Model\ProductCollection\Order;
 use RAD\Fulfillment\Model\FulfillmentModel as Fulfillment;
-use RAD\Fulfillment\Model\SupplierOrderModel as SupplierOrder;
 use RAD\Log\Model\LogModel as Log;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
 use RAD\YellowCube\Soap\ART\Article;
@@ -26,7 +24,7 @@ use RAD\YellowCube\Soap\ControlReference;
 /**
  * Class Service
  */
-class Service implements EventSubscriberInterface
+class Service implements EventSubscriber
 {
     /**
      * @var Client
@@ -74,8 +72,8 @@ class Service implements EventSubscriberInterface
             'yellowcube.confirmFulfillment' => 'onConfirmFulfillment',
             'yellowcube.updateFulfillment' => 'onUpdateFulfillment',
             'yellowcube.exportProduct' => 'onExportProduct',
-            'yellowcube.exportSupplierorder' => 'onExportSupplierorder',
-            'yellowcube.import' => 'onImport',
+            'yellowcube.exportSupplierOrder' => 'onExportSupplierOrder',
+            'yellowcube.importStock' => 'onImportStock',
         );
     }
 
