@@ -5,7 +5,7 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace RAD\YellowCube\Soap\Util;
+namespace RAD\YellowCube\Soap\Unit;
 
 /**
  * Interface UnitInterface

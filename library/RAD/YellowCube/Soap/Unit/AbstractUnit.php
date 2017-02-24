@@ -8,7 +8,6 @@
 namespace RAD\YellowCube\Soap\Unit;
 
 use RAD\YellowCube\Soap\Util\SimpleValue;
-use RAD\YellowCube\Soap\Util\UnitInterface;
 
 /**
  * Class AbstractUnit
