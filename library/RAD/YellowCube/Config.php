@@ -45,6 +45,7 @@ class Config
                 'features' => SOAP_SINGLE_ELEMENT_ARRAYS,
                 'exceptions' => true,
                 'cache_wsdl' => WSDL_CACHE_MEMORY,
+                'soap_version' => SOAP_1_1,
             );
         }
 

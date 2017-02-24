@@ -7,6 +7,7 @@
  */
 namespace RAD\YellowCube\Soap;
 
+use Contao\System;
 use SoapClient;
 use RAD\YellowCube\Soap\Response\GenericResponse;
 
@@ -26,6 +27,8 @@ class Client extends SoapClient
      */
     public function __construct($wsdl, array $options)
     {
+        System::log($wsdl . json_encode($options), __METHOD__, TL_GENERAL);
+
         parent::__construct($wsdl, array_merge(array(
             'classmap' => array(
                 'GEN_Response' => 'RAD\\YellowCube\\Soap\\Response\\GenericResponse',
