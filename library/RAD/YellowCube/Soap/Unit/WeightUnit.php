@@ -25,6 +25,10 @@ class WeightUnit extends AbstractUnit
             'kg' => ISO::KGM,
         );
 
+        if (isset($map[$ISO])) {
+            $ISO = $map[$ISO];
+        }
+
         parent::__construct($value, $ISO);
     }
 }
