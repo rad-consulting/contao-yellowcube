@@ -9,7 +9,7 @@ namespace RAD\Fulfillment\Model\Product;
 
 use Exception;
 use Isotope\Model\Product\Standard;
-use RAD\Logging\Model\LogModel;
+use RAD\Logging\Model\LogModel as Log;
 
 /**
  * Class FulfillmentProduct
@@ -75,7 +75,7 @@ class FulfillmentProduct extends Standard
     public function setExported($exported = true, $message = null, $data = null)
     {
         if ($message) {
-            $this->log($message, LogModel::INFO, $data);
+            $this->log($message, Log::INFO, $data);
         }
 
         $this->rad_exported = (int)$exported;
@@ -89,14 +89,14 @@ class FulfillmentProduct extends Standard
      * @param string|null      $data
      * @return $this
      */
-    public function log($message, $level = LogModel::INFO, $data = null)
+    public function log($message, $level = Log::INFO, $data = null)
     {
         if ($message instanceof Exception) {
             $level = $message->getCode();
             $message = $message->getMessage();
         }
 
-        LogModel::log($this, $message, $level, $data);
+        Log::log($this, $message, $level, $data);
 
         return $this;
     }

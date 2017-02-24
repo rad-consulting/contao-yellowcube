@@ -11,11 +11,13 @@
 \Isotope\Model\Product::registerModelType('yellowcube', 'RAD\YellowCube\\Model\\ProductModel');
 $GLOBALS['TL_MODELS'][\RAD\Event\Model\EventModel::getTable()] = 'RAD\Event\\Model\\EventModel';
 $GLOBALS['TL_MODELS'][\RAD\Logging\Model\LogModel::getTable()] = 'RAD\Logging\\Model\\LogModel';
+$GLOBALS['TL_MODELS'][\RAD\Fulfillment\Model\FulfillmentModel::getTable()] = 'RAD\Fulfillment\\Model\\FulfillmentModel';
+$GLOBALS['TL_MODELS'][\RAD\Fulfillment\Model\SupplierOrderModel::getTable()] = 'RAD\Fulfillment\\Model\\SupplierOrderModel';
 $GLOBALS['TL_MODELS'][\RAD\Fulfillment\Model\Product\FulfillmentProduct::getTable()] = 'RAD\Fulfillment\\Model\\Product\\FulfillmentProduct';
 $GLOBALS['TL_MODELS'][\RAD\YellowCube\Model\Product\YellowCubeProduct::getTable()] = 'RAD\YellowCube\\Model\\Product\\YellowCubeProduct';
 
 // Hooks
-$GLOBALS['ISO_HOOKS']['postCheckout'][] = array('Fulfillment\\Service', 'postCheckout');
+$GLOBALS['ISO_HOOKS']['postCheckout'][] = array('RAD\\Fulfillment\\Service', 'postCheckout');
 
 // Crons
-$GLOBALS['TL_CRON']['minutely'][] = array('Event\\EventDispatcher', 'run');
+$GLOBALS['TL_CRON']['minutely'][] = array('RAD\\Event\\EventDispatcher', 'run');

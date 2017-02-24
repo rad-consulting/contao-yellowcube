@@ -15,8 +15,9 @@ use Contao\DataContainer;
 use Contao\Model;
 use Isotope\Model\OrderStatus;
 use Isotope\Model\ProductCollection\Order;
-use RAD\Fulfillment\Model\FulfillmentModel;
-use RAD\Logging\Model\LogModel;
+use RAD\Fulfillment\Model\FulfillmentModel as Fulfillment;
+use RAD\Fulfillment\Model\SupplierOrderModel as SupplierOrder;
+use RAD\Logging\Model\LogModel as Log;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
 use RAD\YellowCube\Soap\ART\Article;
 use RAD\YellowCube\Soap\Client;
@@ -139,7 +140,7 @@ class Service implements EventSubscriberInterface
                 return;
             }
 
-            throw new Exception($response->getStatusText(), LogModel::ERROR);
+            throw new Exception($response->getStatusText(), Log::ERROR);
         }
     }
 
@@ -161,7 +162,7 @@ class Service implements EventSubscriberInterface
     public function onCompleteFulfillment(Event $event)
     {
         /**
-         * @var FulfillmentModel $fulfillment
+         * @var Fulfillment $fulfillment
          */
         $fulfillment = $event->getSubject();
         $fulfillment->setCompleted()->save();
@@ -184,7 +185,7 @@ class Service implements EventSubscriberInterface
     public function onConfirmFulfillment(Event $event)
     {
         /**
-         * @var FulfillmentModel $fulfillment
+         * @var Fulfillment $fulfillment
          */
         $fulfillment = $event->getSubject();
         $fulfillment->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
@@ -200,7 +201,7 @@ class Service implements EventSubscriberInterface
     public function onSendFulfillment(Event $event)
     {
         /**
-         * @var FulfillmentModel $fulfillment
+         * @var Fulfillment $fulfillment
          */
         $fulfillment = $event->getSubject();
         $fulfillment->setSent($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
@@ -216,7 +217,7 @@ class Service implements EventSubscriberInterface
     public function onUpdateFulfillment(Event $event)
     {
         /**
-         * @var FulfillmentModel $fulfillment
+         * @var Fulfillment $fulfillment
          */
         $fulfillment = $event->getSubject();
         // TODO
@@ -266,7 +267,7 @@ class Service implements EventSubscriberInterface
                 return;
             }
 
-            $fulfillment = FulfillmentModel::factory($order);
+            $fulfillment = Fulfillment::factory($order);
             $fulfillment->save();
 
             $this->dispatch('sendFulfillment', $fulfillment);

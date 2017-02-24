@@ -7,10 +7,8 @@
  */
 namespace RAD\Fulfillment\Model;
 
-use Exception;
-use Contao\Model;
 use Isotope\Model\ProductCollection\Order;
-use RAD\Logging\Model\LogModel;
+use RAD\Logging\Model\LogModel as Log;
 
 /**
  * Class FulfillmentModel
@@ -22,7 +20,7 @@ use RAD\Logging\Model\LogModel;
  * @property string $reference
  * @property string $tracking
  */
-class FulfillmentModel extends Model
+class FulfillmentModel extends AbstractModel
 {
     /**
      * @const int
@@ -83,7 +81,7 @@ class FulfillmentModel extends Model
         }
 
         if ($message) {
-            $this->log($message, LogModel::INFO, $data);
+            $this->log($message, Log::INFO, $data);
         }
 
         $this->status = static::CONFIRMED;
@@ -104,7 +102,7 @@ class FulfillmentModel extends Model
         }
 
         if ($message) {
-            $this->log($message, LogModel::INFO, $data);
+            $this->log($message, Log::INFO, $data);
         }
 
         $this->status = static::DELIVERED;
@@ -125,28 +123,10 @@ class FulfillmentModel extends Model
         }
 
         if ($message) {
-            $this->log($message, LogModel::INFO, $data);
+            $this->log($message, Log::INFO, $data);
         }
 
         $this->status = static::SENT;
-
-        return $this;
-    }
-
-    /**
-     * @param string|Exception $message
-     * @param int              $level
-     * @param string|null      $data
-     * @return $this
-     */
-    public function log($message, $level = LogModel::INFO, $data = null)
-    {
-        if ($message instanceof Exception) {
-            $level = $message->getCode();
-            $message = $message->getMessage();
-        }
-
-        LogModel::log($this, $message, $level, $data);
 
         return $this;
     }
