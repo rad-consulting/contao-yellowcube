@@ -36,6 +36,8 @@ class Panel extends Backend
 
             if ($model instanceof SupplierOrder && $model->doExport()) {
                 EventDispatcher::getInstance()->dispatch('yellowcube.exportSupplierOrder', $model);
+
+                return;
             }
         }
     }
