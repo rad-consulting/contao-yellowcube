@@ -5,7 +5,7 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace YellowCube\Model;
+namespace Logging\Model;
 
 use Contao\Database;
 use Contao\Model;
@@ -38,7 +38,7 @@ class LogModel extends Model
     /**
      * @var string
      */
-    public static $strTable = 'tl_yellowcube_log';
+    public static $strTable = 'tl_lg_log';
 
     /**
      * @param Model $model

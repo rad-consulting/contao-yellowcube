@@ -7,26 +7,26 @@
  */
 namespace YellowCube;
 
-use Contao\DataContainer;
+use Event\EventDispatcher;
+use Event\EventSubscriberInterface;
+use Event\Model\EventModel as Event;
 use Exception;
+use Contao\DataContainer;
 use Contao\Model;
-use Contao\Model\Collection;
 use Isotope\Model\OrderStatus;
 use Isotope\Model\Product;
 use Isotope\Model\ProductCollection\Order;
-use YellowCube\Model\EventModel;
-use YellowCube\Model\FulfillmentModel;
-use YellowCube\Model\LogModel;
+use Fulfillment\Model\FulfillmentModel;
+use Logging\Model\LogModel;
 use YellowCube\Model\Product\YellowCubeProduct;
 use YellowCube\Soap\ART\Article;
 use YellowCube\Soap\Client;
 use YellowCube\Soap\ControlReference;
-use YellowCube\Soap\ResponseGeneric;
 
 /**
  * Class Service
  */
-class Service
+class Service implements EventSubscriberInterface
 {
     /**
      * @var Client
@@ -64,55 +64,32 @@ class Service
     }
 
     /**
-     * @param string|null $name
      * @return array
      */
-    public function getListeners($name = null)
+    public static function getSubscribedEvents()
     {
-        $listeners = array(
-            'sendFulfillment' => array(
-                array($this, 'onSendFulfillment'),
-            ),
-            'confirmFulfillment' => array(
-                array($this, 'onConfirmFulfillment'),
-            ),
-            'updateFulfillment' => array(
-                array($this, 'onUpdateFulfillment'),
-            ),
-            'completeFulfillment' => array(
-                array($this, 'onCompleteFulfillment'),
-            ),
-            'sendArticle' => array(
-                array($this, 'onSendArticle'),
-            ),
+        return array(
+            'order.create' => 'onCreateOrder',
+            'yellowcube.sendFulfillment' => 'onSendFulfillment',
+            'yellowcube.confirmFulfillment' => 'onConfirmFulfillment',
+            'yellowcube.updateFulfillment' => 'onUpdateFulfillment',
+            'yellowcube.exportProduct' => 'onExportProduct',
+            'yellowcube.exportSupplierorder' => 'onExportSupplierorder',
+            'yellowcube.import' => 'onImport',
         );
-
-        return $name ? $listeners[str_replace('yellowcube.', '', $name)] : $listeners;
     }
 
     /**
+     * @param DataContainer $dc
      * @return void
      */
-    public function run()
+    public function exportProduct(DataContainer $dc)
     {
-        $collection = EventModel::findAll(array('order' => 'id ASC', 'return' => 'Collection'));
+        if ($dc->activeRecord) {
+            $product = YellowCubeProduct::findByPk($dc->activeRecord->id);
 
-        if ($collection instanceof Collection) {
-            foreach ($collection as $item) {
-                if ($item instanceof EventModel && (0 == $item->attempt || time() > $item->tstamp + $item->timeout)) {
-                    try {
-                        $item->run()->save();
-
-                        foreach ($this->getListeners($item->name) as $listener) {
-                            call_user_func_array($listener, array($item, $this));
-                        }
-
-                        $item->delete();
-                    }
-                    catch (Exception $e) {
-                        $item->wait($e)->save();
-                    }
-                }
+            if ($product instanceof YellowCubeProduct && $product->doExport()) {
+                $this->dispatch('exportProduct', $product);
             }
         }
     }
@@ -121,56 +98,68 @@ class Service
      * @param DataContainer $dc
      * @return void
      */
-    public function sendArticle(DataContainer $dc)
+    public function exportSupplierorder(DataContainer $dc)
     {
         if ($dc->activeRecord) {
-            $product = Product::findByPk($dc->activeRecord->id);
-            $this->dispatchEvent('sendArticle', $product);
-        }
-    }
+            $order = SupplierOrder::findByPk($dc->activeRecord->id);
 
-    /**
-     * @param Collection $collection
-     * @return ResponseGeneric
-     * @throws Exception
-     */
-    public function sendMasterData(Collection $collection)
-    {
-        $articles = array();
-
-        foreach ($collection as $item) {
-            if ($item instanceof YellowCubeProduct && $item->doExport()) {
-                $articles[] = Article::factory($item);
+            if ($order instanceof SupplierOrder && $order->doExport()) {
+                $this->dispatch('exportSupplierorder', $order);
             }
         }
-
-        return $this->getClient()->XXX(array(
-            'ControlReference' => ControlReference::factory('ART', $this->getConfig()),
-            'ArticleList' => $articles,
-        ));
     }
 
     /**
-     * @param YellowCubeProduct $product
-     * @return ResponseGeneric
-     * @throws Exception
+     * @return void
      */
-    public function sendMasterDataSingle(YellowCubeProduct $product)
+    public function importStock()
     {
-        return $this->getClient()->XXX(array(
-            'ControlReference' => ControlReference::factory('ART', $this->getConfig()),
-            'ArticleList' => array(
-                'Article' => Article::factory($product),
-            ),
-        ));
+        $this->dispatch('importStock');
     }
 
     /**
-     * @param EventModel $event
+     * @param Event $event
      * @return void
      * @throws Exception
      */
-    public function onCompleteFulfillment(EventModel $event)
+    public function onExportProduct(Event $event)
+    {
+        $product = $event->getSubject();
+
+        if ($product instanceof YellowCubeProduct) {
+            $response = $this->getClient()->XXX(array(
+                'ControlReference' => ControlReference::factory('ART', $this->getConfig()),
+                'ArticleList' => array(
+                    'Article' => Article::factory($product),
+                ),
+            ));
+
+            if ($response->isSuccess()) {
+                $product->setExported()->log($response->getStatusText(), LogModel::INFO, $this->getLastXML())->save();
+
+                return;
+            }
+
+            throw new Exception($response->getStatusText(), LogModel::ERROR);
+        }
+    }
+
+    /**
+     * @param Event $event
+     * @return void
+     * @throws Exception
+     */
+    public function onExportSupplierorder(Event $event)
+    {
+        // TODO
+    }
+
+    /**
+     * @param Event $event
+     * @return void
+     * @throws Exception
+     */
+    public function onCompleteFulfillment(Event $event)
     {
         /**
          * @var FulfillmentModel $fulfillment
@@ -189,11 +178,11 @@ class Service
     }
 
     /**
-     * @param EventModel $event
+     * @param Event $event
      * @return void
      * @throws Exception
      */
-    public function onConfirmFulfillment(EventModel $event)
+    public function onConfirmFulfillment(Event $event)
     {
         /**
          * @var FulfillmentModel $fulfillment
@@ -201,72 +190,15 @@ class Service
         $fulfillment = $event->getSubject();
         $fulfillment->setConfirmed()->log($response->getStatusText(), LogModel::INFO, $this->getLastXML())->save();
 
-        $this->dispatchEvent('updateFulfillment', $fulfillment);
+        $this->dispatch('updateFulfillment', $fulfillment);
     }
 
     /**
-     * @param Order $order
+     * @param Event $event
      * @return void
      * @throws Exception
      */
-    public function onCreateOrder(Order $order)
-    {
-        if (!(bool)$this->getConfig()->get('active')) {
-            return;
-        }
-
-        $items = array();
-
-        foreach ($order->getItems() as $item) {
-            if ('yellowcube' == $item->type) {
-                $items[] = $item;
-            }
-        }
-
-        if (!count($items)) {
-            return;
-        }
-
-        $fulfillment = FulfillmentModel::factory($order);
-        $fulfillment->save();
-
-        // TODO: Shoot event
-        $this->dispatchEvent('sendFulfillment', $fulfillment);
-    }
-
-    /**
-     * @param EventModel $event
-     * @return void
-     * @throws Exception
-     */
-    public function onSendArticle(EventModel $event)
-    {
-        $product = $event->getSubject();
-
-        if ($product instanceof YellowCubeProduct) {
-            $response = $this->sendMasterDataSingle($product);
-
-            if ($response->isSuccess()) {
-                $product->setExported(true)
-                    ->log($response->getStatusText(), LogModel::INFO, $this->getLastXML())
-                    ->save();
-            }
-            else {
-                $product->log($response->getStatusText(), LogModel::ERROR, $this->getLastXML());
-
-                throw new Exception($response->getStatusText(), LogModel::ERROR);
-            }
-        }
-
-        throw new Exception('Event subject must be instance of YellowCube\\Model\\Product\\YellowCubeProduct', LogModel::ERROR);
-    }
-
-    /**
-     * @param EventModel $event
-     * @return void
-     * @throws Exception
-     */
-    public function onSendFulfillment(EventModel $event)
+    public function onSendFulfillment(Event $event)
     {
         /**
          * @var FulfillmentModel $fulfillment
@@ -274,31 +206,84 @@ class Service
         $fulfillment = $event->getSubject();
         $fulfillment->setSent($response->getReference())->log($response->getStatusText(), LogModel::INFO, $this->getLastXML())->save();
 
-        $this->dispatchEvent('confirmFulfillment', $fulfillment);
+        $this->dispatch('confirmFulfillment', $fulfillment);
     }
 
     /**
-     * @param EventModel $event
+     * @param Event $event
      * @return void
      * @throws Exception
      */
-    public function onUpdateFulfillment(EventModel $event)
+    public function onUpdateFulfillment(Event $event)
     {
         /**
          * @var FulfillmentModel $fulfillment
          */
         $fulfillment = $event->getSubject();
         // TODO
+
+        $response = $this->getClient()->XXX($p);
+
+        if ($response instanceof GoodsIssue) {
+            $fulfillment->setDelivered($response->getPostalNo())->save();
+        }
+
+        $this->dispatch('completeFulfillment', $fulfillment);
     }
 
     /**
-     * @param string $name
-     * @param Model  $subject
+     * @param Event $event
+     * @return void
+     * @throws Exception
      */
-    protected function dispatchEvent($name, Model $subject)
+    public function onImportStock(Event $event)
     {
-        $event = EventModel::factory('yellowcube.' . $name, $subject);
-        $event->save();
+        // TODO
+    }
+
+    /**
+     * @param Event $event
+     * @return void
+     * @throws Exception
+     */
+    public function onCreateOrder(Event $event)
+    {
+        if (!(bool)$this->getConfig()->get('active')) {
+            return;
+        }
+
+        $order = $event->getSubject();
+
+        if ($order instanceof Order) {
+            $items = array();
+
+            foreach ($order->getItems() as $item) {
+                if ('yellowcube' == $item->type) {
+                    $items[] = $item;
+                }
+            }
+
+            if (!count($items)) {
+                return;
+            }
+
+            $fulfillment = FulfillmentModel::factory($order);
+            $fulfillment->save();
+
+            $this->dispatch('sendFulfillment', $fulfillment);
+        }
+    }
+
+    /**
+     * @param string     $name
+     * @param Model|null $subject
+     * @return $this
+     */
+    protected function dispatch($name, Model $subject = null)
+    {
+        EventDispatcher::getInstance()->dispatch('yellowcube.' . $name, $subject);
+
+        return $this;
     }
 
     /**

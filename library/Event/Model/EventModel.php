@@ -5,10 +5,11 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace YellowCube\Model;
+namespace Event\Model;
 
 use Exception;
 use Contao\Model;
+use Logging\Model\LogModel;
 
 /**
  * Class EventModel
@@ -20,6 +21,7 @@ use Contao\Model;
  * @property int    $timeout
  * @property int    $error
  * @property int    $status
+ * @property string $name
  * @property string $ptable
  * @property string $argument
  */
@@ -34,7 +36,7 @@ class EventModel extends Model
     /**
      * @var string
      */
-    public static $strTable = 'tl_yc_event';
+    public static $strTable = 'tl_ev_event';
 
     /**
      * @param string     $name
@@ -102,6 +104,25 @@ class EventModel extends Model
     public function setArguments(array $arguments)
     {
         $this->argument = serialize($arguments);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
         return $this;
     }

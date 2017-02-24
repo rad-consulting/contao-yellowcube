@@ -5,15 +5,15 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace YellowCube\Soap;
-
-use SoapClient;
+namespace Event;
 
 /**
- * Class Client
- *
- * @method ResponseGeneric XXX($p)
+ * Interface EventSubscriberInterface
  */
-class Client extends SoapClient
+interface EventSubscriberInterface
 {
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents();
 }

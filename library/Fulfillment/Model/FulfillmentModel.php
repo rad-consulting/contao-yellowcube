@@ -5,11 +5,12 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace YellowCube\Model;
+namespace Fulfillment\Model;
 
 use Exception;
 use Contao\Model;
 use Isotope\Model\ProductCollection\Order;
+use Logging\Model\LogModel;
 
 /**
  * Class FulfillmentModel
@@ -35,7 +36,7 @@ class FulfillmentModel extends Model
     /**
      * @var string
      */
-    public static $strTable = 'tl_yc_fulfillment';
+    public static $strTable = 'tl_ff_fulfillment';
 
     /**
      * @param Order $order

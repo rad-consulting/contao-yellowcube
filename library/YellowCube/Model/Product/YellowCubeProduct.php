@@ -7,27 +7,20 @@
  */
 namespace YellowCube\Model\Product;
 
-use Exception;
-use Isotope\Model\Product\Standard;
+use Fulfillment\Model\Product\FulfillmentProduct;
 use YellowCube\ArticleInterface;
-use YellowCube\Model\LogModel;
 
 /**
  * Class YellowCubeProduct
  *
- * @property int   $id
  * @property int   $ean
- * @property int   $yc_export
- * @property int   $yc_exported
- * @property int   $yc_stock
- * @property int   $yc_updated
  * @property float $yc_weightGross
  * @property float $yc_weightNet
  * @property float $yc_width
  * @property float $yc_length
  * @property float $yc_height
  */
-class YellowCubeProduct extends Standard implements ArticleInterface
+class YellowCubeProduct extends FulfillmentProduct implements ArticleInterface
 {
     /**
      * @inheritdoc
@@ -66,7 +59,18 @@ class YellowCubeProduct extends Standard implements ArticleInterface
      */
     public function getStock()
     {
-        return $this->yc_stock;
+        return $this->getDistributorStock();
+    }
+
+    /**
+     * @param int $stock
+     * @return $this
+     */
+    public function setStock($stock)
+    {
+        $this->setDistributorStock($stock);
+
+        return $this;
     }
 
     /**
@@ -91,50 +95,5 @@ class YellowCubeProduct extends Standard implements ArticleInterface
     public function getWidth()
     {
         return $this->yc_width;
-    }
-
-    /**
-     * @return bool
-     */
-    public function doExport()
-    {
-        return (bool)$this->yc_export;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isExported()
-    {
-        return (bool)$this->yc_exported;
-    }
-
-    /**
-     * @param bool $exported
-     * @return $this
-     */
-    public function setExported($exported = true)
-    {
-        $this->yc_exported = (int)$exported;
-
-        return $this;
-    }
-
-    /**
-     * @param string|Exception $message
-     * @param int              $level
-     * @param string|null      $data
-     * @return $this
-     */
-    public function log($message, $level = LogModel::INFO, $data = null)
-    {
-        if ($message instanceof Exception) {
-            $level = $message->getCode();
-            $message = $message->getMessage();
-        }
-
-        LogModel::log($this, $message, $level, $data);
-
-        return $this;
     }
 }
