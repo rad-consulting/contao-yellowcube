@@ -7,12 +7,12 @@
  */
 
 // Models
-\Isotope\Model\Product::registerModelType('fulfillment', 'Fulfillment\\Model\\ProductModel');
-\Isotope\Model\Product::registerModelType('yellowcube', 'YellowCube\\Model\\ProductModel');
-$GLOBALS['TL_MODELS'][\Event\Model\EventModel::getTable()] = 'Event\\Model\\EventModel';
-$GLOBALS['TL_MODELS'][\Logging\Model\LogModel::getTable()] = 'Logging\\Model\\LogModel';
-$GLOBALS['TL_MODELS'][\Fulfillment\Model\Product\FulfillmentProduct::getTable()] = 'Fulfillment\\Model\\Product\\FulfillmentProduct';
-$GLOBALS['TL_MODELS'][\YellowCube\Model\Product\YellowCubeProduct::getTable()] = 'YellowCube\\Model\\Product\\YellowCubeProduct';
+\Isotope\Model\Product::registerModelType('fulfillment', 'RAD\Fulfillment\\Model\\ProductModel');
+\Isotope\Model\Product::registerModelType('yellowcube', 'RAD\YellowCube\\Model\\ProductModel');
+$GLOBALS['TL_MODELS'][\RAD\Event\Model\EventModel::getTable()] = 'RAD\Event\\Model\\EventModel';
+$GLOBALS['TL_MODELS'][\RAD\Logging\Model\LogModel::getTable()] = 'RAD\Logging\\Model\\LogModel';
+$GLOBALS['TL_MODELS'][\RAD\Fulfillment\Model\Product\FulfillmentProduct::getTable()] = 'RAD\Fulfillment\\Model\\Product\\FulfillmentProduct';
+$GLOBALS['TL_MODELS'][\RAD\YellowCube\Model\Product\YellowCubeProduct::getTable()] = 'RAD\YellowCube\\Model\\Product\\YellowCubeProduct';
 
 // Hooks
 $GLOBALS['ISO_HOOKS']['postCheckout'][] = array('Fulfillment\\Service', 'postCheckout');

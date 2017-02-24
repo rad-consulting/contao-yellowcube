@@ -5,7 +5,7 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace Fulfillment\Model\Product;
+namespace RAD\Fulfillment\Model\Product;
 
 use Exception;
 use Isotope\Model\Product\Standard;
