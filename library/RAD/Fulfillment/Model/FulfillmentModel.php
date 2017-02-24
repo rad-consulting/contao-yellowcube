@@ -8,7 +8,7 @@
 namespace RAD\Fulfillment\Model;
 
 use Isotope\Model\ProductCollection\Order;
-use RAD\Logging\Model\LogModel as Log;
+use RAD\Log\Model\LogModel as Log;
 
 /**
  * Class FulfillmentModel

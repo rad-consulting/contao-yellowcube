@@ -40,7 +40,7 @@ class EventDispatcher
     protected function __construct()
     {
         // Attach subscribers
-        foreach ($GLOBALS['EVENT_SUBSCRIBERS'] as $subscriber) {
+        foreach ($GLOBALS['RAD_SUBSCRIBERS'] as $subscriber) {
             $subscriber = System::importStatic($subscriber);
 
             if ($subscriber instanceof EventSubscriberInterface) {

@@ -9,6 +9,9 @@ namespace RAD\Fulfillment\Model;
 
 /**
  * Class SupplierOrderModel
+ *
+ * @property int $export
+ * @property int $exported
  */
 class SupplierOrderModel extends AbstractModel
 {

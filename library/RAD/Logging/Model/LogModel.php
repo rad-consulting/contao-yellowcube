@@ -5,7 +5,7 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace RAD\Logging\Model;
+namespace RAD\Log\Model;
 
 use Contao\Database;
 use Contao\Model;

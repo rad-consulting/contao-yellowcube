@@ -9,7 +9,7 @@ namespace RAD\Event\Model;
 
 use Exception;
 use Contao\Model;
-use RAD\Logging\Model\LogModel;
+use RAD\Log\Model\LogModel;
 
 /**
  * Class EventModel

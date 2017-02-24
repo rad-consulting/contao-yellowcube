@@ -8,25 +8,40 @@
 namespace RAD\Fulfillment\Model\Product;
 
 use Exception;
+use Haste\Units\Mass\Weight;
 use Isotope\Model\Product\Standard;
-use RAD\Logging\Model\LogModel as Log;
+use RAD\Log\Model\LogModel as Log;
 
 /**
  * Class FulfillmentProduct
  *
  * @property int    $id
+ * @property int    $rad_ean
  * @property int    $rad_export
  * @property int    $rad_exported
  * @property int    $rad_stock
  * @property int    $rad_updated
+ * @property float  $rad_width
+ * @property float  $rad_weight_net
+ * @property float  $rad_length
+ * @property float  $rad_height
  * @property string $rad_sku
+ * @property string $rad_volume
  */
 class FulfillmentProduct extends Standard
 {
     /**
+     * @inheritdoc
+     */
+    public function getEAN()
+    {
+        return $this->rad_ean;
+    }
+
+    /**
      * @return string
      */
-    public function getDistributorSKU()
+    public function getSKU()
     {
         return $this->rad_sku;
     }
@@ -34,7 +49,7 @@ class FulfillmentProduct extends Standard
     /**
      * @return int
      */
-    public function getDistributorStock()
+    public function getStock()
     {
         return $this->rad_stock;
     }
@@ -43,7 +58,7 @@ class FulfillmentProduct extends Standard
      * @param int $stock
      * @return $this
      */
-    public function setDistributorStock($stock)
+    public function setStock($stock)
     {
         $this->rad_stock = (int)$stock;
 
@@ -81,6 +96,79 @@ class FulfillmentProduct extends Standard
         $this->rad_exported = (int)$exported;
 
         return $this;
+    }
+
+    /**
+     * @param bool        $updated
+     * @param string|null $message
+     * @param string|null $data
+     * @return $this
+     */
+    public function setUpdated($updated = true, $message = null, $data = null)
+    {
+        if ($message) {
+            $this->log($message, Log::INFO, $data);
+        }
+
+        $this->rad_updated = $updated ? time() : 0;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getHeight()
+    {
+        return $this->rad_height;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLength()
+    {
+        return $this->rad_length;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWidth()
+    {
+        return $this->rad_width;
+    }
+
+    /**
+     * @return \Haste\Units\Mass\Weight
+     */
+    public function getWeight()
+    {
+        return parent::getWeight();
+    }
+
+    /**
+     * @return \Haste\Units\Mass\Weight
+     */
+    public function getWeightGross()
+    {
+        return $this->getWeight();
+    }
+
+    /**
+     * @return \Haste\Units\Mass\Weight
+     */
+    public function getWeightNet()
+    {
+        return Weight::createFromTimePeriod($this->rad_weight_net);
+    }
+
+    /**
+     * @return float
+     */
+    public function getVolume()
+    {
+        return $this->rad_volume;
     }
 
     /**

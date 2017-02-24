@@ -11,13 +11,6 @@ use RAD\Fulfillment\Model\Product\FulfillmentProduct;
 
 /**
  * Class YellowCubeProduct
- *
- * @property int   $ean
- * @property float $rad_weightGross
- * @property float $rad_weightNet
- * @property float $rad_width
- * @property float $rad_length
- * @property float $rad_height
  */
 class YellowCubeProduct extends FulfillmentProduct
 {
@@ -26,73 +19,6 @@ class YellowCubeProduct extends FulfillmentProduct
      */
     public function getArticleNo()
     {
-        return $this->id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getEAN()
-    {
-        return $this->ean;
-    }
-
-    /**
-     * @return float
-     */
-    public function getHeight()
-    {
-        return $this->rad_height;
-    }
-
-    /**
-     * @return float
-     */
-    public function getLength()
-    {
-        return $this->rad_length;
-    }
-
-    /**
-     * @return int
-     */
-    public function getStock()
-    {
-        return $this->getDistributorStock();
-    }
-
-    /**
-     * @param int $stock
-     * @return $this
-     */
-    public function setStock($stock)
-    {
-        $this->setDistributorStock($stock);
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getWeightGross()
-    {
-        return $this->rad_weightGross;
-    }
-
-    /**
-     * @return float
-     */
-    public function getWeightNet()
-    {
-        return $this->rad_weightNet;
-    }
-
-    /**
-     * @return float
-     */
-    public function getWidth()
-    {
-        return $this->rad_width;
+        return $this->getId();
     }
 }

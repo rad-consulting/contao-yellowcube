@@ -17,7 +17,7 @@ use Isotope\Model\OrderStatus;
 use Isotope\Model\ProductCollection\Order;
 use RAD\Fulfillment\Model\FulfillmentModel as Fulfillment;
 use RAD\Fulfillment\Model\SupplierOrderModel as SupplierOrder;
-use RAD\Logging\Model\LogModel as Log;
+use RAD\Log\Model\LogModel as Log;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
 use RAD\YellowCube\Soap\ART\Article;
 use RAD\YellowCube\Soap\Client;
