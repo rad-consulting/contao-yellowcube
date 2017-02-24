@@ -7,14 +7,5 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
-// Log
-\NamespaceClassLoader::add('RAD', __DIR__ . '/../library');
-
-// Event
-\NamespaceClassLoader::add('RAD', __DIR__ . '/../library');
-
-// Fulfillment
-\NamespaceClassLoader::add('RAD', __DIR__ . '/../library');
-
 // Yellowcube
-\NamespaceClassLoader::add('RAD', __DIR__ . '/../library');
+\NamespaceClassLoader::add('RAD', 'system/modules/rad-yellowcube/library');
