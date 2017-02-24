@@ -67,11 +67,17 @@ class FulfillmentProduct extends Standard
     }
 
     /**
-     * @param bool $exported
+     * @param bool        $exported
+     * @param string|null $message
+     * @param string|null $data
      * @return $this
      */
-    public function setExported($exported = true)
+    public function setExported($exported = true, $message = null, $data = null)
     {
+        if ($message) {
+            $this->log($message, LogModel::INFO, $data);
+        }
+
         $this->ff_exported = (int)$exported;
 
         return $this;

@@ -16,4 +16,15 @@ use SoapClient;
  */
 class Client extends SoapClient
 {
+
+    /**
+     * @return string
+     */
+    public function getLastXML()
+    {
+        return implode(PHP_EOL . PHP_EOL, array(
+            'RESPONSE XML: ' . PHP_EOL . $this->__getLastResponse(),
+            'REQUEST XML: ' . PHP_EOL . $this->__getLastRequest(),
+        ));
+    }
 }

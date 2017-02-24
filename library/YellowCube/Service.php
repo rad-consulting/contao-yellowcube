@@ -14,7 +14,6 @@ use Exception;
 use Contao\DataContainer;
 use Contao\Model;
 use Isotope\Model\OrderStatus;
-use Isotope\Model\Product;
 use Isotope\Model\ProductCollection\Order;
 use Fulfillment\Model\FulfillmentModel;
 use Logging\Model\LogModel;
@@ -135,7 +134,7 @@ class Service implements EventSubscriberInterface
             ));
 
             if ($response->isSuccess()) {
-                $product->setExported()->log($response->getStatusText(), LogModel::INFO, $this->getLastXML())->save();
+                $product->setExported(true, $response->getStatusText(), $this->getLastXML())->save();
 
                 return;
             }
@@ -188,7 +187,7 @@ class Service implements EventSubscriberInterface
          * @var FulfillmentModel $fulfillment
          */
         $fulfillment = $event->getSubject();
-        $fulfillment->setConfirmed()->log($response->getStatusText(), LogModel::INFO, $this->getLastXML())->save();
+        $fulfillment->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
 
         $this->dispatch('updateFulfillment', $fulfillment);
     }
@@ -204,7 +203,7 @@ class Service implements EventSubscriberInterface
          * @var FulfillmentModel $fulfillment
          */
         $fulfillment = $event->getSubject();
-        $fulfillment->setSent($response->getReference())->log($response->getStatusText(), LogModel::INFO, $this->getLastXML())->save();
+        $fulfillment->setSent($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
 
         $this->dispatch('confirmFulfillment', $fulfillment);
     }
@@ -225,7 +224,7 @@ class Service implements EventSubscriberInterface
         $response = $this->getClient()->XXX($p);
 
         if ($response instanceof GoodsIssue) {
-            $fulfillment->setDelivered($response->getPostalNo())->save();
+            $fulfillment->setDelivered($response->getPostalNo(), $response->getStatusText(), $this->getLastXML())->save();
         }
 
         $this->dispatch('completeFulfillment', $fulfillment);
@@ -291,9 +290,6 @@ class Service implements EventSubscriberInterface
      */
     protected function getLastXML()
     {
-        return implode(PHP_EOL . PHP_EOL, array(
-            'RESPONSE XML: ' . PHP_EOL . $this->getClient()->__getLastResponse(),
-            'REQUEST XML: ' . PHP_EOL . $this->getClient()->__getLastRequest(),
-        ));
+        return $this->getClient()->getLastXML();
     }
 }

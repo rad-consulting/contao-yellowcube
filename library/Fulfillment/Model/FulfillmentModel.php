@@ -72,12 +72,18 @@ class FulfillmentModel extends Model
 
     /**
      * @param string|null $reference
+     * @param string|null $message
+     * @param string|null $data
      * @return $this
      */
-    public function setConfirmed($reference = null)
+    public function setConfirmed($reference = null, $message = null, $data = null)
     {
         if ($reference) {
             $this->reference = $reference;
+        }
+
+        if ($message) {
+            $this->log($message, LogModel::INFO, $data);
         }
 
         $this->status = static::CONFIRMED;
@@ -87,12 +93,18 @@ class FulfillmentModel extends Model
 
     /**
      * @param string|null $tracking
+     * @param string|null $message
+     * @param string|null $data
      * @return $this
      */
-    public function setDelivered($tracking = null)
+    public function setDelivered($tracking = null, $message = null, $data = null)
     {
         if ($tracking) {
             $this->tracking = $tracking;
+        }
+
+        if ($message) {
+            $this->log($message, LogModel::INFO, $data);
         }
 
         $this->status = static::DELIVERED;
@@ -102,12 +114,18 @@ class FulfillmentModel extends Model
 
     /**
      * @param string|null $reference
+     * @param string|null $message
+     * @param string|null $data
      * @return $this
      */
-    public function setSent($reference = null)
+    public function setSent($reference = null, $message = null, $data = null)
     {
         if ($reference) {
             $this->reference = $reference;
+        }
+
+        if ($message) {
+            $this->log($message, LogModel::INFO, $data);
         }
 
         $this->status = static::SENT;
