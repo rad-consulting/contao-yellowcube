@@ -153,6 +153,20 @@ class Service implements EventSubscriber
 
         if ($model instanceof SupplierOrderModel) {
             $order = SupplierOrder::factory($model, $this->getConfig());
+            $response = $this->getClient()->sendSupplierOrder(array(
+                'ControlReference' => Request\ControlReference::factory('WBL', $this->getConfig()),
+                'SupplierOrder' => $order,
+            ));
+
+            if ($response->isSuccess()) {
+                $model->log($response->getStatusText(), Log::DEBUG, $this->getLastXML());
+                $this->dispatch('statusSupplierOrder', $model, array('reference' => $response->getReference()));
+
+                return;
+            }
+
+            $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
+            throw new Exception($response->getStatusText());
         }
     }
 
