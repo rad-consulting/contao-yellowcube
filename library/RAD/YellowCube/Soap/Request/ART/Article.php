@@ -8,7 +8,7 @@
 namespace RAD\YellowCube\Soap\Request\ART;
 
 use RAD\YellowCube\Config;
-use RAD\YellowCube\Model\Product\YellowCubeProduct;
+use RAD\YellowCube\Model\Product\YellowCubeProduct as Model;
 use RAD\YellowCube\Soap\Unit\EANUnit;
 use RAD\YellowCube\Soap\Unit\GrossWeightUnit;
 use RAD\YellowCube\Soap\Unit\HeightUnit;
@@ -93,33 +93,33 @@ class Article
     protected $ArticleDescriptions = array();
 
     /**
-     * @param YellowCubeProduct $article
-     * @param Config            $config
+     * @param Model  $model
+     * @param Config $config
      * @return static
      */
-    public static function factory(YellowCubeProduct $article, Config $config)
+    public static function factory(Model $model, Config $config)
     {
         $instance = new static();
 
         // Mandatory
-        $instance->ChangeFlag = $article->isExported() ? 'U' : 'I';
+        $instance->ChangeFlag = $model->isExported() ? 'U' : 'I';
         $instance->DepositorNo = $config->get('depositorno');
         $instance->PlantID = $config->get('plantid');
-        $instance->ArticleNo = $article->getArticleNo();
+        $instance->ArticleNo = $model->getArticleNo();
         $instance->BaseUOM = ISO::PCE;
-        $instance->NetWeight = new NetWeightUnit($article->getWeightNet()->getWeightValue(), $article->getWeightNet()->getWeightUnit());
+        $instance->NetWeight = new NetWeightUnit($model->getWeightNet()->getWeightValue(), $model->getWeightNet()->getWeightUnit());
         $instance->UnitsOfMeasure['AlternateUnitISO'] = ISO::PCE;
-        $instance->addArticleDescription(new ArticleDescription($article->getName(), 'de'));
+        $instance->addArticleDescription(new ArticleDescription($model->getName(), 'de'));
 
         // Optional
-        $instance->addUnitOfMeasure(new GrossWeightUnit($article->getWeightGross()->getWeightValue(), $article->getWeightGross()->getWeightUnit()));
-        $instance->addUnitOfMeasure(new LengthUnit($article->getLength(), ISO::CMT));
-        $instance->addUnitOfMeasure(new WidthUnit($article->getWidth(), ISO::CMT));
-        $instance->addUnitOfMeasure(new HeightUnit($article->getHeight(), ISO::CMT));
-        $instance->addUnitOfMeasure(new VolumeUnit($article->getVolume(), ISO::CMQ));
+        $instance->addUnitOfMeasure(new GrossWeightUnit($model->getWeightGross()->getWeightValue(), $model->getWeightGross()->getWeightUnit()));
+        $instance->addUnitOfMeasure(new LengthUnit($model->getLength(), ISO::CMT));
+        $instance->addUnitOfMeasure(new WidthUnit($model->getWidth(), ISO::CMT));
+        $instance->addUnitOfMeasure(new HeightUnit($model->getHeight(), ISO::CMT));
+        $instance->addUnitOfMeasure(new VolumeUnit($model->getVolume(), ISO::CMQ));
 
         if ('p' == $config->get('operatingmode')) {
-            $instance->addUnitOfMeasure(new EANUnit($article->getEAN(), EANType::HE));
+            $instance->addUnitOfMeasure(new EANUnit($model->getEAN(), EANType::HE));
         }
 
         return $instance;

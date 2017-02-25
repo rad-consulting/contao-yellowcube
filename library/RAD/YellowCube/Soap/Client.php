@@ -19,6 +19,8 @@ use RAD\YellowCube\Soap\Response\GenericStatus;
  *
  * @method GenericResponse insertArticleMasterData(array $request)
  * @method GenericStatus getInsertArticleMasterDataStatus(array $request)
+ * @method GenericResponse createYCSupplierOrder(array $request)
+ * @method GenericStatus getYCSupplierOrderStatus(array $request)
  */
 class Client extends SoapClient
 {
@@ -37,11 +39,29 @@ class Client extends SoapClient
 
     /**
      * @param array $request
+     * @return GenericResponse
+     */
+    public function sendArticleMasterData(array $request)
+    {
+        return $this->insertArticleMasterData($request);
+    }
+
+    /**
+     * @param array $request
      * @return GenericStatus
      */
-    public function statusArticleMasterDataStatus(array $request)
+    public function statusArticleMasterData(array $request)
     {
         return $this->getInsertArticleMasterDataStatus($request);
+    }
+
+    /**
+     * @param array $request
+     * @return GenericResponse
+     */
+    public function sendSupplierOrder(array $request)
+    {
+        return $this->createYCSupplierOrder($request);
     }
 
     /**

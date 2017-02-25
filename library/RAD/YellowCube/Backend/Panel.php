@@ -35,14 +35,14 @@ class Panel extends Backend
                 $type = ProductType::findByPk($model->type);
 
                 if ('yellowcube' == $type->class) {
-                    EventDispatcher::getInstance()->dispatch('yellowcube.exportProduct', $model);
+                    EventDispatcher::getInstance()->dispatch('yellowcube.sendProduct', $model);
                 }
 
                 return;
             }
 
             if ($model instanceof SupplierOrder && $model->doExport()) {
-                EventDispatcher::getInstance()->dispatch('yellowcube.exportSupplierOrder', $model);
+                EventDispatcher::getInstance()->dispatch('yellowcube.sendSupplierOrder', $model);
 
                 return;
             }

@@ -15,10 +15,12 @@ use Contao\Model;
 use Isotope\Model\OrderStatus;
 use Isotope\Model\ProductCollection\Order;
 use RAD\Fulfillment\Model\FulfillmentModel as Fulfillment;
+use RAD\Fulfillment\Model\SupplierOrderModel;
 use RAD\Log\Model\LogModel as Log;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
 use RAD\YellowCube\Soap\Request;
 use RAD\YellowCube\Soap\Client;
+use RAD\YellowCube\Soap\WBL\Order as SupplierOrder;
 
 /**
  * Class Service
@@ -70,9 +72,9 @@ class Service implements EventSubscriber
             'yellowcube.sendFulfillment' => 'onSendFulfillment',
             'yellowcube.confirmFulfillment' => 'onConfirmFulfillment',
             'yellowcube.updateFulfillment' => 'onUpdateFulfillment',
-            'yellowcube.exportProduct' => 'onExportProduct',
+            'yellowcube.sendProduct' => 'onSendProduct',
             'yellowcube.statusProduct' => 'onStatusProduct',
-            'yellowcube.exportSupplierOrder' => 'onExportSupplierOrder',
+            'yellowcube.sendSupplierOrder' => 'onSendSupplierOrder',
             'yellowcube.importStock' => 'onImportStock',
         );
     }
@@ -90,12 +92,12 @@ class Service implements EventSubscriber
      * @return void
      * @throws Exception
      */
-    public function onExportProduct(Event $event)
+    public function onSendProduct(Event $event)
     {
         $product = $event->getSubject();
 
         if ($product instanceof YellowCubeProduct) {
-            $response = $this->getClient()->insertArticleMasterData(array(
+            $response = $this->getClient()->sendArticleMasterData(array(
                 'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'ArticleList' => array(
                     'Article' => Request\ART\Article::factory($product, $this->getConfig()),
@@ -105,6 +107,7 @@ class Service implements EventSubscriber
             if ($response->isSuccess()) {
                 $product->log($response->getStatusText(), Log::DEBUG, $this->getLastXML());
                 $this->dispatch('statusProduct', $product, array('reference' => $response->getReference()));
+
                 return;
             }
 
@@ -123,7 +126,7 @@ class Service implements EventSubscriber
         $reference = $event->getArgument('reference');
 
         if ($product instanceof YellowCubeProduct) {
-            $response = $this->getClient()->statusArticleMasterDataStatus(array(
+            $response = $this->getClient()->statusArticleMasterData(array(
                 'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'Reference' => $reference,
             ));
@@ -144,9 +147,13 @@ class Service implements EventSubscriber
      * @return void
      * @throws Exception
      */
-    public function onExportSupplierOrder(Event $event)
+    public function onSendSupplierOrder(Event $event)
     {
-        // TODO
+        $model = $event->getSubject();
+
+        if ($model instanceof SupplierOrderModel) {
+            $order = SupplierOrder::factory($model, $this->getConfig());
+        }
     }
 
     /**
