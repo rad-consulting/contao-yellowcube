@@ -113,9 +113,9 @@ class Article
 
         // Optional
         $instance->addUnitOfMeasure(new GrossWeightUnit($model->getWeightGross()->getWeightValue(), $model->getWeightGross()->getWeightUnit()));
-        $instance->addUnitOfMeasure(new LengthUnit($model->getLength(), ISO::CMT));
-        $instance->addUnitOfMeasure(new WidthUnit($model->getWidth(), ISO::CMT));
-        $instance->addUnitOfMeasure(new HeightUnit($model->getHeight(), ISO::CMT));
+        $instance->addUnitOfMeasure(new LengthUnit($model->getLength()->getValue(), $model->getHeight()->getUnit(true)));
+        $instance->addUnitOfMeasure(new WidthUnit($model->getWidth()->getValue(), $model->getHeight()->getUnit(true)));
+        $instance->addUnitOfMeasure(new HeightUnit($model->getHeight()->getValue(), $model->getHeight()->getUnit(true)));
         $instance->addUnitOfMeasure(new VolumeUnit($model->getVolume(), ISO::CMQ));
 
         if ('p' == $config->get('operatingmode')) {
