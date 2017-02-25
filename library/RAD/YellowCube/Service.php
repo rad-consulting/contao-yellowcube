@@ -172,6 +172,32 @@ class Service implements EventSubscriber
 
     /**
      * @param Event $event
+     * @throws Exception
+     */
+    public function onStatusSupplierOrder(Event $event)
+    {
+        $model = $event->getSubject();
+        $reference = $event->getArgument('reference');
+
+        if ($model instanceof SupplierOrderModel) {
+            $response = $this->getClient()->statusArticleMasterData(array(
+                'ControlReference' => Request\ControlReference::factory('WBL', $this->getConfig()),
+                'Reference' => $reference,
+            ));
+
+            if ($response->isSuccess()) {
+                $model->setExported(true, $response->getStatusText(), $this->getLastXML())->save();
+
+                return;
+            }
+
+            $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
+            throw new Exception($response->getStatusText());
+        }
+    }
+
+    /**
+     * @param Event $event
      * @return void
      * @throws Exception
      */
