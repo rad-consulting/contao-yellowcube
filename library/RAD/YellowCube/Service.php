@@ -247,7 +247,7 @@ class Service implements EventSubscriber
             }
             catch (Exception $e) {
                 $model->log($e->getMessage(), Log::ERROR, $this->getLastXML());
-                throw new LogException($e->getMessage(), Log::ERROR, null, $this->getLastXML());
+                throw new LogException($e->getMessage(), Log::ERROR, $e, $this->getLastXML());
             }
 
             $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
