@@ -291,10 +291,6 @@ class Service implements EventSubscriber
      */
     public function onCreateOrder(Event $event)
     {
-        if (!(bool)$this->getConfig()->get('active')) {
-            return;
-        }
-
         $order = $event->getSubject();
 
         if ($order instanceof Order) {
