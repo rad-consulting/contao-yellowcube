@@ -228,13 +228,24 @@ class Service implements EventSubscriber
      */
     public function onConfirmFulfillment(Event $event)
     {
-        /**
-         * @var Fulfillment $fulfillment
-         */
-        $fulfillment = $event->getSubject();
-        $fulfillment->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
+        $model = $event->getSubject();
 
-        $this->dispatch('updateFulfillment', $fulfillment);
+        if ($model instanceof Fulfillment) {
+            $response = $this->getClient()->statusCustomerOrder(array(
+                'ControlReference' => Request\ControlReference::factory('WAB', $this->getConfig()),
+                'Reference' => $model->getReference(),
+            ));
+
+            if ($response->isSuccess()) {
+                $model->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
+                $this->dispatch('updateFulfillment', $model);
+
+                return;
+            }
+
+            $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
+            throw new Exception($response->getStatusText());
+        }
     }
 
     /**
