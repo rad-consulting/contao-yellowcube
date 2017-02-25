@@ -9,6 +9,7 @@ namespace RAD\YellowCube\Soap;
 
 use SoapClient;
 use RAD\YellowCube\Soap\Response\GenericResponse;
+use RAD\YellowCube\Soap\Response\GenericStatus;
 
 /**
  * Class Client
@@ -17,6 +18,7 @@ use RAD\YellowCube\Soap\Response\GenericResponse;
  * @see https://service.swisspost.ch/apache/yellowcube/?wsdl
  *
  * @method GenericResponse insertArticleMasterData(array $request)
+ * @method GenericStatus getInsertArticleMasterDataStatus(array $request)
  */
 class Client extends SoapClient
 {
@@ -29,7 +31,17 @@ class Client extends SoapClient
         parent::__construct($wsdl, array_merge(array(
             'classmap' => array(
                 'GEN_Response' => 'RAD\\YellowCube\\Soap\\Response\\GenericResponse',
+                'GEN_STATUS' => 'RAD\\YellowCube\\Soap\\Response\\GenericStatus',
             )), $options));
+    }
+
+    /**
+     * @param array $request
+     * @return GenericStatus
+     */
+    public function statusArticleMasterDataStatus(array $request)
+    {
+        return $this->getInsertArticleMasterDataStatus($request);
     }
 
     /**

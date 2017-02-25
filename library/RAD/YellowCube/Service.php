@@ -71,6 +71,7 @@ class Service implements EventSubscriber
             'yellowcube.confirmFulfillment' => 'onConfirmFulfillment',
             'yellowcube.updateFulfillment' => 'onUpdateFulfillment',
             'yellowcube.exportProduct' => 'onExportProduct',
+            'yellowcube.statusProduct' => 'onStatusProduct',
             'yellowcube.exportSupplierOrder' => 'onExportSupplierOrder',
             'yellowcube.importStock' => 'onImportStock',
         );
@@ -99,6 +100,32 @@ class Service implements EventSubscriber
                 'ArticleList' => array(
                     'Article' => Request\ART\Article::factory($product, $this->getConfig()),
                 ),
+            ));
+
+            if ($response->isSuccess()) {
+                $product->log($response->getStatusText(), Log::DEBUG, $this->getLastXML());
+                $this->dispatch('statusProduct', $product, array('reference' => $response->getReference()));
+                return;
+            }
+
+            $product->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
+            throw new Exception($response->getStatusText());
+        }
+    }
+
+    /**
+     * @param Event $event
+     * @throws Exception
+     */
+    public function onStatusProduct(Event $event)
+    {
+        $product = $event->getSubject();
+        $reference = $event->getArgument('reference');
+
+        if ($product instanceof YellowCubeProduct) {
+            $response = $this->getClient()->statusArticleMasterDataStatus(array(
+                'ControlReference' => Request\ControlReference::factory('GEN_STATUS', $this->getConfig()),
+                'Reference' => $reference,
             ));
 
             if ($response->isSuccess()) {
@@ -245,11 +272,12 @@ class Service implements EventSubscriber
     /**
      * @param string     $name
      * @param Model|null $subject
+     * @param array|null $arguments
      * @return $this
      */
-    protected function dispatch($name, Model $subject = null)
+    protected function dispatch($name, Model $subject = null, array $arguments = null)
     {
-        EventDispatcher::getInstance()->dispatch('yellowcube.' . $name, $subject);
+        EventDispatcher::getInstance()->dispatch('yellowcube.' . $name, $subject, $arguments);
 
         return $this;
     }
