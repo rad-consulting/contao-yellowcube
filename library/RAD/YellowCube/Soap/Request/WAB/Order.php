@@ -50,7 +50,9 @@ class Order
         $instance->PartnerAddress[] = Partner::factory($order->getShippingAddress(), $config);
 
         // Add service
-        $instance->ValueAddedServices[] = AdditionalService::factory($order, $config);
+        $instance->ValueAddedServices[] = array(
+            'AdditionalService' => Service::factory($order, $config),
+        );
 
         // Add positions
         foreach ($order->getItems() as $item) {

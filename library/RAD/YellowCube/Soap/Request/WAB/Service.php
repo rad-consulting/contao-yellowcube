@@ -11,9 +11,9 @@ use Isotope\Model\ProductCollection\Order as ShopOrder;
 use RAD\YellowCube\Config;
 
 /**
- * Class AdditionalService
+ * Class Service
  */
-class AdditionalService
+class Service
 {
     /**
      * @var string
