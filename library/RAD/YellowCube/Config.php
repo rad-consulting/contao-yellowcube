@@ -43,7 +43,7 @@ class Config
             return array(
                 'trace' => true,
                 'features' => SOAP_SINGLE_ELEMENT_ARRAYS,
-                'exceptions' => false,
+                'exceptions' => true,
                 'cache_wsdl' => WSDL_CACHE_MEMORY,
                 'soap_version' => SOAP_1_1,
             );
