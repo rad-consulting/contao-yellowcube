@@ -116,10 +116,10 @@ class Article
         $instance->addUnitOfMeasure(new LengthUnit($model->getLength()->getValue(), $model->getHeight()->getUnit(true)));
         $instance->addUnitOfMeasure(new WidthUnit($model->getWidth()->getValue(), $model->getHeight()->getUnit(true)));
         $instance->addUnitOfMeasure(new HeightUnit($model->getHeight()->getValue(), $model->getHeight()->getUnit(true)));
-        $instance->addUnitOfMeasure(new VolumeUnit($model->getVolume(), ISO::CMQ));
+        $instance->addUnitOfMeasure(new VolumeUnit($model->getVolume()->getValue(), $model->getVolume()->getUnit(true)));
 
         if ('p' == $config->get('operatingmode')) {
-            $instance->addUnitOfMeasure(new EANUnit($model->getEAN(), EANType::HE));
+            $instance->addUnitOfMeasure(new EANUnit($model->getEAN()->getValue(), $model->getEAN()->getUnit()));
         }
 
         return $instance;
