@@ -20,7 +20,7 @@ use RAD\Log\Model\LogModel as Log;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
 use RAD\YellowCube\Soap\Request;
 use RAD\YellowCube\Soap\Client;
-use RAD\YellowCube\Soap\WBL\Order as SupplierOrder;
+use RAD\YellowCube\Soap\Request\WBL\Order as SupplierOrder;
 
 /**
  * Class Service
