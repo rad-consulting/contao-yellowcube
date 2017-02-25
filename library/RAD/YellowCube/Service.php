@@ -75,6 +75,7 @@ class Service implements EventSubscriber
             'yellowcube.sendProduct' => 'onSendProduct',
             'yellowcube.statusProduct' => 'onStatusProduct',
             'yellowcube.sendSupplierOrder' => 'onSendSupplierOrder',
+            'yellowcube.statusSupplierOrder' => 'onStatusSupplierOrder',
             'yellowcube.importStock' => 'onImportStock',
         );
     }
