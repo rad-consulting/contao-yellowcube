@@ -232,28 +232,22 @@ class Service implements EventSubscriber
         $model = $event->getSubject();
 
         if ($model instanceof Fulfillment) {
-            try {
-                $response = $this->getClient()->statusCustomerOrder(array(
-                    'ControlReference' => Request\ControlReference::factory('WAB', $this->getConfig()),
-                    'Reference' => $model->getReference(),
-                ));
+            $response = $this->getClient()->statusCustomerOrder(array(
+                'ControlReference' => Request\ControlReference::factory('WAB', $this->getConfig()),
+                'Reference' => $model->getReference(),
+            ));
 
-                if ($response->isSuccess()) {
-                    $model->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
-                    $this->dispatch('updateFulfillment', $model);
+            if ($response->isSuccess()) {
+                $model->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
+                $this->dispatch('updateFulfillment', $model);
 
-                    return;
-                }
-
-                if ($response->isError()) {
-                    $model->setRejected($response->getStatusText(), $this->getLastXML());
-
-                    return;
-                }
+                return;
             }
-            catch (Exception $e) {
-                $model->log($e->getMessage(), Log::ERROR, $this->getLastXML());
-                throw new LogException($e->getMessage(), Log::ERROR, $e, $this->getLastXML());
+
+            if ($response->isError()) {
+                $model->setRejected($response->getStatusText(), $this->getLastXML());
+
+                return;
             }
 
             $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
