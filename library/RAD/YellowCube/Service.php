@@ -232,20 +232,25 @@ class Service implements EventSubscriber
         $model = $event->getSubject();
 
         if ($model instanceof Fulfillment) {
-            $response = $this->getClient()->statusCustomerOrder(array(
-                'ControlReference' => Request\ControlReference::factory('WAB', $this->getConfig()),
-                'Reference' => $model->getReference(),
-            ));
+            try {
+                $response = $this->getClient()->statusCustomerOrder(array(
+                    'ControlReference' => Request\ControlReference::factory('WAB', $this->getConfig()),
+                    'Reference' => $model->getReference(),
+                ));
 
-            if ($response->isSuccess()) {
-                $model->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
-                $this->dispatch('updateFulfillment', $model);
+                if ($response->isSuccess()) {
+                    $model->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
+                    $this->dispatch('updateFulfillment', $model);
 
-                return;
+                    return;
+                }
+            }
+            catch (Exception $e) {
+                throw new LogException($e->getMessage(), Log::ERROR, null, $this->getLastXML());
             }
 
             $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
-            throw new LogException($response->getStatusText(), Log::ERROR, null, $this->getLastXML());
+            throw new Exception($response->getStatusText());
         }
     }
 
