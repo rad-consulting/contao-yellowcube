@@ -124,7 +124,7 @@ class Service implements EventSubscriber
 
         if ($product instanceof YellowCubeProduct) {
             $response = $this->getClient()->statusArticleMasterDataStatus(array(
-                'ControlReference' => Request\ControlReference::factory('GEN_STATUS', $this->getConfig()),
+                'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'Reference' => $reference,
             ));
 
