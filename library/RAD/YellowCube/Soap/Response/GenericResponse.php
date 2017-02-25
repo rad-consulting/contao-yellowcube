@@ -120,4 +120,12 @@ class GenericResponse
     {
         return 'S' == $this->StatusType;
     }
+
+    /**
+     * @return bool
+     */
+    public function isError()
+    {
+        return 'E' == $this->StatusType;
+    }
 }

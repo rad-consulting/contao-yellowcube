@@ -244,6 +244,12 @@ class Service implements EventSubscriber
 
                     return;
                 }
+
+                if ($response->isError()) {
+                    $model->setRejected($response->getStatusText(), $this->getLastXML());
+
+                    return;
+                }
             }
             catch (Exception $e) {
                 $model->log($e->getMessage(), Log::ERROR, $this->getLastXML());
