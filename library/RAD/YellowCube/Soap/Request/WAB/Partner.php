@@ -107,31 +107,30 @@ class Partner
         $instance = new static();
         $instance->PartnerNo = $config->get('partnerid');
         $instance->PartnerReference = $address->pid;
-        $instance->Title = $address->salutation;
 
         if (empty($address->company)) {
-            $instance->Name1 = $address->firstname . ' ' . $address->lastname;
+            $instance->Name1 = substr($address->firstname . ' ' . $address->lastname, 0, 35);
         }
         else {
-            $instance->Name1 = $address->company;
-            $instance->Name2 = $address->firstname . ' ' . $address->lastname;
+            $instance->Name1 = substr($address->company, 0, 35);
+            $instance->Name2 = substr($address->firstname . ' ' . $address->lastname, 0, 35);
         }
 
         $street = array();
 
         for ($i = 1; $i <= 3; $i++) {
-            if (!empty($address->{"street{$i}"})) {
-                $street[] = $address->{"street{$i}"};
+            if (!empty($address->{"street_{$i}"})) {
+                $street[] = $address->{"street_{$i}"};
             }
         }
 
-        $instance->Street = implode(', ', $street);
-        $instance->ZIPCode = $address->postal;
-        $instance->City = $address->city;
-        $instance->CountryCode = strtoupper($address->country);
+        $instance->Street = substr(implode(', ', $street), 0, 35);
+        $instance->ZIPCode = substr($address->postal, 0, 10);
+        $instance->City = substr($address->city, 0, 35);
+        $instance->CountryCode = strtoupper(substr($address->country, 0, 2));
 
         if (!empty($address->phone)) {
-            $instance->PhoneNo = $address->phone;
+            $instance->PhoneNo = substr($address->phone, 0, 21);
         }
 
         return $instance;
