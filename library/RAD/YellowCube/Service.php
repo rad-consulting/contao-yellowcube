@@ -16,6 +16,7 @@ use Isotope\Model\OrderStatus;
 use Isotope\Model\ProductCollection\Order;
 use RAD\Fulfillment\Model\FulfillmentModel as Fulfillment;
 use RAD\Fulfillment\Model\SupplierOrderModel;
+use RAD\Log\LogException;
 use RAD\Log\Model\LogModel as Log;
 use RAD\YellowCube\Model\Product\YellowCubeProduct;
 use RAD\YellowCube\Soap\Request;
@@ -244,7 +245,7 @@ class Service implements EventSubscriber
             }
 
             $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
-            throw new Exception($response->getStatusText());
+            throw new LogException($response->getStatusText(), Log::ERROR, null, $this->getLastXML());
         }
     }
 
