@@ -258,8 +258,7 @@ class Service implements EventSubscriber
      * @return void
      * @throws Exception
      */
-    public
-    function onSendFulfillment(Event $event)
+    public function onSendFulfillment(Event $event)
     {
         $model = $event->getSubject();
 
@@ -286,8 +285,7 @@ class Service implements EventSubscriber
      * @return void
      * @throws Exception
      */
-    public
-    function onUpdateFulfillment(Event $event)
+    public function onUpdateFulfillment(Event $event)
     {
         /**
          * @var Fulfillment $fulfillment
@@ -309,8 +307,7 @@ class Service implements EventSubscriber
      * @return void
      * @throws Exception
      */
-    public
-    function onImportStock(Event $event)
+    public function onImportStock(Event $event)
     {
         // TODO
     }
@@ -320,8 +317,7 @@ class Service implements EventSubscriber
      * @return void
      * @throws Exception
      */
-    public
-    function onCreateOrder(Event $event)
+    public function onCreateOrder(Event $event)
     {
         $order = $event->getSubject();
 
@@ -351,8 +347,7 @@ class Service implements EventSubscriber
      * @param array|null $arguments
      * @return $this
      */
-    protected
-    function dispatch($name, Model $subject = null, array $arguments = null)
+    protected function dispatch($name, Model $subject = null, array $arguments = null)
     {
         EventDispatcher::getInstance()->dispatch('yellowcube.' . $name, $subject, $arguments);
 
@@ -362,8 +357,7 @@ class Service implements EventSubscriber
     /**
      * @return string
      */
-    protected
-    function getLastXML()
+    protected function getLastXML()
     {
         return $this->getClient()->getLastXML();
     }
