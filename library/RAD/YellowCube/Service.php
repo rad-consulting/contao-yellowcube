@@ -245,7 +245,7 @@ class Service implements EventSubscriber
             }
 
             if ($response->isError()) {
-                $model->setRejected($response->getStatusText(), $this->getLastXML());
+                $model->setRejected($response->getStatusText(), $this->getLastXML())->save();
 
                 return;
             }
