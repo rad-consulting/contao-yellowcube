@@ -10,6 +10,8 @@ namespace RAD\YellowCube\Soap;
 use SoapClient;
 use RAD\YellowCube\Soap\Response\GenericResponse;
 use RAD\YellowCube\Soap\Response\GenericStatus;
+use RAD\YellowCube\Soap\Response\DeliveryList;
+use RAD\YellowCube\Soap\Response\InventoryList;
 
 /**
  * Class Client
@@ -21,6 +23,10 @@ use RAD\YellowCube\Soap\Response\GenericStatus;
  * @method GenericStatus getInsertArticleMasterDataStatus(array $request)
  * @method GenericResponse createYCSupplierOrder(array $request)
  * @method GenericStatus getYCSupplierOrderStatus(array $request)
+ * @method GenericResponse createYCCustomerOrder(array $request)
+ * @method GenericStatus getYCCustomerOrderStatus(array $request)
+ * @method DeliveryList getYCCustomerOrderReply(array $request)
+ * @method InventoryList getInventory(array $request)
  */
 class Client extends SoapClient
 {
@@ -34,6 +40,8 @@ class Client extends SoapClient
             'classmap' => array(
                 'GEN_Response' => 'RAD\\YellowCube\\Soap\\Response\\GenericResponse',
                 'GEN_STATUS' => 'RAD\\YellowCube\\Soap\\Response\\GenericStatus',
+                'WAR_List' => 'RAD\\YellowCube\\Soap\\Response\\DeliveryList',
+                'BAR' => 'RAD\\YellowCube\\Soap\\Response\\InventoryList',
             )), $options));
     }
 
@@ -62,6 +70,42 @@ class Client extends SoapClient
     public function sendSupplierOrder(array $request)
     {
         return $this->createYCSupplierOrder($request);
+    }
+
+    /**
+     * @param array $request
+     * @return GenericStatus
+     */
+    public function statusSupplierOrder(array $request)
+    {
+        return $this->getYCSupplierOrderStatus($request);
+    }
+
+    /**
+     * @param array $request
+     * @return GenericResponse
+     */
+    public function sendCustomerOrder(array $request)
+    {
+        return $this->createYCCustomerOrder($request);
+    }
+
+    /**
+     * @param array $request
+     * @return GenericStatus
+     */
+    public function statusCustomerOrder(array $request)
+    {
+        return $this->getYCCustomerOrderStatus($request);
+    }
+
+    /**
+     * @param array $request
+     * @return DeliveryList
+     */
+    public function getDeliveryNotices(array $request)
+    {
+        return $this->getYCCustomerOrderReply($request);
     }
 
     /**

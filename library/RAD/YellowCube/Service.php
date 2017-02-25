@@ -181,7 +181,7 @@ class Service implements EventSubscriber
         $reference = $event->getArgument('reference');
 
         if ($model instanceof SupplierOrderModel) {
-            $response = $this->getClient()->statusArticleMasterData(array(
+            $response = $this->getClient()->statusSupplierOrder(array(
                 'ControlReference' => Request\ControlReference::factory('WBL', $this->getConfig()),
                 'Reference' => $reference,
             ));

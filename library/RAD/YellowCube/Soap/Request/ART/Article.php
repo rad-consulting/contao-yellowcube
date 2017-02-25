@@ -17,7 +17,6 @@ use RAD\YellowCube\Soap\Unit\NetWeightUnit;
 use RAD\YellowCube\Soap\Unit\UnitInterface;
 use RAD\YellowCube\Soap\Unit\VolumeUnit;
 use RAD\YellowCube\Soap\Unit\WidthUnit;
-use RAD\YellowCube\Soap\Util\EANType;
 use RAD\YellowCube\Soap\Util\ISO;
 
 /**
