@@ -21,6 +21,7 @@ use RAD\YellowCube\Model\Product\YellowCubeProduct;
 use RAD\YellowCube\Soap\Request;
 use RAD\YellowCube\Soap\Client;
 use RAD\YellowCube\Soap\Request\WBL\Order as SupplierOrder;
+use RAD\YellowCube\Soap\Request\WAB\Order as CustomerOrder;
 
 /**
  * Class Service
@@ -243,13 +244,24 @@ class Service implements EventSubscriber
      */
     public function onSendFulfillment(Event $event)
     {
-        /**
-         * @var Fulfillment $fulfillment
-         */
-        $fulfillment = $event->getSubject();
-        $fulfillment->setSent($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
+        $model = $event->getSubject();
 
-        $this->dispatch('confirmFulfillment', $fulfillment);
+        if ($model instanceof Fulfillment) {
+            $response = $this->getClient()->sendCustomerOrder(array(
+                'ControlReference' => Request\ControlReference::factory('WAB', $this->getConfig()),
+                'Order' => CustomerOrder::factory($model->getOrder(), $this->getConfig()),
+            ));
+
+            if ($response->isSuccess()) {
+                $model->setSent($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
+                $this->dispatch('confirmFulfillment', $model, array('reference' => $response->getReference()));
+
+                return;
+            }
+
+            $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
+            throw new Exception($response->getStatusText());
+        }
     }
 
     /**
