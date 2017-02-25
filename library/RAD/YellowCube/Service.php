@@ -245,12 +245,10 @@ class Service implements EventSubscriber
                     return;
                 }
 
-                $model->setRejected($response->getStatusText(), $this->getLastXML())->save();
                 throw new Exception($response->getStatusText());
             }
             catch (Exception $e) {
                 $model->setRejected($e->getMessage(), $this->getLastXML())->save();
-                throw new LogException($e->getMessage(), Log::ERROR, $e, $this->getLastXML());
             }
         }
     }
