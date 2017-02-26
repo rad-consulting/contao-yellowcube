@@ -6,7 +6,9 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
-// Yellowcube
-\Isotope\Model\Product::registerModelType('yellowcube', 'RAD\\YellowCube\\Model\\Product\\YellowCubeProduct');
-$GLOBALS['TL_MODELS'][\RAD\YellowCube\Model\Product\YellowCubeProduct::getTable()] = 'RAD\\YellowCube\\Model\\Product\\YellowCubeProduct';
+// Models
+\Isotope\Model\Product::registerModelType('yellowcube', 'RAD\\YellowCube\\Model\\Product\\YellowCube');
+$GLOBALS['TL_MODELS'][\RAD\YellowCube\Model\Product\YellowCube::getTable()] = 'RAD\\YellowCube\\Model\\Product\\YellowCube';
+
+// Subscribers
 $GLOBALS['RAD_SUBSCRIBERS'][] = 'RAD\\YellowCube\\Service';

@@ -7,7 +7,7 @@
  */
 namespace RAD\YellowCube\Soap\Request\WBL;
 
-use RAD\Fulfillment\Model\SupplierOrderModel as Model;
+use RAD\Fulfillment\Model\SupplierOrder as Model;
 use RAD\YellowCube\Config;
 
 /**

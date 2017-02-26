@@ -11,8 +11,8 @@ use Contao\Backend;
 use Contao\DataContainer;
 use Isotope\Model\ProductType;
 use RAD\Event\EventDispatcher;
-use RAD\Fulfillment\Model\SupplierOrderModel as SupplierOrder;
-use RAD\YellowCube\Model\Product\YellowCubeProduct;
+use RAD\Fulfillment\Model\SupplierOrder;
+use RAD\YellowCube\Model\Product\YellowCube;
 
 /**
  * Class Panel
@@ -29,7 +29,7 @@ class Panel extends Backend
             $class = $GLOBALS['TL_MODELS'][$dc->table];
             $model = forward_static_call(array($class, 'findByPk'), $dc->activeRecord->id);
 
-            if ($model instanceof YellowCubeProduct && $model->doExport()) {
+            if ($model instanceof YellowCube && $model->doExport()) {
                 $type = ProductType::findByPk($model->type);
 
                 if ('yellowcube' == $type->class) {

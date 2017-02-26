@@ -8,7 +8,7 @@
 namespace RAD\YellowCube\Soap\Request\ART;
 
 use RAD\YellowCube\Config;
-use RAD\YellowCube\Model\Product\YellowCubeProduct as Model;
+use RAD\YellowCube\Model\Product\YellowCube as Model;
 use RAD\YellowCube\Soap\Unit\EANUnit;
 use RAD\YellowCube\Soap\Unit\GrossWeightUnit;
 use RAD\YellowCube\Soap\Unit\HeightUnit;

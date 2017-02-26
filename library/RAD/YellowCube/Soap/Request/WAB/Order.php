@@ -9,7 +9,7 @@ namespace RAD\YellowCube\Soap\Request\WAB;
 
 use Isotope\Model\ProductCollection\Order as ShopOrder;
 use RAD\YellowCube\Config;
-use RAD\YellowCube\Model\Product\YellowCubeProduct;
+use RAD\YellowCube\Model\Product\YellowCube;
 
 /**
  * Class Order
@@ -58,7 +58,7 @@ class Order
         foreach ($order->getItems() as $item) {
             $product = $item->getProduct();
 
-            if ($product instanceof YellowCubeProduct) {
+            if ($product instanceof YellowCube) {
                 $instance->OrderPositions[] = Position::factory($item, count($instance->OrderPositions) + 1, $config);
             }
         }

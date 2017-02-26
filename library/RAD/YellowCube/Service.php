@@ -9,16 +9,15 @@ namespace RAD\YellowCube;
 
 use RAD\Event\EventDispatcher;
 use RAD\Event\EventSubscriberInterface as EventSubscriber;
-use RAD\Event\Model\EventModel as Event;
+use RAD\Event\Model\Event;
 use Exception;
 use Contao\Model;
 use Isotope\Model\OrderStatus;
-use Isotope\Model\ProductCollection\Order;
-use RAD\Fulfillment\Model\FulfillmentModel as Fulfillment;
-use RAD\Fulfillment\Model\SupplierOrderModel;
-use RAD\Log\LogException;
-use RAD\Log\Model\LogModel as Log;
-use RAD\YellowCube\Model\Product\YellowCubeProduct;
+use Isotope\Model\ProductCollection\Order as ShopOrder;
+use RAD\Fulfillment\Model\Fulfillment;
+use RAD\Fulfillment\Model\SupplierOrder as ShopSupplierOrder;
+use RAD\Log\Model\Log;
+use RAD\YellowCube\Model\Product\YellowCube;
 use RAD\YellowCube\Soap\Request;
 use RAD\YellowCube\Soap\Client;
 use RAD\YellowCube\Soap\Request\WBL\Order as SupplierOrder;
@@ -99,7 +98,7 @@ class Service implements EventSubscriber
     {
         $product = $event->getSubject();
 
-        if ($product instanceof YellowCubeProduct) {
+        if ($product instanceof YellowCube) {
             $response = $this->getClient()->sendArticleMasterData(array(
                 'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'ArticleList' => array(
@@ -128,7 +127,7 @@ class Service implements EventSubscriber
         $product = $event->getSubject();
         $reference = $event->getArgument('reference');
 
-        if ($product instanceof YellowCubeProduct) {
+        if ($product instanceof YellowCube) {
             $response = $this->getClient()->statusArticleMasterData(array(
                 'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'Reference' => $reference,
@@ -154,7 +153,7 @@ class Service implements EventSubscriber
     {
         $model = $event->getSubject();
 
-        if ($model instanceof SupplierOrderModel) {
+        if ($model instanceof ShopSupplierOrder) {
             $order = SupplierOrder::factory($model, $this->getConfig());
             $response = $this->getClient()->sendSupplierOrder(array(
                 'ControlReference' => Request\ControlReference::factory('WBL', $this->getConfig()),
@@ -182,7 +181,7 @@ class Service implements EventSubscriber
         $model = $event->getSubject();
         $reference = $event->getArgument('reference');
 
-        if ($model instanceof SupplierOrderModel) {
+        if ($model instanceof ShopSupplierOrder) {
             $response = $this->getClient()->statusSupplierOrder(array(
                 'ControlReference' => Request\ControlReference::factory('WBL', $this->getConfig()),
                 'Reference' => $reference,
@@ -213,7 +212,7 @@ class Service implements EventSubscriber
         $fulfillment->setCompleted()->save();
 
         $status = OrderStatus::findBy('name', 'Complete');
-        $order = Order::findByPk($fulfillment->pid);
+        $order = ShopOrder::findByPk($fulfillment->pid);
 
         if ($status->id == $order->order_status) {
             return;
@@ -321,7 +320,7 @@ class Service implements EventSubscriber
     {
         $order = $event->getSubject();
 
-        if ($order instanceof Order) {
+        if ($order instanceof ShopOrder) {
             $items = array();
 
             foreach ($order->getItems() as $item) {

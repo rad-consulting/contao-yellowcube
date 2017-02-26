@@ -8,7 +8,7 @@
 namespace RAD\YellowCube\Soap\Request\WBL;
 
 use RAD\YellowCube\Config;
-use RAD\YellowCube\Model\Product\YellowCubeProduct as Model;
+use RAD\YellowCube\Model\Product\YellowCube as Model;
 use RAD\YellowCube\Soap\Util\ISO;
 
 /**

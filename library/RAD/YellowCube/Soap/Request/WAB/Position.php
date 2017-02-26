@@ -9,7 +9,7 @@ namespace RAD\YellowCube\Soap\Request\WAB;
 
 use Isotope\Model\ProductCollectionItem as ShopPosition;
 use RAD\YellowCube\Config;
-use RAD\YellowCube\Model\Product\YellowCubeProduct;
+use RAD\YellowCube\Model\Product\YellowCube;
 use RAD\YellowCube\Soap\Util\ISO;
 
 /**
@@ -63,7 +63,7 @@ class Position
         $instance = new static();
         $product = $position->getProduct();
 
-        if ($product instanceof YellowCubeProduct) {
+        if ($product instanceof YellowCube) {
             $instance->ArticleNo = $product->getId();
             $instance->PosNo = $no * 10;
             $instance->Plant = $config->get('plantid');

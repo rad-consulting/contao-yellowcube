@@ -7,9 +7,9 @@
  */
 namespace RAD\YellowCube\Soap\Request\WBL;
 
-use RAD\Fulfillment\Model\SupplierOrderModel as Model;
+use RAD\Fulfillment\Model\SupplierOrder as Model;
 use RAD\YellowCube\Config;
-use RAD\YellowCube\Model\Product\YellowCubeProduct;
+use RAD\YellowCube\Model\Product\YellowCube;
 
 /**
  * Class Order
@@ -39,9 +39,9 @@ class Order
         $instance->SupplierOrderHeader = Header::factory($model, $config);
 
         foreach ($model->getPositions() as $position) {
-            $product = YellowCubeProduct::findByPk($position['product']);
+            $product = YellowCube::findByPk($position['product']);
 
-            if ($product instanceof YellowCubeProduct) {
+            if ($product instanceof YellowCube) {
                 $instance->addPosition(Position::factory($product, $position['quantity'], $config));
             }
         }

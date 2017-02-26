@@ -7,12 +7,12 @@
  */
 namespace RAD\YellowCube\Model\Product;
 
-use RAD\Fulfillment\Model\Product\FulfillmentProduct;
+use RAD\Fulfillment\Model\Product\Fulfillment;
 
 /**
- * Class YellowCubeProduct
+ * Class YellowCube
  */
-class YellowCubeProduct extends FulfillmentProduct
+class YellowCube extends Fulfillment
 {
     /**
      * @inheritdoc
