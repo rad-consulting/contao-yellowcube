@@ -86,7 +86,7 @@ class Service implements EventSubscriber
      */
     public function importStock()
     {
-        $this->dispatch('importStock');
+        $this->dispatch('yellowcube.importStock');
     }
 
     /**
@@ -108,7 +108,7 @@ class Service implements EventSubscriber
 
             if ($response->isSuccess()) {
                 $product->log($response->getStatusText(), Log::DEBUG, $this->getLastXML());
-                $this->dispatch('statusProduct', $product, array('reference' => $response->getReference()));
+                $this->dispatch('yellowcube.statusProduct', $product, array('reference' => $response->getReference()));
 
                 return;
             }
@@ -162,7 +162,7 @@ class Service implements EventSubscriber
 
             if ($response->isSuccess()) {
                 $model->log($response->getStatusText(), Log::DEBUG, $this->getLastXML());
-                $this->dispatch('statusSupplierOrder', $model, array('reference' => $response->getReference()));
+                $this->dispatch('yellowcube.statusSupplierOrder', $model, array('reference' => $response->getReference()));
 
                 return;
             }
@@ -203,29 +203,6 @@ class Service implements EventSubscriber
      * @return void
      * @throws Exception
      */
-    public function onCompleteFulfillment(Event $event)
-    {
-        /**
-         * @var Fulfillment $fulfillment
-         */
-        $fulfillment = $event->getSubject();
-        $fulfillment->setCompleted()->save();
-
-        $status = OrderStatus::findBy('name', 'Complete');
-        $order = ShopOrder::findByPk($fulfillment->pid);
-
-        if ($status->id == $order->order_status) {
-            return;
-        }
-
-        // TODO
-    }
-
-    /**
-     * @param Event $event
-     * @return void
-     * @throws Exception
-     */
     public function onConfirmFulfillment(Event $event)
     {
         $model = $event->getSubject();
@@ -239,7 +216,7 @@ class Service implements EventSubscriber
 
                 if ($response->isSuccess()) {
                     $model->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
-                    $this->dispatch('updateFulfillment', $model);
+                    $this->dispatch('yellowcube.updateFulfillment', $model);
 
                     return;
                 }
@@ -269,7 +246,7 @@ class Service implements EventSubscriber
 
             if ($response->isSuccess()) {
                 $model->setSent($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
-                $this->dispatch('confirmFulfillment', $model, array('reference' => $response->getReference()));
+                $this->dispatch('yellowcube.confirmFulfillment', $model, array('reference' => $response->getReference()));
 
                 return;
             }
@@ -298,7 +275,7 @@ class Service implements EventSubscriber
             $fulfillment->setDelivered($response->getPostalNo(), $response->getStatusText(), $this->getLastXML())->save();
         }
 
-        $this->dispatch('completeFulfillment', $fulfillment);
+        $this->dispatch('fulfillment.complete', $fulfillment);
     }
 
     /**
@@ -321,22 +298,16 @@ class Service implements EventSubscriber
         $order = $event->getSubject();
 
         if ($order instanceof ShopOrder) {
-            $items = array();
-
             foreach ($order->getItems() as $item) {
                 if ('yellowcube' == $item->type) {
-                    $items[] = $item;
+
+                    $fulfillment = Fulfillment::factory($order);
+                    $fulfillment->save();
+                    $this->dispatch('yellowcube.sendFulfillment', $fulfillment);
+
+                    return;
                 }
             }
-
-            if (!count($items)) {
-                return;
-            }
-
-            $fulfillment = Fulfillment::factory($order);
-            $fulfillment->save();
-
-            $this->dispatch('sendFulfillment', $fulfillment);
         }
     }
 
@@ -348,7 +319,7 @@ class Service implements EventSubscriber
      */
     protected function dispatch($name, Model $subject = null, array $arguments = null)
     {
-        EventDispatcher::getInstance()->dispatch('yellowcube.' . $name, $subject, $arguments);
+        EventDispatcher::getInstance()->dispatch($name, $subject, $arguments);
 
         return $this;
     }
