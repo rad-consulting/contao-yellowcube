@@ -12,7 +12,7 @@ $GLOBALS['TL_DCA']['tl_iso_shipping']['palettes']['yellowcube'] = str_replace('{
 // Fields
 $GLOBALS['TL_DCA']['tl_iso_shipping']['fields']['rad_yellowcube_basicservice'] = array(
     'sql' => "varchar(24) NOT NULL default 'ECO'",
-    'eval' => array(),
+    'label' => &$GLOBALS['TL_LANG']['tl_iso_shipping']['rad_yellowcube_basicservice'],
     'default' => 'ECO',
     'options' => array('ECO', 'PRI', 'APOST', 'APOSTPLUS', 'BPOST', 'RETURN', 'URGENT'),
     'reference' => &$GLOBALS['TL_LANG']['tl_iso_shipping']['rad_yellowcube_basicservice.reference'],
