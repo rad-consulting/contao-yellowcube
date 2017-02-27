@@ -15,6 +15,9 @@ use RAD\YellowCube\Config;
  */
 class Partner
 {
+    /**
+     * @var string
+     */
     protected $PartnerType = 'WE';
 
     /**
