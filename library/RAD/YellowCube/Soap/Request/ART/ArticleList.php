@@ -15,7 +15,7 @@ use RAD\YellowCube\Model\Product\YellowCube;
 /**
  * Class ArticleList
  */
-class ArticleList extends ArrayObject implements \Iterator, \ArrayAccess
+class ArticleList extends ArrayObject implements \Iterator
 {
     protected $key = 0;
 
