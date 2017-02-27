@@ -19,7 +19,7 @@ class ArticleList
     /**
      * @var Article[]
      */
-    protected $Article = array();
+    protected $ArticleList = array();
 
     /**
      * @param Collection $collection
@@ -38,7 +38,7 @@ class ArticleList
                     if ($variants instanceof Collection) {
                         foreach ($variants as $variant) {
                             if ($variant instanceof YellowCube) {
-                                $instance->Article[] = Article::factory($variant, $config);
+                                $instance->ArticleList[] = array('Article' => Article::factory($variant, $config));
                             }
                         }
                     }
@@ -46,7 +46,7 @@ class ArticleList
                     continue;
                 }
 
-                $instance->Article[] = Article::factory($item, $config);
+                $instance->ArticleList[] = array('Article' => Article::factory($item, $config));
             }
         }
 
