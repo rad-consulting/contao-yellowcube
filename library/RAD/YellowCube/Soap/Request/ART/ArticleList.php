@@ -17,14 +17,9 @@ use RAD\YellowCube\Model\Product\YellowCube;
 class ArticleList
 {
     /**
-     * @var ArticleList[]
-     */
-    protected $ArticleList = array();
-
-    /**
      * @param Collection $collection
      * @param Config     $config
-     * @return static
+     * @return array
      */
     public static function factory(Collection $collection, Config $config)
     {
@@ -46,7 +41,7 @@ class ArticleList
                     continue;
                 }
 
-                $articles[] = Article::factory($item, $config);
+                $articles[] = array('Article' => Article::factory($item, $config);
             }
         }
 
