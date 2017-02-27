@@ -15,9 +15,10 @@ use RAD\YellowCube\Model\Product\YellowCube;
 /**
  * Class ArticleList
  */
-class ArticleList extends ArrayObject implements \Iterator
+class ArticleList implements \Iterator
 {
     protected $key = 0;
+    protected $article = array();
 
     /**
      * @param Collection $collection
@@ -57,7 +58,7 @@ class ArticleList extends ArrayObject implements \Iterator
      */
     public function addArticle(Article $article)
     {
-        $this->append($article);
+        $this->article[] = $article;
 
         return $this;
     }
@@ -67,7 +68,7 @@ class ArticleList extends ArrayObject implements \Iterator
      */
     public function current()
     {
-        return $this->offsetGet($this->key);
+        return $this->article[$this->key];
     }
 
     /**
@@ -90,7 +91,7 @@ class ArticleList extends ArrayObject implements \Iterator
 
     public function valid()
     {
-        return $this->offsetExists($this->key) && $this->offsetGet($this->key) instanceof Article;
+        return isset($this->article[$this->key]) && $this->article[$this->key] instanceof Article;
     }
 
 
