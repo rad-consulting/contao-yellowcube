@@ -127,6 +127,9 @@ class Service implements EventSubscriber
                                 $this->dispatch('yellowcube.sendProduct', $product);
                             }
                         }
+
+
+                        System::log(get_class($product), __METHOD__, TL_ERROR);
                     }
                 }
             }
