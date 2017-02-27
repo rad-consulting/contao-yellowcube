@@ -7,11 +7,11 @@
  */
 
 // Legends
-$GLOBALS['TL_DCA']['tl_iso_shipping']['yellowcube_legend'] = 'YellowCube';
+$GLOBALS['TL_LANG']['tl_iso_shipping']['yellowcube_legend'] = 'YellowCube';
 
 // Fields
-$GLOBALS['TL_DCA']['tl_iso_shipping']['rad_yellowcube_basicservice'] = array('Einfache Dienstleistung');
-$GLOBALS['TL_DCA']['tl_iso_shipping']['rad_yellowcube_basicservice.reference'] = array(
+$GLOBALS['TL_LANG']['tl_iso_shipping']['rad_yellowcube_basicservice'] = array('Einfache Dienstleistung');
+$GLOBALS['TL_LANG']['tl_iso_shipping']['rad_yellowcube_basicservice.reference'] = array(
     'ECO' => 'Economy',
     'PRI' => 'Priority',
     'APOST' => 'A-Post',
