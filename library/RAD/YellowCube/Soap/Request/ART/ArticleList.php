@@ -46,7 +46,7 @@ class ArticleList extends ArrayObject
             }
         }
 
-        return '<ns1:ArticleList><ns1:Article><ns1:ArticleNo>0</ns1:ArticleNo></ns1:Article></ns1:ArticleList>';
+        return '<ns1:Article><ns1:ArticleNo>0</ns1:ArticleNo></ns1:Article>';
     }
 
     /**
