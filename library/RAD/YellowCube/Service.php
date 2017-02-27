@@ -7,6 +7,8 @@
  */
 namespace RAD\YellowCube;
 
+use Isotope\Model\Product;
+use Isotope\Model\ProductType;
 use RAD\Event\EventDispatcher;
 use RAD\Event\EventSubscriberInterface as EventSubscriber;
 use RAD\Event\Model\Event;
@@ -101,7 +103,7 @@ class Service implements EventSubscriber
         $model = $event->getSubject();
 
         if ($model instanceof MasterData && 'yellowcube' == $model->producttype) {
-            $collection = YellowCube::findAll();
+            $collection = Product::findByType('yellowcube');
             $response = $this->getClient()->sendArticleMasterData(array(
                 'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'ArticleList' => Request\ART\ArticleList::factory($collection, $this->getConfig()),
