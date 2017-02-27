@@ -10,13 +10,8 @@ namespace RAD\YellowCube\Soap\Request\ART;
 use RAD\YellowCube\Config;
 use RAD\YellowCube\Model\Product\YellowCube as Model;
 use RAD\YellowCube\Soap\Unit\EANUnit;
-use RAD\YellowCube\Soap\Unit\GrossWeightUnit;
-use RAD\YellowCube\Soap\Unit\HeightUnit;
-use RAD\YellowCube\Soap\Unit\LengthUnit;
 use RAD\YellowCube\Soap\Unit\NetWeightUnit;
 use RAD\YellowCube\Soap\Unit\UnitInterface;
-use RAD\YellowCube\Soap\Unit\VolumeUnit;
-use RAD\YellowCube\Soap\Unit\WidthUnit;
 use RAD\YellowCube\Soap\Util\ISO;
 
 /**

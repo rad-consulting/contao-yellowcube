@@ -45,12 +45,6 @@ class Panel extends Backend
 
                 return;
             }
-
-            if ($model instanceof MasterData && $model->doExport() && !$model->isExported()) {
-                EventDispatcher::getInstance()->dispatch('yellowcube.sendAssortment', $model);
-
-                return;
-            }
         }
     }
 }
