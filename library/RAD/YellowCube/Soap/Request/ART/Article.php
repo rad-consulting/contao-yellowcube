@@ -107,7 +107,13 @@ class Article
         $instance->ArticleNo = $model->getArticleNo();
         $instance->BaseUOM = ISO::PCE;
 
-        $instance->NetWeight = new NetWeightUnit($model->getWeight()->getWeightValue() * .91, $model->getWeight()->getWeightUnit());
+        if ($weight = $model->getWeight()) {
+            $instance->NetWeight = new NetWeightUnit($weight->getWeightValue() * .91, $weight->getWeightUnit());
+        }
+        else {
+            $instance->NetWeight = new NetWeightUnit(0, ISO::KGM);
+        }
+
         $instance->UnitsOfMeasure['AlternateUnitISO'] = ISO::PCE;
         $instance->addArticleDescription(new ArticleDescription($model->getName(), 'de'));
 
