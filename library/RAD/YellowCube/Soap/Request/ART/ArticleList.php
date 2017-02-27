@@ -58,7 +58,7 @@ class ArticleList implements \Iterator
      */
     public function __construct()
     {
-        $this->Article = function () use ($this) {
+        $this->Article = function () {
             return $this->current();
         };
     }
