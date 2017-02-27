@@ -47,9 +47,7 @@ class Client extends SoapClient
 
     public function __doRequest($request, $location, $action, $version, $one_way = 0)
     {
-        if ('insertArticleMasterData' == $action) {
-            file_put_contents('/home/www-data/' . $action . '.xml', $request);
-        }
+        file_put_contents('/home/www-data/' . $action . '.xml', $request);
 
         return parent::__doRequest($request, $location, $action, $version, $one_way);
     }
