@@ -126,8 +126,6 @@ class Article
             $instance->addUnitOfMeasure(new EANUnit($model->getEAN()->getValue(), $model->getEAN()->getUnit()));
         }
 
-        $instance->Article = $instance;
-
         return $instance;
     }
 

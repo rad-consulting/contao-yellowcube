@@ -7,6 +7,7 @@
  */
 namespace RAD\YellowCube\Soap\Request\ART;
 
+use Iterator;
 use Contao\Model\Collection;
 use RAD\YellowCube\Config;
 use RAD\YellowCube\Model\Product\YellowCube;
@@ -14,16 +15,26 @@ use RAD\YellowCube\Model\Product\YellowCube;
 /**
  * Class ArticleList
  */
-class ArticleList
+class ArticleList implements Iterator
 {
+    /**
+     * @var int
+     */
+    protected $key = 0;
+
+    /**
+     * @var Article[]
+     */
+    protected $articles = array();
+
     /**
      * @param Collection $collection
      * @param Config     $config
-     * @return array
+     * @return ArticleList
      */
     public static function factory(Collection $collection, Config $config)
     {
-        $articles = array();
+        $instance = new self();
 
         foreach ($collection as $item) {
             if ($item instanceof YellowCube) {
@@ -33,7 +44,7 @@ class ArticleList
                     if ($variants instanceof Collection) {
                         foreach ($variants as $variant) {
                             if ($variant instanceof YellowCube) {
-                                $articles[] = Article::factory($variant, $config);
+                                $instance->addArticle(Article::factory($variant, $config));
                             }
                         }
                     }
@@ -41,10 +52,65 @@ class ArticleList
                     continue;
                 }
 
-                $articles[] = Article::factory($item, $config);
+                $instance->addArticle(Article::factory($item, $config));
             }
         }
 
-        return $articles;
+        return $instance;
+    }
+
+    /**
+     * @param Article $article
+     * @return $this
+     */
+    public function addArticle(Article $article)
+    {
+        $this->articles[] = $article;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function current()
+    {
+        return array('Article' => $this->articles[$this->key()]);
+    }
+
+    /**
+     * @return int
+     */
+    public function key()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @return void
+     */
+    public function next()
+    {
+        $this->key++;
+    }
+
+    /**
+     * @return void
+     */
+    public function rewind()
+    {
+        $this->key = 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function valid()
+    {
+        if (!isset($this->articles[$this->key])) {
+            return false;
+        }
+
+        return $this->articles[$this->key] instanceof Article;
     }
 }
