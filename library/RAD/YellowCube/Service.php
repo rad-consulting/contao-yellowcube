@@ -12,9 +12,9 @@ use RAD\Event\EventSubscriberInterface as EventSubscriber;
 use RAD\Event\Model\Event;
 use Exception;
 use Contao\Model;
-use Isotope\Model\OrderStatus;
 use Isotope\Model\ProductCollection\Order as ShopOrder;
 use RAD\Fulfillment\Model\Fulfillment;
+use RAD\Fulfillment\Model\MasterData;
 use RAD\Fulfillment\Model\SupplierOrder as ShopSupplierOrder;
 use RAD\Log\Model\Log;
 use RAD\YellowCube\Model\Product\YellowCube;
@@ -73,7 +73,9 @@ class Service implements EventSubscriber
             'yellowcube.sendFulfillment' => 'onSendFulfillment',
             'yellowcube.confirmFulfillment' => 'onConfirmFulfillment',
             'yellowcube.updateFulfillment' => 'onUpdateFulfillment',
+            'yellowcube.sendAssortment' => 'onSendAssortment',
             'yellowcube.sendProduct' => 'onSendProduct',
+            'yellowcube.statusAssortment' => 'onStatusAssortment',
             'yellowcube.statusProduct' => 'onStatusProduct',
             'yellowcube.sendSupplierOrder' => 'onSendSupplierOrder',
             'yellowcube.statusSupplierOrder' => 'onStatusSupplierOrder',
@@ -87,6 +89,60 @@ class Service implements EventSubscriber
     public function importStock()
     {
         $this->dispatch('yellowcube.importStock');
+    }
+
+    /**
+     * @param Event $event
+     * @return void
+     * @throws Exception
+     */
+    public function onSendAssortment(Event $event)
+    {
+        $model = $event->getSubject();
+
+        if ($model instanceof MasterData && 'yellowcube' == $model->producttype) {
+            $collection = YellowCube::findAll();
+            $response = $this->getClient()->sendArticleMasterData(array(
+                'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
+                'ArticleList' => Request\ART\ArticleList::factory($collection, $this->getConfig()),
+            ));
+
+            if ($response->isSuccess()) {
+                $model->log($response->getStatusText(), Log::DEBUG, $this->getLastXML());
+                $this->dispatch('yellowcube.statusAssortment', $model, array('reference' => $response->getReference()));
+
+                return;
+            }
+
+            $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
+            throw new Exception($response->getStatusText());
+        }
+    }
+
+    /**
+     * @param Event $event
+     * @throws Exception
+     */
+    public function onStatusAssortment(Event $event)
+    {
+        $model = $event->getSubject();
+        $reference = $event->getArgument('reference');
+
+        if ($model instanceof MasterData) {
+            $response = $this->getClient()->statusArticleMasterData(array(
+                'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
+                'Reference' => $reference,
+            ));
+
+            if ($response->isSuccess()) {
+                $model->setExported(true, $response->getStatusText(), $this->getLastXML())->save();
+
+                return;
+            }
+
+            $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
+            throw new Exception($response->getStatusText());
+        }
     }
 
     /**
