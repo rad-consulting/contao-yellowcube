@@ -9,7 +9,7 @@ namespace RAD\YellowCube\Soap\Request\WAB;
 
 use Isotope\Model\ProductCollection\Order as ShopOrder;
 use RAD\YellowCube\Config;
-use RAD\YellowCube\Model\Shipping\YellowCube as YellowCubeBasic;
+use RAD\YellowCube\Model\Shipping\Swisspost;
 
 /**
  * Class Service
@@ -31,7 +31,7 @@ class Service
         $instance = new static();
         $shipping = $order->getShippingMethod();
 
-        if ($shipping instanceof YellowCubeBasic) {
+        if ($shipping instanceof Swisspost) {
             $instance->BasicShippingServices = $shipping->getBasicService();
         }
 
