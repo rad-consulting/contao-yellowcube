@@ -15,16 +15,18 @@ use RAD\YellowCube\Model\Product\YellowCube;
 /**
  * Class ArticleList
  */
-class ArticleList extends ArrayObject
+class ArticleList extends ArrayObject implements \Iterator, \ArrayAccess
 {
+    protected $key = 0;
+
     /**
      * @param Collection $collection
      * @param Config     $config
-     * @return string
+     * @return ArticleList
      */
     public static function factory(Collection $collection, Config $config)
     {
-        $articles = array();
+        $instance = new static();
 
         foreach ($collection as $item) {
             if ($item instanceof YellowCube) {
@@ -34,7 +36,7 @@ class ArticleList extends ArrayObject
                     if ($variants instanceof Collection) {
                         foreach ($variants as $variant) {
                             if ($variant instanceof YellowCube) {
-                                $articles[] = Article::factory($variant, $config);
+                                $instance->addArticle(Article::factory($variant, $config));
                             }
                         }
                     }
@@ -42,11 +44,11 @@ class ArticleList extends ArrayObject
                     continue;
                 }
 
-                $articles[] = Article::factory($item, $config);
+                $instance->addArticle(Article::factory($item, $config));
             }
         }
 
-        return '<ns1:xmlString><Article><ArticleNo>0</ArticleNo></Article></ns1:xmlString>';
+        return $instance;
     }
 
     /**
@@ -61,12 +63,34 @@ class ArticleList extends ArrayObject
     }
 
     /**
-     * @param mixed $index
-     * @return array
+     * @return mixed
      */
-    public function offsetGet($index)
+    public function current()
     {
-        return array('Article' => parent::offsetGet($index));
+        return $this->offsetGet($this->key);
+    }
+
+    /**
+     * @return string
+     */
+    public function key()
+    {
+        return 'Article';
+    }
+
+    public function next()
+    {
+        $this->key++;
+    }
+
+    public function rewind()
+    {
+        $this->key = 0;
+    }
+
+    public function valid()
+    {
+        return $this->offsetExists($this->key) && $this->offsetGet($this->key) instanceof Article;
     }
 
 
