@@ -27,6 +27,11 @@ use RAD\YellowCube\Soap\Util\ISO;
 class Article
 {
     /**
+     * @var Article
+     */
+    protected $Article;
+
+    /**
      * @var int
      */
     protected $EAN;
@@ -121,6 +126,8 @@ class Article
             $instance->addUnitOfMeasure(new EANUnit($model->getEAN()->getValue(), $model->getEAN()->getUnit()));
         }
 
+        $instance->Article = $instance;
+
         return $instance;
     }
 
@@ -143,14 +150,6 @@ class Article
     {
         $this->UnitsOfMeasure[$unit->getName()] = $unit;
 
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function Article()
-    {
         return $this;
     }
 }
