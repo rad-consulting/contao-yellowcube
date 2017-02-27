@@ -59,6 +59,14 @@ class ArticleList implements Iterator
     /**
      * @return Article
      */
+    public function getArticle()
+    {
+        return $this->articles[$this->key++];
+    }
+
+    /**
+     * @return Article
+     */
     public function current()
     {
         return $this->articles[$this->key];
@@ -69,7 +77,7 @@ class ArticleList implements Iterator
      */
     public function key()
     {
-        return 'Article';
+        return $this->key;
     }
 
     /**
