@@ -18,6 +18,11 @@ use RAD\YellowCube\Model\Product\YellowCube;
 class ArticleList implements Iterator
 {
     /**
+     * @var \Closure
+     */
+    protected $Article;
+
+    /**
      * @var array
      */
     protected $articles = array();
@@ -46,6 +51,16 @@ class ArticleList implements Iterator
     }
 
     /**
+     * ArticleList constructor.
+     */
+    public function __construct()
+    {
+        $this->Article = function () {
+            return $this->articles[$this->key++];
+        };
+    }
+
+    /**
      * @param Article $article
      * @return $this
      */
@@ -54,14 +69,6 @@ class ArticleList implements Iterator
         $this->articles[] = $article;
 
         return $this;
-    }
-
-    /**
-     * @return Article
-     */
-    public function getArticle()
-    {
-        return $this->articles[$this->key++];
     }
 
     /**
