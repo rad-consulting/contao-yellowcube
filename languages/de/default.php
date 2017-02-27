@@ -8,4 +8,3 @@
 
 // Models
 $GLOBALS['TL_LANG']['MODEL']['tl_iso_product']['yellowcube'] = array('YellowCube-Produkt');
-$GLOBALS['TL_LANG']['MODEL']['tl_iso_shipping']['yellowcube'] = array('YellowCube-Versand');
