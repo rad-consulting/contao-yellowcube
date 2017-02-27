@@ -7,7 +7,7 @@
  */
 namespace RAD\YellowCube\Soap\Request\ART;
 
-use ArrayAccess, Iterator;
+use ArrayObject;
 use Contao\Model\Collection;
 use RAD\YellowCube\Config;
 use RAD\YellowCube\Model\Product\YellowCube;
@@ -15,18 +15,8 @@ use RAD\YellowCube\Model\Product\YellowCube;
 /**
  * Class ArticleList
  */
-class ArticleList implements Iterator, ArrayAccess
+class ArticleList extends ArrayObject
 {
-    /**
-     * @var int
-     */
-    protected $key = 0;
-
-    /**
-     * @var Article[]
-     */
-    protected $articles = array();
-
     /**
      * @param Collection $collection
      * @param Config     $config
@@ -65,87 +55,17 @@ class ArticleList implements Iterator, ArrayAccess
      */
     public function addArticle(Article $article)
     {
-        $this->articles[] = $article;
+        $this->append($article);
 
         return $this;
     }
 
     /**
+     * @param mixed $index
      * @return array
      */
-    public function current()
+    public function offsetGet($index)
     {
-        return array('Article' => $this->articles[$this->key()]);
-    }
-
-    /**
-     * @return int
-     */
-    public function key()
-    {
-        return $this->key;
-    }
-
-    /**
-     * @return void
-     */
-    public function next()
-    {
-        $this->key++;
-    }
-
-    /**
-     * @return void
-     */
-    public function rewind()
-    {
-        $this->key = 0;
-    }
-
-    /**
-     * @return bool
-     */
-    public function valid()
-    {
-        if (!isset($this->articles[$this->key])) {
-            return false;
-        }
-
-        return $this->articles[$this->key] instanceof Article;
-    }
-
-    /**
-     * @param mixed $offset
-     * @return bool
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->articles[$offset]);
-    }
-
-    /**
-     * @param mixed $offset
-     * @return Article
-     */
-    public function offsetGet($offset)
-    {
-        return $this->articles[$offset];
-    }
-
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->articles[$offset] = $value;
-    }
-
-    /**
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->articles[$offset]);
+        return array('Article' => parent::offsetGet($index));
     }
 }
