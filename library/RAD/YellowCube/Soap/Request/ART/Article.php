@@ -106,12 +106,12 @@ class Article
         $instance->PlantID = $config->get('plantid');
         $instance->ArticleNo = $model->getArticleNo();
         $instance->BaseUOM = ISO::PCE;
-        $instance->NetWeight = new NetWeightUnit($model->getWeightNet()->getWeightValue(), $model->getWeightNet()->getWeightUnit());
+
+        $instance->NetWeight = new NetWeightUnit($model->getWeight()->getWeightValue() * .91, $model->getWeight()->getWeightUnit());
         $instance->UnitsOfMeasure['AlternateUnitISO'] = ISO::PCE;
         $instance->addArticleDescription(new ArticleDescription($model->getName(), 'de'));
 
         // Optional
-        $instance->addUnitOfMeasure(new GrossWeightUnit($model->getWeightGross()->getWeightValue(), $model->getWeightGross()->getWeightUnit()));
         $instance->addUnitOfMeasure(new LengthUnit($model->getLength()->getValue(), $model->getHeight()->getUnit(true)));
         $instance->addUnitOfMeasure(new WidthUnit($model->getWidth()->getValue(), $model->getHeight()->getUnit(true)));
         $instance->addUnitOfMeasure(new HeightUnit($model->getHeight()->getValue(), $model->getHeight()->getUnit(true)));
