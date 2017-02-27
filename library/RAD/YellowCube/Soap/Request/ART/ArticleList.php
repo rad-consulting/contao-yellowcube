@@ -54,17 +54,6 @@ class ArticleList implements \Iterator
     }
 
     /**
-     * ArticleList constructor.
-     */
-    public function __construct()
-    {
-        $this->Article = function () {
-            return $this->current();
-        };
-    }
-
-
-    /**
      * @param Article $article
      * @return $this
      */
@@ -80,7 +69,9 @@ class ArticleList implements \Iterator
      */
     public function current()
     {
-        return $this->articles[$this->key];
+        $class = new \stdClass();
+
+        return $class->Article = $this->articles[$this->key];
     }
 
     /**
