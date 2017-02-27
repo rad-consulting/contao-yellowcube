@@ -8,6 +8,7 @@
 namespace RAD\YellowCube\Soap\Request\ART;
 
 use Contao\Model\Collection;
+use Contao\System;
 use Iterator;
 use RAD\YellowCube\Config;
 use RAD\YellowCube\Model\Product\YellowCube;
@@ -56,6 +57,7 @@ class ArticleList implements Iterator
     public function __construct()
     {
         $this->Article = function () {
+            System::log(count($this->articles), __METHOD__, TL_ERROR);
             return $this->articles[$this->key++];
         };
     }
