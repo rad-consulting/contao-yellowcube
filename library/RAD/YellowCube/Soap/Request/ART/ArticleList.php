@@ -19,7 +19,6 @@ class ArticleList implements \Iterator
 {
     protected $key = 0;
     protected $articles = array();
-    protected $Article;
 
     /**
      * @param Collection $collection
