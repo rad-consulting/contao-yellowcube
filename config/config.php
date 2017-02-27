@@ -8,6 +8,8 @@
 
 // Models
 \Isotope\Model\Product::registerModelType('yellowcube', 'RAD\\YellowCube\\Model\\Product\\YellowCube');
+\Isotope\Model\Shipping::registerModelType('yellowcube', 'RAD\\YellowCube\\Model\\Shipping\\YellowCube');
+
 $GLOBALS['TL_MODELS'][\RAD\YellowCube\Model\Product\YellowCube::getTable()] = 'RAD\\YellowCube\\Model\\Product\\YellowCube';
 
 // Subscribers

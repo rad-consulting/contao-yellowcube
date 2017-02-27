@@ -27,7 +27,7 @@ class Order
     protected $PartnerAddress = array();
 
     /**
-     * @var AdditionalService[]
+     * @var Service[]
      */
     protected $ValueAddedServices = array();
 
