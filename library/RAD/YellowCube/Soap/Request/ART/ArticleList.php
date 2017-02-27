@@ -20,11 +20,11 @@ class ArticleList extends ArrayObject
     /**
      * @param Collection $collection
      * @param Config     $config
-     * @return ArticleList
+     * @return Article[]
      */
     public static function factory(Collection $collection, Config $config)
     {
-        $instance = new self();
+        $articles = array();
 
         foreach ($collection as $item) {
             if ($item instanceof YellowCube) {
@@ -34,7 +34,7 @@ class ArticleList extends ArrayObject
                     if ($variants instanceof Collection) {
                         foreach ($variants as $variant) {
                             if ($variant instanceof YellowCube) {
-                                $instance->addArticle(Article::factory($variant, $config));
+                                $articles[] = Article::factory($variant, $config);
                             }
                         }
                     }
@@ -42,11 +42,11 @@ class ArticleList extends ArrayObject
                     continue;
                 }
 
-                $instance->addArticle(Article::factory($item, $config));
+                $articles[] = Article::factory($item, $config);
             }
         }
 
-        return $instance;
+        return $articles;
     }
 
     /**
@@ -68,4 +68,6 @@ class ArticleList extends ArrayObject
     {
         return array('Article' => parent::offsetGet($index));
     }
+
+
 }
