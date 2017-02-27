@@ -17,6 +17,7 @@ use RAD\Fulfillment\Model\Fulfillment;
 use RAD\Fulfillment\Model\MasterData;
 use RAD\Fulfillment\Model\Product\Fulfillment as FulfillmentProduct;
 use RAD\Fulfillment\Model\SupplierOrder as ShopSupplierOrder;
+use RAD\Log\LogException;
 use RAD\Log\Model\Log;
 use RAD\YellowCube\Model\Product\YellowCube;
 use RAD\YellowCube\Soap\Request;
@@ -102,21 +103,26 @@ class Service implements EventSubscriber
         $model = $event->getSubject();
 
         if ($model instanceof MasterData && 'yellowcube' == $model->producttype) {
-            $collection = FulfillmentProduct::findByType('yellowcube');
-            $response = $this->getClient()->sendArticleMasterData(array(
-                'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
-                'ArticleList' => Request\ART\ArticleList::factory($collection, $this->getConfig()),
-            ));
+            try {
+                $collection = FulfillmentProduct::findByType('yellowcube');
+                $response = $this->getClient()->sendArticleMasterData(array(
+                    'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
+                    'ArticleList' => Request\ART\ArticleList::factory($collection, $this->getConfig()),
+                ));
 
-            if ($response->isSuccess()) {
-                $model->log($response->getStatusText(), Log::DEBUG, $this->getLastXML());
-                $this->dispatch('yellowcube.statusAssortment', $model, array('reference' => $response->getReference()));
+                if ($response->isSuccess()) {
+                    $model->log($response->getStatusText(), Log::DEBUG, $this->getLastXML());
+                    $this->dispatch('yellowcube.statusAssortment', $model, array('reference' => $response->getReference()));
 
-                return;
+                    return;
+                }
+
+                $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
+                throw new Exception($response->getStatusText());
             }
-
-            $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
-            throw new Exception($response->getStatusText());
+            catch (Exception $e) {
+                throw new LogException($e->getMessage(), Log::ERROR, $e, $this->getLastXML());
+            }
         }
     }
 
