@@ -105,20 +105,27 @@ class Service implements EventSubscriber
         if ($model instanceof MasterData && 'yellowcube' == $model->producttype) {
             try {
                 $collection = FulfillmentProduct::findByType('yellowcube');
-                $response = $this->getClient()->sendArticleMasterData(array(
-                    'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
-                    'ArticleList' => Request\ART\ArticleList::factory($collection, $this->getConfig()),
-                ));
 
-                if ($response->isSuccess()) {
-                    $model->log($response->getStatusText(), Log::DEBUG, $this->getLastXML());
-                    $this->dispatch('yellowcube.statusAssortment', $model, array('reference' => $response->getReference()));
+                if ($collection) {
+                    foreach ($collection as $product) {
+                        if ($product instanceof YellowCube) {
+                            if ($product->hasVariants()) {
+                                $variants = YellowCube::findByPk($product->getVariantIds());
 
-                    return;
+                                if ($variants) {
+                                    foreach ($variants as $variant) {
+                                        if ($variant instanceof YellowCube) {
+                                            $this->dispatch('yellowcube.sendProduct', $product);
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                $this->dispatch('yellowcube.sendProduct', $product);
+                            }
+                        }
+                    }
                 }
-
-                $model->log($response->getStatusText(), Log::ERROR, $this->getLastXML());
-                throw new Exception($response->getStatusText());
             }
             catch (Exception $e) {
                 throw new LogException($e->getMessage(), Log::ERROR, $e, $this->getLastXML());
