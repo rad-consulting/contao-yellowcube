@@ -110,7 +110,6 @@ class Service implements EventSubscriber
             ));
 
             if ($response->isSuccess()) {
-                $product->setExport(false)->save();
                 $product->log($response->getStatusText(), Log::DEBUG, $this->getLastXML());
                 $this->dispatch('yellowcube.statusProduct', $product, array('reference' => $response->getReference()));
 
