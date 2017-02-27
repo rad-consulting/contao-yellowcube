@@ -145,4 +145,12 @@ class Article
 
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function Article()
+    {
+        return $this;
+    }
 }

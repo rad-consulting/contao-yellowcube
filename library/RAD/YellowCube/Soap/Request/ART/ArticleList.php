@@ -41,7 +41,7 @@ class ArticleList
                     continue;
                 }
 
-                $articles[] = array('Article' => Article::factory($item, $config));
+                $articles[] = Article::factory($item, $config);
             }
         }
 
