@@ -7,6 +7,7 @@
  */
 namespace RAD\YellowCube;
 
+use Contao\System;
 use RAD\Event\EventDispatcher;
 use RAD\Event\EventSubscriberInterface as EventSubscriber;
 use RAD\Event\Model\Event;
@@ -105,12 +106,14 @@ class Service implements EventSubscriber
         if ($model instanceof MasterData && 'yellowcube' == $model->producttype) {
             try {
                 $collection = FulfillmentProduct::findByType('yellowcube');
+                System::log(var_export($collection, true), __METHOD__, TL_ERROR);
 
                 if ($collection) {
                     foreach ($collection as $product) {
                         if ($product instanceof YellowCube) {
                             if ($product->hasVariants()) {
                                 $variants = YellowCube::findByPk($product->getVariantIds());
+                                System::log(var_export($variants, true), __METHOD__, TL_ERROR);
 
                                 if ($variants) {
                                     foreach ($variants as $variant) {
