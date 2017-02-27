@@ -8,8 +8,8 @@
 namespace RAD\YellowCube\Soap\Request\WAB;
 
 use Isotope\Model\ProductCollection\Order as ShopOrder;
+use RAD\Fulfillment\Model\Shipping\Swisspost;
 use RAD\YellowCube\Config;
-use RAD\YellowCube\Model\Shipping\Swisspost;
 
 /**
  * Class Service
