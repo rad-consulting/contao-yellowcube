@@ -7,7 +7,7 @@
  */
 namespace RAD\YellowCube\Soap\Request\ART;
 
-use Iterator;
+use ArrayAccess, Iterator;
 use Contao\Model\Collection;
 use RAD\YellowCube\Config;
 use RAD\YellowCube\Model\Product\YellowCube;
@@ -15,7 +15,7 @@ use RAD\YellowCube\Model\Product\YellowCube;
 /**
  * Class ArticleList
  */
-class ArticleList implements Iterator
+class ArticleList implements Iterator, ArrayAccess
 {
     /**
      * @var int
@@ -112,5 +112,40 @@ class ArticleList implements Iterator
         }
 
         return $this->articles[$this->key] instanceof Article;
+    }
+
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->articles[$offset]);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return Article
+     */
+    public function offsetGet($offset)
+    {
+        return $this->articles[$offset];
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->articles[$offset] = $value;
+    }
+
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->articles[$offset]);
     }
 }

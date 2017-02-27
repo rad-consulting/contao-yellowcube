@@ -27,11 +27,6 @@ use RAD\YellowCube\Soap\Util\ISO;
 class Article
 {
     /**
-     * @var Article
-     */
-    protected $Article;
-
-    /**
      * @var int
      */
     protected $EAN;
