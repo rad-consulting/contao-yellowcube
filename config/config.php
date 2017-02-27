@@ -9,7 +9,5 @@
 // Models
 \Isotope\Model\Product::registerModelType('yellowcube', 'RAD\\YellowCube\\Model\\Product\\YellowCube');
 
-$GLOBALS['TL_MODELS'][\RAD\YellowCube\Model\Product\YellowCube::getTable()] = 'RAD\\YellowCube\\Model\\Product\\YellowCube';
-
 // Subscribers
 $GLOBALS['RAD_SUBSCRIBERS'][] = 'RAD\\YellowCube\\Service';
