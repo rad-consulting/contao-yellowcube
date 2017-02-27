@@ -105,32 +105,16 @@ class Service implements EventSubscriber
 
         if ($model instanceof MasterData && 'yellowcube' == $model->producttype) {
             try {
-                $collection = FulfillmentProduct::findByType('yellowcube');
-                System::log(var_export($collection, true), __METHOD__, TL_ERROR);
+                $collection = FulfillmentProduct::findByType('yellowcube', true);
+                $response = $this->getClient()->sendArticleMasterData(array(
+                    'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
+                    'ArticleList' => Request\ART\ArticleList::factory($collection, $this->getConfig()),
+                ));
 
-                if ($collection) {
-                    foreach ($collection as $product) {
-                        if ($product instanceof YellowCube) {
-                            if ($product->hasVariants()) {
-                                $variants = YellowCube::findByPk($product->getVariantIds());
-                                System::log(var_export($variants, true), __METHOD__, TL_ERROR);
+                if ($response->isSuccess()) {
+                    $model->setExported(true, $response->getStatusText(), $this->getLastXML());
 
-                                if ($variants) {
-                                    foreach ($variants as $variant) {
-                                        if ($variant instanceof YellowCube) {
-                                            $this->dispatch('yellowcube.sendProduct', $product);
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                $this->dispatch('yellowcube.sendProduct', $product);
-                            }
-                        }
-
-
-                        System::log(get_class($product), __METHOD__, TL_ERROR);
-                    }
+                    return;
                 }
             }
             catch (Exception $e) {
