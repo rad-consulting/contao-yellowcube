@@ -17,7 +17,7 @@ use RAD\YellowCube\Model\Product\YellowCube;
 class ArticleList
 {
     /**
-     * @var Article[]
+     * @var ArticleList[]
      */
     protected $ArticleList = array();
 
@@ -28,7 +28,7 @@ class ArticleList
      */
     public static function factory(Collection $collection, Config $config)
     {
-        $instance = new static();
+        $articles = array();
 
         foreach ($collection as $item) {
             if ($item instanceof YellowCube) {
@@ -38,7 +38,7 @@ class ArticleList
                     if ($variants instanceof Collection) {
                         foreach ($variants as $variant) {
                             if ($variant instanceof YellowCube) {
-                                $instance->ArticleList[] = array('Article' => Article::factory($variant, $config));
+                                $articles[] = Article::factory($variant, $config);
                             }
                         }
                     }
@@ -46,10 +46,10 @@ class ArticleList
                     continue;
                 }
 
-                $instance->ArticleList[] = array('Article' => Article::factory($item, $config));
+                $articles[] = Article::factory($item, $config);
             }
         }
 
-        return $instance;
+        return $articles;
     }
 }
