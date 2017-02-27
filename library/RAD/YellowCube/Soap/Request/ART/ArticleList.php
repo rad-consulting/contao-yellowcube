@@ -46,7 +46,7 @@ class ArticleList extends ArrayObject
             }
         }
 
-        return '<ns1:Article><ns1:ArticleNo>0</ns1:ArticleNo></ns1:Article>';
+        return '<ns1:xmlString><ns1:Article><ns1:ArticleNo>0</ns1:ArticleNo></ns1:Article></ns1:xmlString>';
     }
 
     /**
