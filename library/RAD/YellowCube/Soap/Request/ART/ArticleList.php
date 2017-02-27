@@ -32,6 +32,20 @@ class ArticleList
 
         foreach ($collection as $item) {
             if ($item instanceof YellowCube) {
+                if ($item->hasVariants()) {
+                    $variants = YellowCube::findMultipleByIds($item->getVariantIds());
+
+                    if ($variants instanceof Collection) {
+                        foreach ($variants as $variant) {
+                            if ($variant instanceof YellowCube) {
+                                $instance->Article[] = Article::factory($variant, $config);
+                            }
+                        }
+                    }
+
+                    continue;
+                }
+
                 $instance->Article[] = Article::factory($item, $config);
             }
         }

@@ -7,8 +7,6 @@
  */
 namespace RAD\YellowCube;
 
-use Isotope\Model\Product;
-use Isotope\Model\ProductType;
 use RAD\Event\EventDispatcher;
 use RAD\Event\EventSubscriberInterface as EventSubscriber;
 use RAD\Event\Model\Event;
@@ -17,6 +15,7 @@ use Contao\Model;
 use Isotope\Model\ProductCollection\Order as ShopOrder;
 use RAD\Fulfillment\Model\Fulfillment;
 use RAD\Fulfillment\Model\MasterData;
+use RAD\Fulfillment\Model\Product\Fulfillment as FulfillmentProduct;
 use RAD\Fulfillment\Model\SupplierOrder as ShopSupplierOrder;
 use RAD\Log\Model\Log;
 use RAD\YellowCube\Model\Product\YellowCube;
@@ -103,7 +102,7 @@ class Service implements EventSubscriber
         $model = $event->getSubject();
 
         if ($model instanceof MasterData && 'yellowcube' == $model->producttype) {
-            $collection = Product::findByType('yellowcube');
+            $collection = FulfillmentProduct::findByType('yellowcube');
             $response = $this->getClient()->sendArticleMasterData(array(
                 'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'ArticleList' => Request\ART\ArticleList::factory($collection, $this->getConfig()),
