@@ -20,7 +20,7 @@ class ArticleList extends ArrayObject
     /**
      * @param Collection $collection
      * @param Config     $config
-     * @return Article[]
+     * @return string
      */
     public static function factory(Collection $collection, Config $config)
     {
@@ -46,7 +46,7 @@ class ArticleList extends ArrayObject
             }
         }
 
-        return $articles;
+        return '<ns1:ArticleList><ns1:Article><ns1:ArticleNo>0</ns1:ArticleNo></ns1:Article></ns1:ArticleList>';
     }
 
     /**

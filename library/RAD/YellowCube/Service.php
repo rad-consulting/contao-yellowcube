@@ -107,9 +107,7 @@ class Service implements EventSubscriber
                 $collection = FulfillmentProduct::findByType('yellowcube');
                 $response = $this->getClient()->sendArticleMasterData(array(
                     'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
-                    'ArticleList' => array(
-                        'Article' => Request\ART\ArticleList::factory($collection, $this->getConfig()),
-                    ),
+                    (string)Request\ART\ArticleList::factory($collection, $this->getConfig()),
                 ));
 
                 if ($response->isSuccess()) {
