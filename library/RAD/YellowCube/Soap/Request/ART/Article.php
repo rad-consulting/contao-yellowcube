@@ -9,10 +9,10 @@ namespace RAD\YellowCube\Soap\Request\ART;
 
 use RAD\YellowCube\Config;
 use RAD\YellowCube\Model\Product\YellowCube as Model;
-use RAD\YellowCube\Soap\Unit\EANUnit;
-use RAD\YellowCube\Soap\Unit\NetWeightUnit;
-use RAD\YellowCube\Soap\Unit\UnitInterface;
-use RAD\YellowCube\Soap\Util\ISO;
+use RAD\YellowCube\Soap\Unit\EAN;
+use RAD\YellowCube\Soap\Unit\Mass;
+use RAD\YellowCube\Soap\Unit\ISO;
+use RAD\YellowCube\Soap\Util\SimpleValue;
 
 /**
  * Class Article
@@ -52,7 +52,7 @@ class Article
     protected $DepositorNo;
 
     /**
-     * @var UnitInterface
+     * @var SimpleValue
      */
     protected $NetWeight;
 
@@ -77,7 +77,7 @@ class Article
     protected $SerialNoFlag;
 
     /**
-     * @var UnitInterface[]
+     * @var SimpleValue[]
      */
     protected $UnitsOfMeasure = array();
 
@@ -103,10 +103,10 @@ class Article
         $instance->BaseUOM = ISO::PCE;
 
         if ($weight = $model->getWeight()) {
-            $instance->NetWeight = new NetWeightUnit($weight->getWeightValue() * .91, $weight->getWeightUnit());
+            $instance->NetWeight = new Mass($weight->getWeightValue() * .91, $weight->getWeightUnit());
         }
         else {
-            $instance->NetWeight = new NetWeightUnit(0, ISO::KGM);
+            $instance->NetWeight = new Mass(0, ISO::KGM);
         }
 
         $instance->UnitsOfMeasure['AlternateUnitISO'] = ISO::PCE;
@@ -114,7 +114,7 @@ class Article
 
         // Optional
         if ('p' == $config->get('operatingmode')) {
-            $instance->addUnitOfMeasure(new EANUnit($model->getEAN()->getValue(), $model->getEAN()->getUnit()));
+            $instance->addUnitOfMeasure('EAN', new EAN($model->getEAN()->getValue(), $model->getEAN()->getUnit()));
         }
 
         return $instance;
@@ -132,12 +132,13 @@ class Article
     }
 
     /**
-     * @param UnitInterface $unit
+     * @param string      $name
+     * @param SimpleValue $unit
      * @return $this
      */
-    public function addUnitOfMeasure(UnitInterface $unit)
+    public function addUnitOfMeasure($name, SimpleValue $unit)
     {
-        $this->UnitsOfMeasure[$unit->getName()] = $unit;
+        $this->UnitsOfMeasure[$name] = $unit;
 
         return $this;
     }

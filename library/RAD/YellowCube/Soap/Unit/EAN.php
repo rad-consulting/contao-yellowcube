@@ -5,12 +5,14 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace RAD\YellowCube\Soap\Util;
+namespace RAD\YellowCube\Soap\Unit;
+
+use RAD\YellowCube\Soap\Util\SimpleValue;
 
 /**
- * Class EANType
+ * Class EAN
  */
-class EANType extends SimpleValue
+class EAN extends SimpleValue
 {
     /**
      * @const string
@@ -27,4 +29,20 @@ class EANType extends SimpleValue
     const SG = 'SG';
     const UC = 'UC';
     const VC = 'VC';
+
+    /**
+     * @var string
+     */
+    protected $EANType = 'HE';
+
+    /**
+     * @param mixed       $EAN
+     * @param string|null $EANType
+     */
+    public function __construct($EAN, $EANType = null)
+    {
+        parent::__construct($EAN);
+
+        $this->EANType = $EANType;
+    }
 }

@@ -7,28 +7,33 @@
  */
 namespace RAD\YellowCube\Soap\Unit;
 
-use RAD\YellowCube\Soap\Util\ISO;
+use RAD\YellowCube\Soap\Util\SimpleValue;
 
 /**
- * Class WeightUnit
+ * Class Mass
  */
-class WeightUnit extends AbstractUnit
+class Mass extends SimpleValue
 {
+    /**
+     * @var string
+     */
+    protected $ISO = ISO::KGM;
+
     /**
      * @param float  $value
      * @param string $ISO
      */
     public function __construct($value, $ISO)
     {
+        parent::__construct($value);
+
         // Map values from Haste
         $map = array(
             'kg' => ISO::KGM,
         );
 
         if (isset($map[$ISO])) {
-            $ISO = $map[$ISO];
+            $this->ISO = $map[$ISO];
         }
-
-        parent::__construct($value, $ISO);
     }
 }
