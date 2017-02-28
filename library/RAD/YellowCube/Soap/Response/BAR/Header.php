@@ -5,12 +5,12 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace RAD\YellowCube\Soap\Response;
+namespace RAD\YellowCube\Soap\Response\BAR;
 
 /**
- * Class DeliveryList
+ * Class Header
  */
-class DeliveryList
+class Header
 {
 
 }

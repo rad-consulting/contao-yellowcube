@@ -11,12 +11,12 @@ use RAD\YellowCube\Soap\Shared\CustomerOrderDetail;
 use RAD\YellowCube\Soap\Shared\CustomerOrderHeader;
 
 /**
- * Class GoodsIssue
+ * Class Issue
  */
-class GoodsIssue
+class Issue
 {
     /**
-     * @var GoodsIssueHeader
+     * @var IssueHeader
      */
     protected $GoodsIssueHeader;
 
@@ -31,7 +31,7 @@ class GoodsIssue
     protected $CustomerOrderList = array();
 
     /**
-     * @return GoodsIssueHeader
+     * @return IssueHeader
      */
     public function getIssueHeader()
     {

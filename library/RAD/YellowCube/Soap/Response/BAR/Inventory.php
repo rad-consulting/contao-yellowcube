@@ -5,25 +5,28 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace RAD\YellowCube\Soap\Response\WAR;
+namespace RAD\YellowCube\Soap\Response\BAR;
 
 /**
- * Class GoodsIssueHeader
+ * Class Inventory
  */
-class GoodsIssueHeader
+class Inventory
 {
     /**
-     * @var int
+     * @var Header
      */
-    protected $BookingVoucherID;
+    protected $InventoryHeader;
 
     /**
-     * @var int
+     * ArticleList
      */
-    protected $BookingVoucherYear;
+    protected $ArticleList;
 
     /**
-     * @var string
+     * @return ArticleList
      */
-    protected $DepositorNo;
+    public function getArticles()
+    {
+        return $this->ArticleList;
+    }
 }

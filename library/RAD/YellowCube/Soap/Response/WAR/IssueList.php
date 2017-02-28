@@ -8,17 +8,17 @@
 namespace RAD\YellowCube\Soap\Response\WAR;
 
 /**
- * Class GoodsIssueList
+ * Class IssueList
  */
-class GoodsIssueList
+class IssueList
 {
     /**
-     * @var GoodsIssue[]
+     * @var Issue[]
      */
     protected $WAR = array();
 
     /**
-     * @return GoodsIssue[]
+     * @return Issue[]
      */
     public function getIssues()
     {

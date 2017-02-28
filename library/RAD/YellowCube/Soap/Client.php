@@ -10,8 +10,8 @@ namespace RAD\YellowCube\Soap;
 use SoapClient;
 use RAD\YellowCube\Soap\Response\GenericResponse;
 use RAD\YellowCube\Soap\Response\GenericStatus;
-use RAD\YellowCube\Soap\Response\InventoryList;
-use RAD\YellowCube\Soap\Response\WAR\GoodsIssueList;
+use RAD\YellowCube\Soap\Response\BAR\ArticleList;
+use RAD\YellowCube\Soap\Response\WAR\IssueList;
 
 /**
  * Class Client
@@ -25,8 +25,8 @@ use RAD\YellowCube\Soap\Response\WAR\GoodsIssueList;
  * @method GenericStatus getYCSupplierOrderStatus(array $request)
  * @method GenericResponse createYCCustomerOrder(array $request)
  * @method GenericStatus getYCCustomerOrderStatus(array $request)
- * @method GoodsIssueList getYCCustomerOrderReply(array $request)
- * @method InventoryList getInventory(array $request)
+ * @method IssueList getYCCustomerOrderReply(array $request)
+ * @method ArticleList getInventory(array $request)
  */
 class Client extends SoapClient
 {
@@ -40,10 +40,10 @@ class Client extends SoapClient
             'classmap' => array(
                 'GEN_Response' => 'RAD\\YellowCube\\Soap\\Response\\GenericResponse',
                 'GEN_STATUS' => 'RAD\\YellowCube\\Soap\\Response\\GenericStatus',
-                'WAR_List' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssueList',
-                'WAR' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssue',
-                'BAR' => 'RAD\\YellowCube\\Soap\\Response\\InventoryList',
-                'GoodsIssueHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssueHeader',
+                'WAR_List' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\IssueList',
+                'WAR' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Issue',
+                'BAR' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\ArticleList',
+                'GoodsIssueHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\IssueHeader',
                 'CustomerOrderDetail' => 'RAD\\YellowCube\\Soap\\Shared\\CustomerOrderDetail',
                 'CustomerOrderHeader' => 'RAD\\YellowCube\\Soap\\Shared\\CustomerOrderHeader',
             )), $options));
@@ -105,7 +105,7 @@ class Client extends SoapClient
 
     /**
      * @param array $request
-     * @return GoodsIssueList
+     * @return IssueList
      */
     public function getDeliveryNotices(array $request)
     {
