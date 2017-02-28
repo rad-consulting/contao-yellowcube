@@ -280,6 +280,8 @@ class Service implements EventSubscriber
 
                 return;
             }
+
+            throw new LogException('No delivery', Log::ERROR, $this->getLastXML());
         }
     }
 
