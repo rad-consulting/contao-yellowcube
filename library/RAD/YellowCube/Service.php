@@ -266,19 +266,21 @@ class Service implements EventSubscriber
      */
     public function onUpdateFulfillment(Event $event)
     {
-        /**
-         * @var Fulfillment $fulfillment
-         */
-        $fulfillment = $event->getSubject();
-        // TODO
+        $model = $event->getSubject();
 
-        $response = $this->getClient()->XXX($p);
+        if ($model instanceof Fulfillment) {
+            $response = $this->getClient()->getDeliveryNotices(array(
+                'ControlReference' => Request\ControlReference::factory('WAR', $this->getConfig()),
+                'CustomerOrderNo' => $model->pid,
+            ));
 
-        if ($response instanceof GoodsIssue) {
-            $fulfillment->setDelivered($response->getPostalNo(), $response->getStatusText(), $this->getLastXML())->save();
+            if ($response->isSuccess()) {
+                $model->setDelivered($response->getTracking(), 'Delivered', $this->getLastXML())->save();
+                $this->dispatch('yellowcube.completeFulfillment', $model);
+
+                return;
+            }
         }
-
-        $this->dispatch('fulfillment.complete', $fulfillment);
     }
 
     /**

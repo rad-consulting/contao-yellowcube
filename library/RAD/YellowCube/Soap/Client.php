@@ -10,8 +10,8 @@ namespace RAD\YellowCube\Soap;
 use SoapClient;
 use RAD\YellowCube\Soap\Response\GenericResponse;
 use RAD\YellowCube\Soap\Response\GenericStatus;
-use RAD\YellowCube\Soap\Response\DeliveryList;
 use RAD\YellowCube\Soap\Response\InventoryList;
+use RAD\YellowCube\Soap\Response\WAR\GoodsIssueList;
 
 /**
  * Class Client
@@ -25,7 +25,7 @@ use RAD\YellowCube\Soap\Response\InventoryList;
  * @method GenericStatus getYCSupplierOrderStatus(array $request)
  * @method GenericResponse createYCCustomerOrder(array $request)
  * @method GenericStatus getYCCustomerOrderStatus(array $request)
- * @method DeliveryList getYCCustomerOrderReply(array $request)
+ * @method GoodsIssueList getYCCustomerOrderReply(array $request)
  * @method InventoryList getInventory(array $request)
  */
 class Client extends SoapClient
@@ -40,8 +40,12 @@ class Client extends SoapClient
             'classmap' => array(
                 'GEN_Response' => 'RAD\\YellowCube\\Soap\\Response\\GenericResponse',
                 'GEN_STATUS' => 'RAD\\YellowCube\\Soap\\Response\\GenericStatus',
-                'WAR_List' => 'RAD\\YellowCube\\Soap\\Response\\DeliveryList',
+                'WAR_List' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssueList',
+                'WAR' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssue',
                 'BAR' => 'RAD\\YellowCube\\Soap\\Response\\InventoryList',
+                'GoodsIssueHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssueHeader',
+                'CustomerOrderDetail' => 'RAD\\YellowCube\\Soap\\Shared\\CustomerOrderDetail',
+                'CustomerOrderHeader' => 'RAD\\YellowCube\\Soap\\Shared\\CustomerOrderHeader',
             )), $options));
     }
 
@@ -101,7 +105,7 @@ class Client extends SoapClient
 
     /**
      * @param array $request
-     * @return DeliveryList
+     * @return GoodsIssueList
      */
     public function getDeliveryNotices(array $request)
     {
