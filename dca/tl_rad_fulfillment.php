@@ -8,4 +8,4 @@
  */
 
 // Config
-$GLOBALS['TL_DCA']['tl_iso_product']['config']['onsubmit_callback'][] = array('RAD\\YellowCube\\Backend\\Panel', 'onSubmit');
+$GLOBALS['TL_DCA']['tl_rad_fulfillment']['config']['onsubmit_callback'][] = array('RAD\\YellowCube\\Backend\\Panel', 'onSubmit');

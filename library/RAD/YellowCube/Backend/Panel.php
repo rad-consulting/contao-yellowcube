@@ -11,6 +11,7 @@ use Contao\Backend;
 use Contao\DataContainer;
 use Isotope\Model\ProductType;
 use RAD\Event\EventDispatcher;
+use RAD\Fulfillment\Model\Fulfillment;
 use RAD\Fulfillment\Model\MasterData;
 use RAD\Fulfillment\Model\SupplierOrder;
 use RAD\YellowCube\Model\Product\YellowCube;
@@ -42,6 +43,12 @@ class Panel extends Backend
 
             if ($model instanceof SupplierOrder && $model->doExport() && !$model->isExported()) {
                 EventDispatcher::getInstance()->dispatch('yellowcube.sendSupplierOrder', $model);
+
+                return;
+            }
+
+            if ($model instanceof Fulfillment && $model->status == $model::PENDING) {
+                EventDispatcher::getInstance()->dispatch('yellowcube.sendFulfillment', $model);
 
                 return;
             }

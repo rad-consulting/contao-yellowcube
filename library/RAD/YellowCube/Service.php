@@ -281,7 +281,7 @@ class Service implements EventSubscriber
                 return;
             }
 
-            throw new LogException('Currently no delivery notices available', Log::WARNING, null, $this->getLastXML());
+            throw new LogException('Currently no WARs available', Log::WARNING, null, $this->getLastXML());
         }
     }
 
