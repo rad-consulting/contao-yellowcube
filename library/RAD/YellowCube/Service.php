@@ -77,6 +77,7 @@ class Service implements EventSubscriber
             'yellowcube.confirmFulfillment' => 'onConfirmFulfillment',
             'yellowcube.updateFulfillment' => 'onUpdateFulfillment',
             'yellowcube.sendProduct' => 'onSendProduct',
+            'yellowcube.sendAssortment' => 'onSendAssortment',
             'yellowcube.statusProduct' => 'onStatusProduct',
             'yellowcube.sendSupplierOrder' => 'onSendSupplierOrder',
             'yellowcube.statusSupplierOrder' => 'onStatusSupplierOrder',
@@ -87,9 +88,36 @@ class Service implements EventSubscriber
     /**
      * @return void
      */
+    public function exportAssortment()
+    {
+        $this->dispatch('yellowcube.exportAssortment');
+    }
+
+    /**
+     * @return void
+     */
     public function importStock()
     {
         $this->dispatch('yellowcube.importStock');
+    }
+
+    /**
+     * Allows to bulk-send the whole yellowcube assortment as the masterdata call only allows one article per request
+     *
+     * @param Event $event
+     * @return void
+     */
+    public function onSendAssortment(Event $event)
+    {
+        $collection = YellowCube::findByType('yellowcube');
+
+        if ($collection instanceof Model\Collection) {
+            foreach ($collection as $item) {
+                if ($item instanceof YellowCube) {
+                    $this->dispatch('yellowcube.sendProduct', $item);
+                }
+            }
+        }
     }
 
     /**
