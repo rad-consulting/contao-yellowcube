@@ -276,7 +276,7 @@ class Service implements EventSubscriber
 
             if ($response->isSuccess()) {
                 $model->setDelivered($response->getTracking(), 'Delivered', $this->getLastXML())->save();
-                $this->dispatch('yellowcube.completeFulfillment', $model);
+                $this->dispatch('fulfillment.complete', $model);
 
                 return;
             }
