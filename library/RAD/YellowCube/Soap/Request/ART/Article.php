@@ -103,7 +103,7 @@ class Article
         $instance->BaseUOM = ISO::PCE;
 
         if ($weight = $model->getWeight()) {
-            $instance->NetWeight = new Mass(round($weight->getWeightValue() * .91, 3), $weight->getWeightUnit());
+            $instance->NetWeight = new Mass(round($weight->getWeightValue(), 3), $weight->getWeightUnit());
         }
         else {
             $instance->NetWeight = new Mass(0, ISO::KGM);
