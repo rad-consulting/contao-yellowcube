@@ -10,7 +10,7 @@ namespace RAD\YellowCube\Soap\Request\WAB;
 use Isotope\Model\ProductCollectionItem as ShopPosition;
 use RAD\YellowCube\Config;
 use RAD\YellowCube\Model\Product\YellowCube;
-use RAD\YellowCube\Soap\Util\ISO;
+use RAD\YellowCube\Soap\Unit\ISO;
 
 /**
  * Class Position
