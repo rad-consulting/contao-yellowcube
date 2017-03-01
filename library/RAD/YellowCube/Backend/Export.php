@@ -27,7 +27,8 @@ class Export extends Backend implements executable
     {
         $template = new BackendTemplate('be_yellowcube_masterdata');
         $template->action = ampersand(Environment::get('request'));
-        $template->jobHeadline = $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata'];
+        $template->jobHeadline = $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata'][0];
+        $template->jobMessage = $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata'][1];
         $template->isActive = $this->isActive();
 
         if ('yellowcube_masterdata' == Input::get('act')) {

@@ -1,10 +1,10 @@
 <div id="tl_maintenance_index" class="maintenance_<?= $this->isActive ? 'active' : 'inactive' ?>">
     <h2 class="sub_headline"><?= $this->jobHeadline ?></h2>
+    <div class="tl_message">
     <?php if ($this->jobMessage): ?>
-        <div class="tl_message">
-            <p class="tl_error"><?= $this->jobMessage ?></p>
-        </div>
+        <p class="tl_info"><?= $this->jobMessage ?></p>
     <?php endif; ?>
+    </div>
     <?php if ($this->isRunning): ?>
         <div id="tl_rebuild_index">
             <p id="index_loading"><?= $this->jobLoading ?></p>
@@ -24,7 +24,6 @@
                 <input type="hidden" name="act" value="yellowcube_export">
                 <input type="hidden" name="do" value="maintenance">
                 <input type="hidden" name="rt" value="<?= REQUEST_TOKEN ?>">
-                <p>blahblah</p>
             </div>
             <div class="tl_submit_container">
                 <input type="submit" id="index" class="tl_submit" value="<?= $this->jobSubmit ?>">
