@@ -8,3 +8,4 @@
 
 // Yellowcube
 $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata'] = 'YellowCube Masterdata Export';
+$GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata_submit'] = array('Produkte an YellowCube übermitteln');
