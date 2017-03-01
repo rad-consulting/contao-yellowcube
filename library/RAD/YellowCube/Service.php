@@ -219,7 +219,7 @@ class Service implements EventSubscriber
             ));
 
             if ($response->isSuccess()) {
-                $model->setExported()->doNotExport()->setReference($response->getReference(1), $response->getStatusText(), $this->getLastXML())->save();
+                $model->setExported()->setReference($response->getReference(1), $response->getStatusText(), $this->getLastXML())->save();
 
                 return;
             }
