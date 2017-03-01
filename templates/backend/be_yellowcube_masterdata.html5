@@ -1,13 +1,13 @@
 <div id="tl_maintenance_index" class="maintenance_<?= $this->isActive ? 'active' : 'inactive' ?>">
     <h2 class="sub_headline"><?= $this->jobHeadline ?></h2>
-    <div class="tl_message" id="lu_message">
-        <p class="tl_info"><?= $this->jobDescription ?></p>
-    </div>
     <?php if ($this->isActive): ?>
         <div class="tl_message" id="lu_message">
             <p class="tl_success"><?= $this->jobMessage ?></p>
         </div>
     <?php else: ?>
+        <div class="tl_message" id="lu_message">
+            <p class="tl_info"><?= $this->jobDescription ?></p>
+        </div>
         <form action="<?= $this->action ?>" class="tl_form" method="get">
             <div class="tl_formbody_edit">
                 <input type="hidden" name="act" value="yellowcube_masterdata">
