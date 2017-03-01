@@ -25,8 +25,10 @@ class Export extends Backend implements executable
      */
     public function run()
     {
+        return 'hallo';
+
         $template = new BackendTemplate('be_yellowcube_masterdata');
-        $template->action = ampersand(\Environment::get('request'));
+        $template->action = ampersand(Environment::get('request'));
         $template->jobHeadline = $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata'];
         $template->isActive = $this->isActive();
 
