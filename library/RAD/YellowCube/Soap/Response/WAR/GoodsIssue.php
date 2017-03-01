@@ -7,16 +7,13 @@
  */
 namespace RAD\YellowCube\Soap\Response\WAR;
 
-use RAD\YellowCube\Soap\Shared\CustomerOrderDetail;
-use RAD\YellowCube\Soap\Shared\CustomerOrderHeader;
-
 /**
- * Class Issue
+ * Class GoodsIssue
  */
-class Issue
+class GoodsIssue
 {
     /**
-     * @var IssueHeader
+     * @var GoodsIssueHeader
      */
     protected $GoodsIssueHeader;
 
@@ -31,7 +28,7 @@ class Issue
     protected $CustomerOrderList = array();
 
     /**
-     * @return IssueHeader
+     * @return GoodsIssueHeader
      */
     public function getIssueHeader()
     {
@@ -49,7 +46,7 @@ class Issue
     /**
      * @return CustomerOrderDetail[]
      */
-    public function getOrderDetails()
+    public function getOrderList()
     {
         return $this->CustomerOrderList;
     }

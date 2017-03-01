@@ -8,9 +8,9 @@
 namespace RAD\YellowCube\Soap\Response\WAR;
 
 /**
- * Class IssueHeader
+ * Class GoodsIssueHeader
  */
-class IssueHeader
+class GoodsIssueHeader
 {
     /**
      * @var int

@@ -38,14 +38,16 @@ class Client extends SoapClient
     {
         parent::__construct($wsdl, array_merge(array(
             'classmap' => array(
+                // Generic
                 'GEN_Response' => 'RAD\\YellowCube\\Soap\\Response\\GenericResponse',
                 'GEN_STATUS' => 'RAD\\YellowCube\\Soap\\Response\\GenericStatus',
-                'WAR_List' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\IssueList',
-                'WAR' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Issue',
+                // BAR
                 'BAR' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\ArticleList',
-                'GoodsIssueHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\IssueHeader',
-                'CustomerOrderDetail' => 'RAD\\YellowCube\\Soap\\Shared\\CustomerOrderDetail',
-                'CustomerOrderHeader' => 'RAD\\YellowCube\\Soap\\Shared\\CustomerOrderHeader',
+                // WAR
+                'GoodsIssue' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssue',
+                'GoodsIssueHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssueHeader',
+                'CustomerOrderHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\CustomerOrderHeader',
+                'CustomerOrderDetail' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\CustomerOrderDetail',
             )), $options));
     }
 

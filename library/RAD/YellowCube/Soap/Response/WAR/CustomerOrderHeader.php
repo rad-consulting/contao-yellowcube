@@ -5,7 +5,7 @@
  * @author     Olivier Dahinden <o.dahinden@rad-consulting.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-namespace RAD\YellowCube\Soap\Shared;
+namespace RAD\YellowCube\Soap\Response\WAR;
 
 /**
  * Class CustomerOrderHeader
@@ -13,7 +13,7 @@ namespace RAD\YellowCube\Soap\Shared;
 class CustomerOrderHeader
 {
     /**
-     * @var string
+     * @var int
      */
     protected $YCDeliveryNo;
 
@@ -41,12 +41,4 @@ class CustomerOrderHeader
      * @var string
      */
     protected $PartnerReference;
-
-    /**
-     * @return array
-     */
-    public function getTracking()
-    {
-        return $this->PostalShipmentNo;
-    }
 }
