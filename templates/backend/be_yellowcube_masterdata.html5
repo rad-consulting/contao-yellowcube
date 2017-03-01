@@ -18,6 +18,7 @@
             </div>
         </form>
     <?php else: ?>
+        <br>
         <form action="<?= $this->action ?>" class="tl_form" method="get">
             <div class="tl_formbody_edit">
                 <input type="hidden" name="act" value="yellowcube_export">
