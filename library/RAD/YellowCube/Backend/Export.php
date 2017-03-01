@@ -9,10 +9,12 @@ namespace RAD\YellowCube\Backend;
 
 use Contao\BackendTemplate;
 use Contao\Environment;
+use Contao\Model\Collection;
 use Contao\RequestToken;
 use executable;
 use Contao\Backend;
 use Haste\Input\Input;
+use RAD\Event\EventDispatcher;
 use RAD\YellowCube\Model\Product\YellowCube;
 
 
@@ -40,7 +42,20 @@ class Export extends Backend implements executable
 
             $collection = YellowCube::findByType('yellowcube', true);
 
-            $template->jobMessage = sprintf($GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata_message'], $collection->count());
+            if ($collection instanceof Collection) {
+                $i = $collection->count();
+
+                foreach ($collection as $item) {
+                    if ($item instanceof YellowCube) {
+                        EventDispatcher::getInstance()->dispatch('yellowcube.sendProduct', $item);
+                    }
+                }
+            }
+            else {
+                $i = 0;
+            }
+
+            $template->jobMessage = sprintf($GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata_message'], $i);
             $template->theme = Backend::getTheme();
 
             return $template->parse();
