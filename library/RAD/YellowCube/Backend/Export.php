@@ -28,7 +28,7 @@ class Export extends Backend implements executable
         $template = new BackendTemplate('be_yellowcube_masterdata');
         $template->action = ampersand(Environment::get('request'));
         $template->jobHeadline = $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata'][0];
-        $template->jobMessage = $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata'][1];
+        $template->jobDescription = $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata'][1];
         $template->isActive = $this->isActive();
 
         if ('yellowcube_masterdata' == Input::get('act')) {
@@ -37,11 +37,7 @@ class Export extends Backend implements executable
                 $this->redirect('contao/confirm.php');
             }
 
-            $template->jobNote = $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata_note'];
-            $template->jobLoading = $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata_loading'];
-            $template->jobComplete = $GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata_note_complete'];
-            $template->jobContinue = $GLOBALS['TL_LANG']['MSC']['yellowcube_masterdata_note_continue'];
-            $template->isRunning = true;
+            $template->jobNote = sprintf($GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata_message'], 10);
             $template->theme = Backend::getTheme();
 
             return $template->parse();
