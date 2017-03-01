@@ -9,7 +9,7 @@
     </div>
     <form action="<?= $this->action ?>" class="tl_form" method="get">
         <div class="tl_formbody_edit">
-            <input type="hidden" name="act" value="yellowcube_export">
+            <input type="hidden" name="act" value="yellowcube_masterdata">
             <input type="hidden" name="do" value="maintenance">
             <input type="hidden" name="rt" value="<?= REQUEST_TOKEN ?>">
         </div>
