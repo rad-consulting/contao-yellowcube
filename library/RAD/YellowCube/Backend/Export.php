@@ -13,6 +13,7 @@ use Contao\RequestToken;
 use executable;
 use Contao\Backend;
 use Haste\Input\Input;
+use RAD\YellowCube\Model\Product\YellowCube;
 
 
 /**
@@ -37,7 +38,9 @@ class Export extends Backend implements executable
                 $this->redirect('contao/confirm.php');
             }
 
-            $template->jobNote = sprintf($GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata_message'], 10);
+            $collection = YellowCube::findByType('yellowcube', true);
+
+            $template->jobMessage = sprintf($GLOBALS['TL_LANG']['tl_maintenance']['yellowcube_masterdata_message'], $collection->count());
             $template->theme = Backend::getTheme();
 
             return $template->parse();
