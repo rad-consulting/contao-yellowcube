@@ -12,3 +12,6 @@
 // Subscribers
 $GLOBALS['RAD_SUBSCRIBERS'][] = 'RAD\\YellowCube\\Service';
 $GLOBALS['TL_CRON']['daily'][] = array('RAD\\YellowCube\\Service', 'exportAssortment');
+
+// Maintenance
+$GLOBALS['TL_MAINTENANCE'][] = 'RAD\\YellowCube\\Backend\\Export';

@@ -7,5 +7,10 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
-// Yellowcube
+// Namespaces
 \NamespaceClassLoader::add('RAD', 'system/modules/rad-yellowcube/library');
+
+// Templates
+\Contao\TemplateLoader::addFiles(array(
+    'be_yellowcube_masterdata' => 'system/modules/rad-yellowcube/templates/backend',
+));
