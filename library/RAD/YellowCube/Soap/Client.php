@@ -56,7 +56,7 @@ class Client extends SoapClient
      * @param array $request
      * @return GenericResponse
      */
-    public function sendArticleMasterData(array $request)
+    public function createArticle(array $request)
     {
         return $this->insertArticleMasterData($request);
     }
@@ -65,7 +65,7 @@ class Client extends SoapClient
      * @param array $request
      * @return GenericStatus
      */
-    public function statusArticleMasterData(array $request)
+    public function getArticleStatus(array $request)
     {
         return $this->getInsertArticleMasterDataStatus($request);
     }
@@ -74,7 +74,7 @@ class Client extends SoapClient
      * @param array $request
      * @return GenericResponse
      */
-    public function sendSupplierOrder(array $request)
+    public function createSupplierOrder(array $request)
     {
         return $this->createYCSupplierOrder($request);
     }
@@ -83,7 +83,7 @@ class Client extends SoapClient
      * @param array $request
      * @return GenericStatus
      */
-    public function statusSupplierOrder(array $request)
+    public function getSupplierOrderStatus(array $request)
     {
         return $this->getYCSupplierOrderStatus($request);
     }
@@ -92,7 +92,7 @@ class Client extends SoapClient
      * @param array $request
      * @return GenericResponse
      */
-    public function sendCustomerOrder(array $request)
+    public function createCustomerOrder(array $request)
     {
         return $this->createYCCustomerOrder($request);
     }
@@ -101,7 +101,7 @@ class Client extends SoapClient
      * @param array $request
      * @return GenericStatus
      */
-    public function statusCustomerOrder(array $request)
+    public function getCustomerOrderStatus(array $request)
     {
         return $this->getYCCustomerOrderStatus($request);
     }

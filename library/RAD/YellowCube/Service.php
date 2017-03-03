@@ -131,7 +131,7 @@ class Service implements EventSubscriber
         $product = $event->getSubject();
 
         if ($product instanceof YellowCube) {
-            $response = $this->getClient()->sendArticleMasterData(array(
+            $response = $this->getClient()->createArticle(array(
                 'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'ArticleList' => array(
                     'Article' => Request\ART\Article::factory($product, $this->getConfig()),
@@ -160,7 +160,7 @@ class Service implements EventSubscriber
         $reference = $event->getArgument('reference');
 
         if ($product instanceof YellowCube) {
-            $response = $this->getClient()->statusArticleMasterData(array(
+            $response = $this->getClient()->getArticleStatus(array(
                 'ControlReference' => Request\ControlReference::factory('ART', $this->getConfig()),
                 'Reference' => $reference,
             ));
@@ -187,7 +187,7 @@ class Service implements EventSubscriber
 
         if ($model instanceof ShopSupplierOrder) {
             $order = SupplierOrder::factory($model, $this->getConfig());
-            $response = $this->getClient()->sendSupplierOrder(array(
+            $response = $this->getClient()->createSupplierOrder(array(
                 'ControlReference' => Request\ControlReference::factory('WBL', $this->getConfig()),
                 'SupplierOrder' => $order,
             ));
@@ -214,7 +214,7 @@ class Service implements EventSubscriber
         $reference = $event->getArgument('reference');
 
         if ($model instanceof ShopSupplierOrder) {
-            $response = $this->getClient()->statusSupplierOrder(array(
+            $response = $this->getClient()->getSupplierOrderStatus(array(
                 'ControlReference' => Request\ControlReference::factory('WBL', $this->getConfig()),
                 'Reference' => $reference,
             ));
@@ -241,7 +241,7 @@ class Service implements EventSubscriber
 
         if ($model instanceof Fulfillment) {
             try {
-                $response = $this->getClient()->statusCustomerOrder(array(
+                $response = $this->getClient()->getCustomerOrderStatus(array(
                     'ControlReference' => Request\ControlReference::factory('WAB', $this->getConfig()),
                     'Reference' => $model->getReference(),
                 ));
@@ -271,7 +271,7 @@ class Service implements EventSubscriber
         $model = $event->getSubject();
 
         if ($model instanceof Fulfillment) {
-            $response = $this->getClient()->sendCustomerOrder(array(
+            $response = $this->getClient()->createCustomerOrder(array(
                 'ControlReference' => Request\ControlReference::factory('WAB', $this->getConfig()),
                 'Order' => CustomerOrder::factory($model->getOrder(), $this->getConfig()),
             ));
@@ -299,7 +299,7 @@ class Service implements EventSubscriber
 
         if ($model instanceof Fulfillment) {
             try {
-                $reply = $this->getClient()->getCustomerOrderReplies(array(
+                $reply = $this->getClient()->getCustomerOrderReply(array(
                     'ControlReference' => Request\ControlReference::factory('WAR', $this->getConfig()),
                     'CustomerOrderNo' => $model->pid,
                 ));
@@ -310,6 +310,8 @@ class Service implements EventSubscriber
 
                     return;
                 }
+
+                throw new Exception("No reply for order ID {$model->pid} available yet", Log::WARNING);
             }
             catch (Exception $e) {
                 throw new LogException($e->getMessage(), Log::WARNING, $e, $this->getLastXML());
