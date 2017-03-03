@@ -248,7 +248,7 @@ class Service implements EventSubscriber
 
                 if ($response->isSuccess()) {
                     $model->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
-                    $this->dispatch('yellowcube.updateFulfillment', $model);
+                    $this->dispatch('yellowcube.updateFulfillment', $model, null, 895);
 
                     return;
                 }
@@ -374,11 +374,12 @@ class Service implements EventSubscriber
      * @param string     $name
      * @param Model|null $subject
      * @param array|null $arguments
+     * @param int        $timeout
      * @return $this
      */
-    protected function dispatch($name, Model $subject = null, array $arguments = null)
+    protected function dispatch($name, Model $subject = null, array $arguments = null, $timeout = 295)
     {
-        EventDispatcher::getInstance()->dispatch($name, $subject, $arguments);
+        EventDispatcher::getInstance()->dispatch($name, $subject, $arguments, $timeout);
 
         return $this;
     }
