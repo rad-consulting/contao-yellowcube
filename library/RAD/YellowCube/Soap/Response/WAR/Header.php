@@ -8,9 +8,9 @@
 namespace RAD\YellowCube\Soap\Response\WAR;
 
 /**
- * Class CustomerOrderHeader
+ * Class Header
  */
-class CustomerOrderHeader
+class Header
 {
     /**
      * @var int
@@ -41,4 +41,20 @@ class CustomerOrderHeader
      * @var string
      */
     protected $PartnerReference;
+
+    /**
+     * @return string
+     */
+    public function getOrderId()
+    {
+        return $this->CustomerOrderNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTracking()
+    {
+        return $this->PostalShipmentNo;
+    }
 }

@@ -7,10 +7,12 @@
  */
 namespace RAD\YellowCube\Soap\Response\WAR;
 
+use RAD\YellowCube\Soap\Unit\Quantity;
+
 /**
- * Class CustomerOrderDetail
+ * Class Detail
  */
-class CustomerOrderDetail
+class Detail
 {
     /**
      * @var int
@@ -63,7 +65,7 @@ class CustomerOrderDetail
     protected $StockType;
 
     /**
-     * @var int
+     * @var Quantity
      */
     protected $QuantityUOM;
 
@@ -76,4 +78,28 @@ class CustomerOrderDetail
      * @var string
      */
     protected $SerialNumbers;
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->ArticleNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSKU()
+    {
+        return $this->YCArticleNo;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantity()
+    {
+        return $this->QuantityUOM->getValue();
+    }
 }

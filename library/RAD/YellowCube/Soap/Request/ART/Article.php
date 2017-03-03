@@ -82,7 +82,7 @@ class Article
     protected $UnitsOfMeasure = array();
 
     /**
-     * @var ArticleDescription[]
+     * @var Description[]
      */
     protected $ArticleDescriptions = array();
 
@@ -110,7 +110,7 @@ class Article
         }
 
         $instance->UnitsOfMeasure['AlternateUnitISO'] = $model->getUnit();
-        $instance->addArticleDescription(new ArticleDescription($model->getName(), 'de'));
+        $instance->addArticleDescription(new Description($model->getName(), 'de'));
 
         // Optional
         if ('p' == $config->get('operatingmode')) {
@@ -121,10 +121,10 @@ class Article
     }
 
     /**
-     * @param ArticleDescription $description
+     * @param Description $description
      * @return $this
      */
-    public function addArticleDescription(ArticleDescription $description)
+    public function addArticleDescription(Description $description)
     {
         $this->ArticleDescriptions[] = $description;
 

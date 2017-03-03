@@ -11,6 +11,7 @@ use SoapClient;
 use RAD\YellowCube\Soap\Response\GenericResponse;
 use RAD\YellowCube\Soap\Response\GenericStatus;
 use RAD\YellowCube\Soap\Response\BAR\Inventory;
+use RAD\YellowCube\Soap\Response\WAR\Reply;
 
 /**
  * Class Client
@@ -24,7 +25,7 @@ use RAD\YellowCube\Soap\Response\BAR\Inventory;
  * @method GenericStatus getYCSupplierOrderStatus(array $request)
  * @method GenericResponse createYCCustomerOrder(array $request)
  * @method GenericStatus getYCCustomerOrderStatus(array $request)
- * @method IssueList getYCCustomerOrderReply(array $request)
+ * @method Reply getYCCustomerOrderReply(array $request)
  * @method Inventory getInventory(array $request)
  */
 class Client extends SoapClient
@@ -40,15 +41,14 @@ class Client extends SoapClient
                 // Generic
                 'GEN_Response' => 'RAD\\YellowCube\\Soap\\Response\\GenericResponse',
                 'GEN_STATUS' => 'RAD\\YellowCube\\Soap\\Response\\GenericStatus',
+                'QuantityUOM' => 'RAD\\YellowCube\\Soap\\Unit\\Quantity',
                 // BAR
                 'BAR' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Inventory',
                 'Article' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Article',
-                'QuantityUOM' => 'RAD\\YellowCube\\Soap\\Unit\\Quantity',
                 // WAR
-                'GoodsIssue' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssue',
-                'GoodsIssueHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssueHeader',
-                'CustomerOrderHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\CustomerOrderHeader',
-                'CustomerOrderDetail' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\CustomerOrderDetail',
+                'GoodsIssue' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Reply',
+                'CustomerOrderHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Header',
+                'CustomerOrderDetail' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Detail',
             )), $options));
     }
 
@@ -108,9 +108,9 @@ class Client extends SoapClient
 
     /**
      * @param array $request
-     * @return IssueList
+     * @return Reply
      */
-    public function getDeliveryNotices(array $request)
+    public function getCustomerOrderReply(array $request)
     {
         return $this->getYCCustomerOrderReply($request);
     }

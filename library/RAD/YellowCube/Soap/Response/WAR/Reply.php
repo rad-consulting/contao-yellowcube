@@ -8,46 +8,54 @@
 namespace RAD\YellowCube\Soap\Response\WAR;
 
 /**
- * Class GoodsIssue
+ * Class Reply
  */
-class GoodsIssue
+class Reply
 {
     /**
-     * @var GoodsIssueHeader
+     * @var \stdClass
      */
     protected $GoodsIssueHeader;
 
     /**
-     * @var CustomerOrderHeader
+     * @var Header
      */
     protected $CustomerOrderHeader;
 
     /**
-     * @var CustomerOrderDetail[]
+     * @var \stdClass
      */
-    protected $CustomerOrderList = array();
+    protected $CustomerOrderList;
 
     /**
-     * @return GoodsIssueHeader
+     * @return Detail[]
      */
-    public function getIssueHeader()
+    public function getDetails()
     {
-        return $this->GoodsIssueHeader;
+        return $this->CustomerOrderList->CustomerOrderDetail;
     }
 
     /**
-     * @return CustomerOrderHeader
+     * @return Header
      */
-    public function getOrderHeader()
+    public function getHeader()
     {
         return $this->CustomerOrderHeader;
     }
 
     /**
-     * @return CustomerOrderDetail[]
+     * @return string
      */
-    public function getOrderList()
+    public function getOrderId()
     {
-        return $this->CustomerOrderList;
+        return $this->getHeader()->getOrderId();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTracking()
+    {
+        return $this->getHeader()->getTracking();
     }
 }

@@ -298,21 +298,22 @@ class Service implements EventSubscriber
         $model = $event->getSubject();
 
         if ($model instanceof Fulfillment) {
-            $response = $this->getClient()->getDeliveryNotices(array(
-                'ControlReference' => Request\ControlReference::factory('WAR', $this->getConfig()),
-                'CustomerOrderNo' => $model->pid,
-            ));
+            try {
+                $reply = $this->getClient()->getCustomerOrderReplies(array(
+                    'ControlReference' => Request\ControlReference::factory('WAR', $this->getConfig()),
+                    'CustomerOrderNo' => $model->pid,
+                ));
 
-            if ($response->isSuccess()) {
-                $model->setDelivered($response->getTracking(), 'Delivered', $this->getLastXML())->save();
-                $this->dispatch('fulfillment.complete', $model);
+                if ($reply->getOrderId() == $model->pid) {
+                    $model->setDelivered($reply->getTracking(), 'Delivered', $this->getLastXML())->save();
+                    $this->dispatch('fulfillment.complete', $model);
 
-                return;
+                    return;
+                }
             }
-
-            $msg = 'Currently no WARs available';
-            $model->log($msg, Log::WARNING, $this->getLastXML());
-            throw new LogException($msg, Log::WARNING, null, $this->getLastXML());
+            catch (Exception $e) {
+                throw new LogException($e->getMessage(), Log::WARNING, $e, $this->getLastXML());
+            }
         }
     }
 
@@ -333,7 +334,7 @@ class Service implements EventSubscriber
 
                 foreach ($inventory->getArticles() as $article) {
                     $stmt = $db->prepare('UPDATE ' . YellowCube::getTable() . ' SET `rad_updated` = UNIX_TIMESTAMP(), `rad_sku` = ?, `rad_stock` = ? WHERE `id` = ? LIMIT 1');
-                    $stmt->execute($article->getSKU(), $article->getStock(), $article->getArticleNo());
+                    $stmt->execute($article->getSKU(), $article->getStock(), $article->getId());
                 }
             }
         }

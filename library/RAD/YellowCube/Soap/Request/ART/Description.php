@@ -10,9 +10,9 @@ namespace RAD\YellowCube\Soap\Request\ART;
 use RAD\YellowCube\Soap\Util\SimpleValue;
 
 /**
- * Class ArticleDescription
+ * Class Description
  */
-class ArticleDescription extends SimpleValue
+class Description extends SimpleValue
 {
     /**
      * @var string

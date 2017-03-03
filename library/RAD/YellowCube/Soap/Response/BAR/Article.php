@@ -83,9 +83,17 @@ class Article
     /**
      * @return string
      */
-    public function getArticleNo()
+    public function getId()
     {
         return $this->ArticleNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSKU()
+    {
+        return $this->YCArticleNo;
     }
 
     /**
@@ -98,13 +106,5 @@ class Article
         }
 
         return (int)$this->QuantityUOM->getValue();
-    }
-
-    /**
-     * @return string
-     */
-    public function getSKU()
-    {
-        return $this->YCArticleNo;
     }
 }
