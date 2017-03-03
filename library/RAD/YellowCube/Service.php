@@ -317,7 +317,7 @@ class Service implements EventSubscriber
                 throw new Exception("No reply for order ID {$model->pid} available yet", Log::WARNING);
             }
             catch (Exception $e) {
-                throw new LogException($e->getMessage(), Log::WARNING, $e, $this->getLastXML());
+                throw new LogException($e->getMessage(), Log::NOTICE, $e, $this->getLastXML());
             }
         }
     }
