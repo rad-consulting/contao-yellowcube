@@ -13,16 +13,16 @@ namespace RAD\YellowCube\Soap\Response\BAR;
 class Inventory
 {
     /**
-     * @var Article[]
+     * @var \stdClass
      */
-    protected $ArticleList = array();
+    protected $ArticleList;
 
     /**
      * @return Article[]
      */
     public function getArticles()
     {
-        return $this->ArticleList;
+        return $this->ArticleList->Article;
     }
 
     /**
@@ -30,6 +30,6 @@ class Inventory
      */
     public function hasArticles()
     {
-        return (bool)count($this->ArticleList);
+        return (bool)count($this->ArticleList->Article);
     }
 }
