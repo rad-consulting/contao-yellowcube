@@ -15,6 +15,7 @@ use RAD\Fulfillment\Model\Fulfillment;
 use RAD\Fulfillment\Model\MasterData;
 use RAD\Fulfillment\Model\SupplierOrder;
 use RAD\YellowCube\Model\Product\YellowCube;
+use RAD\YellowCube\Service;
 
 /**
  * Class Panel
@@ -27,6 +28,10 @@ class Panel extends Backend
      */
     public function onSubmit(DataContainer $dc)
     {
+        if (!Service::getConfig()->get('active')) {
+            return;
+        }
+
         if ($dc->activeRecord) {
             $class = $GLOBALS['TL_MODELS'][$dc->table];
             $model = forward_static_call(array($class, 'findByPk'), $dc->activeRecord->id);
