@@ -322,11 +322,11 @@ class Service implements EventSubscriber
      */
     public function onImportStock(Event $event)
     {
-        $response = $this->getClient()->getInventory(array(
+        $inventory = $this->getClient()->getInventory(array(
             'ControlReference' => Request\ControlReference::factory('BAR', $this->getConfig()),
         ));
 
-        throw new LogException($response->getStatusText(), Log::WARNING, null, $this->getLastXML());
+        throw new LogException($inventory->hasArticles(), Log::WARNING, null, $this->getLastXML());
     }
 
     /**
