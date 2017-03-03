@@ -15,32 +15,22 @@ class Reply
     /**
      * @var \stdClass
      */
-    protected $GoodsIssueHeader;
-
-    /**
-     * @var Header
-     */
-    protected $CustomerOrderHeader;
-
-    /**
-     * @var \stdClass
-     */
-    protected $CustomerOrderList;
-
-    /**
-     * @return Detail[]
-     */
-    public function getDetails()
-    {
-        return $this->CustomerOrderList->CustomerOrderDetail;
-    }
+    protected $GoodsIssue;
 
     /**
      * @return Header
      */
     public function getHeader()
     {
-        return $this->CustomerOrderHeader;
+        return $this->GoodsIssue->CustomerOrderHeader;
+    }
+
+    /**
+     * @return Detail[]
+     */
+    public function getDetails()
+    {
+        return $this->GoodsIssue->CustomerOrderList->CustomerOrderList;
     }
 
     /**
@@ -57,13 +47,5 @@ class Reply
     public function getTracking()
     {
         return $this->getHeader()->getTracking();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSuccess()
-    {
-        return $this->CustomerOrderHeader instanceof Header;
     }
 }

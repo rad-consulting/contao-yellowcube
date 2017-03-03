@@ -11,7 +11,7 @@ use SoapClient;
 use RAD\YellowCube\Soap\Response\GenericResponse;
 use RAD\YellowCube\Soap\Response\GenericStatus;
 use RAD\YellowCube\Soap\Response\BAR\Inventory;
-use RAD\YellowCube\Soap\Response\WAR\Reply;
+use RAD\YellowCube\Soap\Response\WAR\Replies;
 
 /**
  * Class Client
@@ -25,7 +25,7 @@ use RAD\YellowCube\Soap\Response\WAR\Reply;
  * @method GenericStatus getYCSupplierOrderStatus(array $request)
  * @method GenericResponse createYCCustomerOrder(array $request)
  * @method GenericStatus getYCCustomerOrderStatus(array $request)
- * @method Reply getYCCustomerOrderReply(array $request)
+ * @method Replies getYCCustomerOrderReply(array $request)
  * @method Inventory getInventory(array $request)
  */
 class Client extends SoapClient
@@ -46,7 +46,8 @@ class Client extends SoapClient
                 'BAR' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Inventory',
                 'Article' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Article',
                 // WAR
-                'WAR_List' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Reply',
+                'WAR' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Reply',
+                'WAR_List' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Replies',
                 'CustomerOrderHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Header',
                 'CustomerOrderDetail' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Detail',
             )), $options));
@@ -108,7 +109,7 @@ class Client extends SoapClient
 
     /**
      * @param array $request
-     * @return Reply
+     * @return Replies
      */
     public function getCustomerOrderReply(array $request)
     {

@@ -26,6 +26,7 @@ use RAD\YellowCube\Soap\Request;
 use RAD\YellowCube\Soap\Client;
 use RAD\YellowCube\Soap\Request\WBL\Order as SupplierOrder;
 use RAD\YellowCube\Soap\Request\WAB\Order as CustomerOrder;
+use RAD\YellowCube\Soap\Response\WAR\Reply;
 
 /**
  * Class Service
@@ -303,19 +304,23 @@ class Service implements EventSubscriber
 
         if ($model instanceof Fulfillment) {
             try {
-                $reply = $this->getClient()->getCustomerOrderReply(array(
+                $replies = $this->getClient()->getCustomerOrderReply(array(
                     'ControlReference' => Request\ControlReference::factory('WAR', $this->getConfig()),
                     'CustomerOrderNo' => $model->pid,
                 ));
 
-                $model->log('Structure', Log::DEBUG, var_export($reply, true));
+                $model->log('Structure', Log::DEBUG, var_export($replies, true));
                 $model->log('XML', Log::DEBUG, $this->getLastXML());
 
-                if ($reply->isSuccess() && $reply->getOrderId() == $model->pid && !empty($reply->getTracking())) {
-                    $model->setDelivered($reply->getTracking(), 'Delivered', $this->getLastXML())->save();
-                    $this->dispatch('fulfillment.complete', $model);
+                if ($replies->isSuccess()) {
+                    foreach ($replies as $reply) {
+                        if ($reply instanceof Reply && $reply->getOrderId() == $model->pid && !empty($reply->getTracking())) {
+                            $model->setDelivered($reply->getTracking(), 'Delivered', $this->getLastXML())->save();
+                            $this->dispatch('fulfillment.complete', $model);
 
-                    return;
+                            return;
+                        }
+                    }
                 }
 
                 throw new Exception("No reply for order ID {$model->pid} available yet", Log::WARNING);
