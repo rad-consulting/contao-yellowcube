@@ -42,7 +42,7 @@ class Client extends SoapClient
                 'GEN_Response' => 'RAD\\YellowCube\\Soap\\Response\\GenericResponse',
                 'GEN_STATUS' => 'RAD\\YellowCube\\Soap\\Response\\GenericStatus',
                 // BAR
-                'BAR' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\ArticleList',
+                'Article' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Article',
                 // WAR
                 'GoodsIssue' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssue',
                 'GoodsIssueHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssueHeader',
