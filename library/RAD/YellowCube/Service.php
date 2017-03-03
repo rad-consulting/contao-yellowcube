@@ -357,8 +357,7 @@ class Service implements EventSubscriber
         if ($order instanceof ShopOrder) {
             foreach ($order->getItems() as $item) {
                 if ('yellowcube' == $item->type) {
-
-                    $fulfillment = Fulfillment::factory($order);
+                    $fulfillment = Fulfillment::factory($order, $item->type);
                     $fulfillment->save();
                     $this->dispatch('yellowcube.sendFulfillment', $fulfillment);
 
