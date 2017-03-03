@@ -58,4 +58,12 @@ class Reply
     {
         return $this->getHeader()->getTracking();
     }
+
+    /**
+     * @return bool
+     */
+    public function isSuccess()
+    {
+        return $this->CustomerOrderHeader instanceof Header;
+    }
 }

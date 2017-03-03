@@ -46,7 +46,7 @@ class Client extends SoapClient
                 'BAR' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Inventory',
                 'Article' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Article',
                 // WAR
-                'WAR' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Reply',
+                'WAR_List' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Reply',
                 'CustomerOrderHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Header',
                 'CustomerOrderDetail' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\Detail',
             )), $options));
