@@ -8,7 +8,7 @@
  */
 
 // Palettes
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{rad_yellowcube_legend},rad_yellowcube_operatingmode,rad_yellowcube_sender,rad_yellowcube_depositorno,rad_yellowcube_supplierno,rad_yellowcube_partnerid,rad_yellowcube_plantid,rad_yellowcube_active;';
+$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{rad_yellowcube_legend},rad_yellowcube_sender,rad_yellowcube_depositorno,rad_yellowcube_supplierno,rad_yellowcube_partnerid,rad_yellowcube_plantid,rad_yellowcube_operatingmode,rad_yellowcube_active;';
 
 // Fields
 
