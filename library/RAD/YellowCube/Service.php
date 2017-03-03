@@ -304,6 +304,8 @@ class Service implements EventSubscriber
                     'CustomerOrderNo' => $model->pid,
                 ));
 
+                $model->log('structure', Log::DEBUG, var_export($reply, true));
+
                 if ($reply->getOrderId() == $model->pid && !empty($reply->getTracking())) {
                     $model->setDelivered($reply->getTracking(), 'Delivered', $this->getLastXML())->save();
                     $this->dispatch('fulfillment.complete', $model);
