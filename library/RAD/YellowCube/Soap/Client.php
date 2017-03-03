@@ -10,8 +10,7 @@ namespace RAD\YellowCube\Soap;
 use SoapClient;
 use RAD\YellowCube\Soap\Response\GenericResponse;
 use RAD\YellowCube\Soap\Response\GenericStatus;
-use RAD\YellowCube\Soap\Response\BAR\ArticleList;
-use RAD\YellowCube\Soap\Response\WAR\IssueList;
+use RAD\YellowCube\Soap\Response\BAR\Inventory;
 
 /**
  * Class Client
@@ -26,7 +25,7 @@ use RAD\YellowCube\Soap\Response\WAR\IssueList;
  * @method GenericResponse createYCCustomerOrder(array $request)
  * @method GenericStatus getYCCustomerOrderStatus(array $request)
  * @method IssueList getYCCustomerOrderReply(array $request)
- * @method ArticleList getInventory(array $request)
+ * @method Inventory getInventory(array $request)
  */
 class Client extends SoapClient
 {
@@ -42,6 +41,7 @@ class Client extends SoapClient
                 'GEN_Response' => 'RAD\\YellowCube\\Soap\\Response\\GenericResponse',
                 'GEN_STATUS' => 'RAD\\YellowCube\\Soap\\Response\\GenericStatus',
                 // BAR
+                'BAR' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Inventory',
                 'Article' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Article',
                 // WAR
                 'GoodsIssue' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssue',
