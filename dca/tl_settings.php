@@ -12,6 +12,7 @@ $GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{rad_yellowcube_le
 
 // Fields
 $GLOBALS['TL_DCA']['tl_settings']['fields']['rad_yellowcube_active'] = array(
+    'eval' => array('tl_class' => 'clr'),
     'label' => &$GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_active'],
     'inputType' => 'checkbox',
 );
