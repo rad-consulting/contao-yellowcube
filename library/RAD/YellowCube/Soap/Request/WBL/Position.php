@@ -49,6 +49,11 @@ class Position
         $instance->Quantity = $quantity;
         $instance->QuantityISO = $product->getUnit();
 
+        // Make sure PK will be PAK
+        if ('PK' == $instance->QuantityISO) {
+            $instance->QuantityISO = 'PAK';
+        }
+
         return $instance;
     }
 

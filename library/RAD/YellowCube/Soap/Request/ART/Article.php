@@ -95,12 +95,19 @@ class Article
     {
         $instance = new static();
 
+        // Make sure PK will be PAK
+        $unit = $model->getUnit();
+
+        if ('PK' == $unit) {
+            $unit = 'PAK';
+        }
+
         // Mandatory
         $instance->ChangeFlag = $model->isExported() ? 'U' : 'I';
         $instance->DepositorNo = $config->get('depositorno');
         $instance->PlantID = $config->get('plantid');
         $instance->ArticleNo = $model->getArticleNo();
-        $instance->BaseUOM = $model->getUnit();
+        $instance->BaseUOM = $unit;
 
         if ($weight = $model->getWeight()) {
             $instance->NetWeight = new Mass(round($weight->getWeightValue(), 3), $weight->getWeightUnit());
@@ -109,7 +116,7 @@ class Article
             $instance->NetWeight = new Mass(0, ISO::KGM);
         }
 
-        $instance->UnitsOfMeasure['AlternateUnitISO'] = $model->getUnit();
+        $instance->UnitsOfMeasure['AlternateUnitISO'] = $unit;
         $instance->addArticleDescription(new Description($model->getName(), 'de'));
 
         // Optional
