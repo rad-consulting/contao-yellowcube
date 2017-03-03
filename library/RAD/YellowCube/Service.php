@@ -251,7 +251,7 @@ class Service implements EventSubscriber
                 ));
 
                 if ($response->isSuccess()) {
-                    $model->setConfirmed($response->getReference(), $response->getStatusText(), $this->getLastXML())->save();
+                    $model->setConfirmed($response->getReference(1), $response->getReference(2), $response->getStatusText(), $this->getLastXML())->save();
                     $this->dispatch('yellowcube.updateFulfillment', $model, null, 895);
 
                     return;
