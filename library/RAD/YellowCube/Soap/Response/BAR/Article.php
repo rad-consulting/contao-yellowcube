@@ -89,4 +89,12 @@ class Article
     {
         return $this->QuantityUOM->getValue();
     }
+
+    /**
+     * @return string
+     */
+    public function getSKU()
+    {
+        return $this->YCArticleNo;
+    }
 }

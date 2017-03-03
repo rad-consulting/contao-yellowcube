@@ -332,15 +332,10 @@ class Service implements EventSubscriber
                 $db = Database::getInstance();
 
                 foreach ($inventory->getArticles() as $article) {
-                    $event->log('Stock: ' . $article->getStock() . ' ID: ' . $article->getArticleNo(), Log::WARNING, var_export($article, true));
-                    /*
-                    $stmt = $db->prepare('UPDATE ' . YellowCube::getTable() . 'SET `rad_updated` = UNIX_TIMESTAMP(), `rad_stock` = ? WHERE `id` = ? LIMIT 1');
-                    $stmt->execute($article->getStock(), $article->getArticleNo());
-                    */
+                    $stmt = $db->prepare('UPDATE ' . YellowCube::getTable() . 'SET `rad_updated` = UNIX_TIMESTAMP(), `rad_sku` = ?, `rad_stock` = ? WHERE `id` = ? LIMIT 1');
+                    $stmt->execute($article->getSKU(), $article->getStock(), $article->getArticleNo());
                 }
             }
-
-            throw new LogException('dummy', Log::WARNING, null, $this->getLastXML());
         }
         catch (Exception $e) {
             throw new LogException($e->getMessage(), Log::WARNING, $e, $this->getLastXML());
