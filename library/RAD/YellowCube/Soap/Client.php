@@ -111,7 +111,7 @@ class Client extends SoapClient
      * @param array $request
      * @return Replies
      */
-    public function getCustomerOrderReply(array $request)
+    public function getCustomerOrderReplies(array $request)
     {
         return $this->getYCCustomerOrderReply($request);
     }

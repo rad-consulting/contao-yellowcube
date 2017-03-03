@@ -304,16 +304,12 @@ class Service implements EventSubscriber
 
         if ($model instanceof Fulfillment) {
             try {
-                $replies = $this->getClient()->getCustomerOrderReply(array(
+                $response = $this->getClient()->getCustomerOrderReplies(array(
                     'ControlReference' => Request\ControlReference::factory('WAR', $this->getConfig()),
-                    'CustomerOrderNo' => $model->pid,
                 ));
 
-                $model->log('Structure', Log::DEBUG, var_export($replies, true));
-                $model->log('XML', Log::DEBUG, $this->getLastXML());
-
-                if ($replies->isSuccess()) {
-                    foreach ($replies as $reply) {
+                if ($response->isSuccess()) {
+                    foreach ($response as $reply) {
                         if ($reply instanceof Reply && $reply->getOrderId() == $model->pid && !empty($reply->getTracking())) {
                             $model->setDelivered($reply->getTracking(), 'Delivered', $this->getLastXML())->save();
                             $this->dispatch('fulfillment.complete', $model);
@@ -323,7 +319,7 @@ class Service implements EventSubscriber
                     }
                 }
 
-                throw new Exception("No reply for order ID {$model->pid} available yet", Log::WARNING);
+                throw new Exception("Currently no customer order replies available.", Log::WARNING);
             }
             catch (Exception $e) {
                 throw new LogException($e->getMessage(), Log::NOTICE, $e, $this->getLastXML());
