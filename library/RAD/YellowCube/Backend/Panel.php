@@ -57,6 +57,12 @@ class Panel extends Backend
 
                 return;
             }
+
+            if ($model instanceof Fulfillment && $model->status == $model::CONFIRMED) {
+                EventDispatcher::getInstance()->dispatch('yellowcube.updateFulfillment', $model);
+
+                return;
+            }
         }
     }
 }
