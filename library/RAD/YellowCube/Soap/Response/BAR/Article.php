@@ -15,6 +15,12 @@ use RAD\YellowCube\Soap\Unit\Quantity;
 class Article
 {
     /**
+     * @const string
+     */
+    const RECEIVED_ON_DOCK = 'YROD';
+    const AVAILABLE_FOR_SALE = 'YAVS';
+
+    /**
      * @var string
      */
     protected $YCArticleNo;
@@ -83,11 +89,15 @@ class Article
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getStock()
     {
-        return $this->QuantityUOM->getValue();
+        if (static::AVAILABLE_FOR_SALE != $this->StorageLocation) {
+            return 0;
+        }
+
+        return (int)$this->QuantityUOM->getValue();
     }
 
     /**
