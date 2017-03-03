@@ -166,7 +166,7 @@ class Service implements EventSubscriber
             ));
 
             if ($response->isSuccess()) {
-                $product->setExported(true, $response->getStatusText(), $this->getLastXML())->save();
+                $product->setExported($response->getStatusText(), $this->getLastXML())->save();
 
                 return;
             }

@@ -103,7 +103,7 @@ class Article
         }
 
         // Mandatory
-        $instance->ChangeFlag = $model->isExported() ? 'U' : 'I';
+        $instance->ChangeFlag = $model->getExport();
         $instance->DepositorNo = $config->get('depositorno');
         $instance->PlantID = $config->get('plantid');
         $instance->ArticleNo = $model->getArticleNo();
