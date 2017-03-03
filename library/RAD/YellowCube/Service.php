@@ -33,14 +33,26 @@ use RAD\YellowCube\Soap\Request\WAB\Order as CustomerOrder;
 class Service implements EventSubscriber
 {
     /**
+     * @var Config
+     */
+    protected static $config;
+
+    /**
      * @var Client
      */
     protected $client;
 
     /**
-     * @var Config
+     * @return Config
      */
-    protected $config;
+    public static function getConfig()
+    {
+        if (empty(static::$config)) {
+            static::$config = new Config();
+        }
+
+        return static::$config;
+    }
 
     /**
      * @return Client
@@ -56,22 +68,14 @@ class Service implements EventSubscriber
     }
 
     /**
-     * @return Config
-     */
-    public function getConfig()
-    {
-        if (empty($this->config)) {
-            $this->config = new Config();
-        }
-
-        return $this->config;
-    }
-
-    /**
      * @return array
      */
     public static function getSubscribedEvents()
     {
+        if (!static::getConfig()->get('active')) {
+            return array();
+        }
+
         return array(
             'order.create' => 'onCreateOrder',
             'yellowcube.sendFulfillment' => 'onSendFulfillment',

@@ -11,6 +11,7 @@
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_legend'] = 'YellowCube';
 
 // Fields
+$GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_active'] = array('Aktivieren');
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_sender'] = array('Sender');
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_depositorno'] = array('Depositor Number');
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_supplierno'] = array('Supplier Number');
