@@ -7,6 +7,7 @@
  */
 namespace RAD\YellowCube;
 
+use Contao\Database;
 use Contao\System;
 use RAD\Event\EventDispatcher;
 use RAD\Event\EventSubscriberInterface as EventSubscriber;
@@ -322,11 +323,28 @@ class Service implements EventSubscriber
      */
     public function onImportStock(Event $event)
     {
-        $inventory = $this->getClient()->getInventory(array(
-            'ControlReference' => Request\ControlReference::factory('BAR', $this->getConfig()),
-        ));
+        try {
+            $inventory = $this->getClient()->getInventory(array(
+                'ControlReference' => Request\ControlReference::factory('BAR', $this->getConfig()),
+            ));
 
-        throw new LogException($inventory->hasArticles(), Log::WARNING, null, $this->getLastXML());
+            if ($inventory->hasArticles()) {
+                $db = Database::getInstance();
+
+                foreach ($inventory->getArticles() as $article) {
+                    $event->log(json_encode(array('id' => $article->getArticleNo(), 'stock' => $article->getStock())), Log::WARNING);
+                    /*
+                    $stmt = $db->prepare('UPDATE ' . YellowCube::getTable() . 'SET `rad_updated` = UNIX_TIMESTAMP(), `rad_stock` = ? WHERE `id` = ? LIMIT 1');
+                    $stmt->execute($article->getStock(), $article->getArticleNo());
+                    */
+                }
+            }
+
+            throw new LogException('dummy', Log::WARNING, $e, $this->getLastXML());
+        }
+        catch (Exception $e) {
+            throw new LogException($e->getMessage(), Log::WARNING, $e, $this->getLastXML());
+        }
     }
 
     /**

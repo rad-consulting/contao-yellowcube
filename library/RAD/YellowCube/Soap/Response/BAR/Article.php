@@ -7,6 +7,8 @@
  */
 namespace RAD\YellowCube\Soap\Response\BAR;
 
+use RAD\YellowCube\Soap\Unit\Quantity;
+
 /**
  * Class Article
  */
@@ -68,7 +70,23 @@ class Article
     protected $StockType;
 
     /**
-     * @var string
+     * @var Quantity
      */
     protected $QuantityUOM;
+
+    /**
+     * @return string
+     */
+    public function getArticleNo()
+    {
+        return $this->ArticleNo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStock()
+    {
+        return $this->QuantityUOM->getValue();
+    }
 }

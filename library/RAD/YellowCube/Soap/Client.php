@@ -43,6 +43,7 @@ class Client extends SoapClient
                 // BAR
                 'BAR' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Inventory',
                 'Article' => 'RAD\\YellowCube\\Soap\\Response\\BAR\\Article',
+                'QuantityUOM' => 'RAD\\YellowCube\\Soap\\Unit\\Quantity',
                 // WAR
                 'GoodsIssue' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssue',
                 'GoodsIssueHeader' => 'RAD\\YellowCube\\Soap\\Response\\WAR\\GoodsIssueHeader',
