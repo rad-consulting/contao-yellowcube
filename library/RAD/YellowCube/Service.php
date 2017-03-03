@@ -332,7 +332,7 @@ class Service implements EventSubscriber
                 $db = Database::getInstance();
 
                 foreach ($inventory->getArticles() as $article) {
-                    $stmt = $db->prepare('UPDATE ' . YellowCube::getTable() . 'SET `rad_updated` = UNIX_TIMESTAMP(), `rad_sku` = ?, `rad_stock` = ? WHERE `id` = ? LIMIT 1');
+                    $stmt = $db->prepare('UPDATE ' . YellowCube::getTable() . ' SET `rad_updated` = UNIX_TIMESTAMP(), `rad_sku` = ?, `rad_stock` = ? WHERE `id` = ? LIMIT 1');
                     $stmt->execute($article->getSKU(), $article->getStock(), $article->getArticleNo());
                 }
             }
