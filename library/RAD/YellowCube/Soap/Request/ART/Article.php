@@ -100,7 +100,7 @@ class Article
         $instance->DepositorNo = $config->get('depositorno');
         $instance->PlantID = $config->get('plantid');
         $instance->ArticleNo = $model->getArticleNo();
-        $instance->BaseUOM = ISO::PCE;
+        $instance->BaseUOM = $model->getUnit();
 
         if ($weight = $model->getWeight()) {
             $instance->NetWeight = new Mass(round($weight->getWeightValue(), 3), $weight->getWeightUnit());
@@ -109,7 +109,7 @@ class Article
             $instance->NetWeight = new Mass(0, ISO::KGM);
         }
 
-        $instance->UnitsOfMeasure['AlternateUnitISO'] = ISO::PCE;
+        $instance->UnitsOfMeasure['AlternateUnitISO'] = $model->getUnit();
         $instance->addArticleDescription(new ArticleDescription($model->getName(), 'de'));
 
         // Optional

@@ -7,6 +7,7 @@
  */
 namespace RAD\YellowCube\Soap\Unit;
 
+use Haste\Units\Mass\Unit;
 use RAD\YellowCube\Soap\Util\SimpleValue;
 
 /**
@@ -27,9 +28,10 @@ class Mass extends SimpleValue
     {
         parent::__construct($value);
 
-        // Map values from Haste
+        // Map units from Haste
         $map = array(
-            'kg' => ISO::KGM,
+            Unit::KILOGRAM => ISO::KGM,
+            Unit::GRAM => ISO::GRM,
         );
 
         if (isset($map[$ISO])) {

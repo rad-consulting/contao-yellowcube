@@ -11,6 +11,8 @@ use RAD\YellowCube\Soap\Util\SimpleValue;
 
 /**
  * Class ISO
+ *
+ * @see http://www.robert-kuhlemann.de/iso_masseinheiten.htm
  */
 abstract class ISO extends SimpleValue
 {
