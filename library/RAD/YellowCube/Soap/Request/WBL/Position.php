@@ -47,7 +47,7 @@ class Position
         $instance = new static();
         $instance->ArticleNo = $product->getArticleNo();
         $instance->Quantity = $quantity;
-        $instance->QuantityISO = ISO::PCE;
+        $instance->QuantityISO = $product->getUnit();
 
         return $instance;
     }
