@@ -338,7 +338,7 @@ class Service implements EventSubscriber
             }
         }
         catch (Exception $e) {
-            throw new LogException($e->getMessage(), Log::WARNING, $e, $this->getLastXML());
+            throw new LogException($e->getMessage(), Log::ERROR, $e, $this->getLastXML());
         }
     }
 
