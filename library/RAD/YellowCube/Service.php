@@ -306,6 +306,7 @@ class Service implements EventSubscriber
             try {
                 $response = $this->getClient()->getCustomerOrderReplies(array(
                     'ControlReference' => Request\ControlReference::factory('WAR', $this->getConfig()),
+                    'Reference' => $model->pid,
                 ));
 
                 if ($response->isSuccess()) {
