@@ -8,6 +8,7 @@
 
 // Models
 \Isotope\Model\Product::registerModelType('yellowcube', 'RAD\\YellowCube\\Model\\Product\\YellowCube');
+\RAD\Fulfillment\Model\Fulfillment::registerModelType('yellowcube', 'RAD\\YellowCube\\Model\\Fulfillment');
 
 // Subscribers
 $GLOBALS['RAD_SUBSCRIBERS'][] = 'RAD\\YellowCube\\Service';
