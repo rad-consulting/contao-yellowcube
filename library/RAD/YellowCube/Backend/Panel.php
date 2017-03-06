@@ -9,7 +9,6 @@ namespace RAD\YellowCube\Backend;
 
 use Contao\Backend;
 use Contao\DataContainer;
-use Contao\System;
 use Isotope\Model\ProductType;
 use RAD\Event\EventDispatcher;
 use RAD\Fulfillment\Model\Fulfillment;
