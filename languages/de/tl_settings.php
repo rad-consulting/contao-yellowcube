@@ -11,6 +11,7 @@
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_legend'] = 'YellowCube';
 
 // Fields
+$GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_eanalways'] = array('EAN immer übermitteln', 'Die EAN Code in jedem und nicht nur im Produktions-Modus übermitteln.');
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_active'] = array('Aktiv', 'Aktivieren oder deaktivieren Sie die Schnittstelle.');
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_sender'] = array('Sender');
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_depositorno'] = array('Depositor Number');

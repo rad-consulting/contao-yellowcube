@@ -8,9 +8,15 @@
  */
 
 // Palettes
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{rad_yellowcube_legend},rad_yellowcube_depositorno,rad_yellowcube_supplierno,rad_yellowcube_partnerid,rad_yellowcube_plantid,rad_yellowcube_sender,rad_yellowcube_operatingmode,rad_yellowcube_termofdelivery,rad_yellowcube_active;';
+$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{rad_yellowcube_legend},rad_yellowcube_depositorno,rad_yellowcube_supplierno,rad_yellowcube_partnerid,rad_yellowcube_plantid,rad_yellowcube_sender,rad_yellowcube_operatingmode,rad_yellowcube_termofdelivery,rad_yellowcube_active,rad_yellowcube_eanalways;';
 
 // Fields
+$GLOBALS['TL_DCA']['tl_settings']['fields']['rad_yellowcube_eanalways'] = array(
+    'eval' => array('tl_class' => 'clr'),
+    'label' => &$GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_eanalways'],
+    'inputType' => 'checkbox',
+);
+
 $GLOBALS['TL_DCA']['tl_settings']['fields']['rad_yellowcube_active'] = array(
     'eval' => array('tl_class' => 'clr'),
     'label' => &$GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_active'],
