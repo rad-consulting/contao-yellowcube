@@ -30,7 +30,6 @@ class Panel extends Backend
         if ($dc->activeRecord) {
             $class = $GLOBALS['TL_MODELS'][$dc->table];
             $model = forward_static_call(array($class, 'findByPk'), $dc->activeRecord->id);
-            System::log(var_export($model, true), __METHOD__, TL_ERROR);
 
             if ($model instanceof YellowCube && $model->doExport()) {
                 $type = ProductType::findByPk($model->type);
