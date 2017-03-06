@@ -51,6 +51,6 @@ class Config
 
         $value = Contao::get('rad_yellowcube_' . $name);
 
-        return empty($value) ? $default : $value;
+        return $value ? $value : $default;
     }
 }
