@@ -120,7 +120,7 @@ class Article
         $instance->addArticleDescription(new Description($model->getName(), 'de'));
 
         // Optional
-        if ('p' == $config->get('operatingmode')) {
+        if ('p' == $config->get('operatingmode') || $config->get('eanalways')) {
             $instance->addUnitOfMeasure('EAN', new EAN($model->getEAN()->getValue(), $model->getEAN()->getUnit()));
         }
 
