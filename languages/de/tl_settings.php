@@ -19,3 +19,4 @@ $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_supplierno'] = array('Supplie
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_operatingmode'] = array('Operating Mode', 'Modus der Schnittstelle.');
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_partnerid'] = array('Partner ID');
 $GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_plantid'] = array('Plant ID');
+$GLOBALS['TL_LANG']['tl_settings']['rad_yellowcube_termofdelivery'] = array('Lieferfristen', 'Wählen Sie die Lieferfristen für den Distributor.');

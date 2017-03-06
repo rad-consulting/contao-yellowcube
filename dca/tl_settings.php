@@ -61,3 +61,4 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['rad_yellowcube_supplierno'] = array
 );
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['rad_yellowcube_termofdelivery'] = $GLOBALS['TL_DCA']['tl_settings']['fields']['rad_fulfillment_termofdelivery'];
+$GLOBALS['TL_DCA']['tl_settings']['fields']['rad_yellowcube_termofdelivery']['label'] = &$GLOBALS['TL_DCA']['tl_settings']['rad_yellowcube_termofdelivery'];
