@@ -9,6 +9,7 @@ namespace RAD\YellowCube\Backend;
 
 use Contao\Backend;
 use Contao\DataContainer;
+use Contao\System;
 use Isotope\Model\ProductType;
 use RAD\Event\EventDispatcher;
 use RAD\Fulfillment\Model\Fulfillment;
@@ -28,6 +29,8 @@ class Panel extends Backend
      */
     public function onSubmit(DataContainer $dc)
     {
+        System::log('fick', __METHOD__, TL_ERROR);
+
         if ($dc->activeRecord) {
             $class = $GLOBALS['TL_MODELS'][$dc->table];
             $model = forward_static_call(array($class, 'findByPk'), $dc->activeRecord->id);
