@@ -29,7 +29,7 @@ class Panel extends Backend
      */
     public function onSubmit(DataContainer $dc)
     {
-        System::log('fick', __METHOD__, TL_ERROR);
+        System::log(var_export($dc->activeRecord, true), __METHOD__, TL_ERROR);
 
         if ($dc->activeRecord) {
             $class = $GLOBALS['TL_MODELS'][$dc->table];
