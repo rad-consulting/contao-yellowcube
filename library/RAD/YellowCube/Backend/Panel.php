@@ -13,10 +13,8 @@ use Contao\System;
 use Isotope\Model\ProductType;
 use RAD\Event\EventDispatcher;
 use RAD\Fulfillment\Model\Fulfillment;
-use RAD\Fulfillment\Model\MasterData;
 use RAD\Fulfillment\Model\SupplierOrder;
 use RAD\YellowCube\Model\Product\YellowCube;
-use RAD\YellowCube\Service;
 
 /**
  * Class Panel
@@ -29,8 +27,6 @@ class Panel extends Backend
      */
     public function onSubmit(DataContainer $dc)
     {
-        System::log(var_export($dc->activeRecord, true), __METHOD__, TL_ERROR);
-
         if ($dc->activeRecord) {
             $class = $GLOBALS['TL_MODELS'][$dc->table];
             $model = forward_static_call(array($class, 'findByPk'), $dc->activeRecord->id);
@@ -51,13 +47,15 @@ class Panel extends Backend
                 return;
             }
 
-            if ($model instanceof Fulfillment && $model->status == $model::PENDING) {
+            if ($model instanceof Fulfillment && $model->status == Fulfillment::PENDING) {
+                System::log(var_export($model, true), __METHOD__, TL_ERROR);
+
                 EventDispatcher::getInstance()->dispatch('yellowcube.sendFulfillment', $model);
 
                 return;
             }
 
-            if ($model instanceof Fulfillment && $model->status == $model::CONFIRMED) {
+            if ($model instanceof Fulfillment && $model->status == Fulfillment::CONFIRMED) {
                 EventDispatcher::getInstance()->dispatch('yellowcube.updateFulfillment', $model);
 
                 return;
